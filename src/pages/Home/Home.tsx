@@ -3,7 +3,7 @@ import './home.scss'
 function Home() {
   return (
     <div>
-Home
+      {/* Home */}
     </div>
   )
 }
