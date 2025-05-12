@@ -1,11 +1,9 @@
-import React from "react";
 import "./home.scss";
-import ReserveBlock from "../../widgets/ReserveBlock/ReserveBlock";
+import Carts from "../../widgets/Carts/Carts";
 function Home() {
   return (
     <div>
-      {/* Home */}
-      <ReserveBlock />
+      <Carts />
     </div>
   );
 }
