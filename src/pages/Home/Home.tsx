@@ -1,11 +1,11 @@
-import React from 'react'
-import './home.scss'
+import "./home.scss";
+import Carts from "../../widgets/Carts/Carts";
 function Home() {
   return (
     <div>
-      {/* Home */}
+      <Carts />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
