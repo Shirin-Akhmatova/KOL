@@ -6,7 +6,7 @@ import dropDownIcon from "../../assets/icons/dropDown.svg";
 interface CountrySelectProps {
   onSelect: (code: string, country: string) => void;
 }
-
+ 
 const CustomCountryCode: React.FC<CountrySelectProps> = ({ onSelect }) => {
   const [selectedCountry, setSelectedCountry] = useState(
     countryCodes.find((c) => c.code === "+996" && c.country === "Kyrgyzstan")!
