@@ -8,6 +8,7 @@
   background: transparent;
   transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
   z-index: 2000;
+  background: #fff;
 }
 
 .container {
@@ -25,6 +26,18 @@
 
 img {
   cursor: pointer;
+}
+
+@keyframes colorCycle {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .mainContent {
@@ -52,7 +65,15 @@ img {
     inset: 0;
     border-radius: 22px;
     padding: 2px;
-    background: linear-gradient(to right, #a0f0f0, #f0c0c0);
+    background: linear-gradient(
+      270deg,
+      #00b2a940,
+      #ff6b3540,
+      #00cbc140,
+      #ff7a4a40
+    );
+    background-size: 600% 600%;
+    animation: colorCycle 7s ease infinite;
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -64,14 +85,12 @@ img {
 }
 
 .searchBar {
-  margin-top: 15px;
   position: relative;
-  justify-self: center;
-  z-index: 0;
-  max-width: 850px;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 850px;
   height: 66px;
-  border-radius: 25px;
+  border-radius: 22px;
   background: white;
   display: flex;
   align-items: center;
@@ -79,6 +98,8 @@ img {
   padding: 0 10px;
   box-sizing: border-box;
   overflow: hidden;
+  transition: all 0.3s ease, transform 0.3s ease, width 0.3s ease, top 0.3s ease;
+  z-index: 0;
 }
 
 .searchBar::before {
@@ -87,7 +108,15 @@ img {
   inset: 0;
   border-radius: 25px;
   padding: 2px;
-  background: linear-gradient(to right, #a0f0f0, #f0c0c0);
+  background: linear-gradient(
+    270deg,
+    #00b2a940,
+    #ff6b3540,
+    #00cbc140,
+    #ff7a4a40
+  );
+  background-size: 600% 600%;
+  animation: colorCycle 5s ease infinite;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
@@ -96,17 +125,53 @@ img {
   box-sizing: border-box;
 }
 
+.searchBarScrolled {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  width: 530px;
+  height: 48px;
+  border-radius: 19px;
+  z-index: 3000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.searchBarScrolled::before {
+  border-radius: 19px;
+}
+
 .searchItem {
   display: flex;
   flex-direction: column;
   padding: 0 16px;
   text-align: start;
+  gap: 4px;
+
+  // &:hover {
+  //   background-color: #f8f8f8;
+  //   height: 66px;
+  //   border: 1px solid #f8f8f8;
+  //   border-radius: 46px;
+  //   cursor: pointer;
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   text-align: start;
+  // }
 
   .label {
     font-family: Montserrat, sans-serif;
     font-weight: bold;
     font-size: 11.81px;
     color: black;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .searchBarScrolled .label {
+    opacity: 0;
+    transform: translateY(-5px);
+    pointer-events: none;
   }
 
   .placeholder {
@@ -121,14 +186,45 @@ img {
   background-color: #dddddd;
 }
 
+.searchBarScrolled .divider {
+  height: 24px;
+}
+
 .searchButton {
   width: 48px;
   height: 48px;
   border-radius: 22px;
-  background-color: #00b2a9;
+  background-color: #16bbb4;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-left: 8px;
   cursor: pointer;
+  transition: width 0.3s ease, height 0.3s ease, margin-left 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+  }
+}
+
+.searchButtonScrolled {
+  border-radius: 14px;
+  width: 32px;
+  height: 32px;
+
+  img {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.searchBarEnd {
+  display: flex;
+  align-items: center;
+  gap: 106px;
+}
+
+.searchBarEndScrolled {
+  gap: 196px;
 }

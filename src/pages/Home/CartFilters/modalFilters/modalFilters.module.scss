@@ -1,8 +1,31 @@
 .modalFiltersBtn {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 17px;
+    padding: 1px;
+    background: linear-gradient(
+      270deg,
+      #00b2a940,
+      #ff6b3540,
+      #00cbc140,
+      #ff7a4a40
+    );
+    background-size: 600% 600%;
+    animation: colorCycle 7s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+
   cursor: pointer;
-  border: 1px solid black;
   padding: 16px 17px;
-  background: #ffffff;
   border-radius: 17px;
   display: flex;
   align-items: center;
