@@ -1,0 +1,52 @@
+.roomTypeFiltersBlock {
+  display: flex;
+  gap: 27px;
+}
+.roomTypeFilter {
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  max-width: 85px;
+  align-items: center;
+  justify-content: start;
+  display: flex;
+  flex-direction: column;
+  &::before {
+    transition: 0.5s;
+    position: absolute;
+    border-radius: 1px;
+    content: "";
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0%;
+    height: 2px;
+    background: #0000002f;
+  }
+  &:hover {
+    &::before {
+      width: 50%;
+    }
+  }
+  &.active {
+    &::before {
+      background: #000000;
+      width: 100%;
+    }
+  }
+  gap: 4px;
+  padding: 2px 0 10px;
+  &Image {
+    width: 32px;
+    height: 32px;
+  }
+  &Title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    color: #666666;
+  }
+}

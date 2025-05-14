@@ -1,0 +1,75 @@
+.weatherWidget {
+  display: flex;
+  .weatherWidgetList {
+    gap: 4px;
+    display: flex;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+    transition: 0.5s;
+    width: 0;
+    &.active {
+      width: 250px;
+      opacity: 1;
+      transform: translateX(0);
+      .weatherWidget {
+        gap: 16px;
+      }
+    }
+  }
+  padding: 2px 5px;
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+}
+.weatherItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  &Span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 13px;
+    text-align: center;
+    color: #6c6c6c;
+  }
+  &Img {
+    width: 24px;
+    height: 24px;
+  }
+}
+.currentWeather {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &Img {
+    width: 78px;
+    height: 78px;
+  }
+  &Info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    &City {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      color: #000000;
+    }
+    &Temp {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 40px;
+      line-height: 52px;
+      text-align: center;
+      color: #000000;
+    }
+  }
+}
