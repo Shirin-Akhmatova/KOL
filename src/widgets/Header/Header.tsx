@@ -29,11 +29,10 @@ function Header() {
 
   return (
     <>
-      <header
-        className={`${styles.header} ${scrolled ? styles.withBackground : ""}`}
-      >
+      <header className={`${styles.header} ${scrolled ? styles.withBackground : ""}`}>
         <div className={styles.container}>
           <a href="#"><img src={Logo} alt="Logo" /></a>
+          {!scrolled && <h3>Живи у озера - дыши горами</h3>}
           {!scrolled ? <h3>Живи у озера - дыши горами</h3> : null}
 
           <div className={styles.mainContent}>
@@ -45,6 +44,7 @@ function Header() {
           </div>
         </div>
 
+        <div className={`${styles.searchBar} ${scrolled ? styles.searchBarScrolled : ""}`}>
         <div
           className={`${styles.searchBar} ${scrolled ? styles.searchBarScrolled : ""}`}
         >
@@ -58,6 +58,7 @@ function Header() {
           <div className={styles.divider} />
 
           <button className={styles.searchItem} onClick={toggleCalendar}>
+            {!scrolled && <span className={styles.label}>Прибытие</span>}
             {!scrolled && <span className={styles.label} onClick={toggleCalendar}>Прибытие</span>}
             <span className={styles.placeholder}>
               {scrolled ? "Дата" : "Когда?"}
@@ -67,6 +68,9 @@ function Header() {
           {!scrolled && (
             <>
               <div className={styles.divider} />
+              <button className={styles.searchItem} onClick={toggleCalendar}>
+                <span className={styles.label}>Выезд</span>
+                <span className={styles.placeholder}>Когда?</span>
               <button className={styles.searchItem}>
                 <span className={styles.label} onClick={toggleCalendar} >Выезд</span>
                 <span className={styles.placeholder} onClick={toggleCalendar}>Когда?</span>
