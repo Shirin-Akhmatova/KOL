@@ -1,7 +1,6 @@
 .calendar {
   width: 446px;
-  height: 415px;
-  overflow-y: auto;
+height: 415px;
   background-color: white;
   border-radius: 36px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -84,14 +83,19 @@ text-align: center;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0;
+    width: 336px;
+height: 303px;
+    margin: 0 auto;
   }
 
   .day-name {
-    text-align: center;
+    color: rgb(133, 133, 133);
+    font-family: Montserrat;
+    font-size: 14px;
     font-weight: 500;
-    font-size: 16px;
-    padding: 8px 0;
-    color: #888;
+    line-height: 17px;
+    letter-spacing: 0%;
+    text-align: center;
   }
 
   .day {
@@ -101,8 +105,13 @@ text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    font-weight: 500;
+    color: rgb(49, 49, 49);
+font-family: Montserrat;
+font-size: 16px;
+font-weight: 400;
+line-height: 20px;
+letter-spacing: 0%;
+text-align: center;
     cursor: pointer;
     z-index: 1;
 
