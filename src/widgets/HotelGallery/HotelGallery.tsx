@@ -17,7 +17,7 @@ import sixthIcon from '../../assets/icons/sixthIcon.svg';
 import seventhIcon from '../../assets/icons/seventhIcon.svg';
 import eighthIcon from '../../assets/icons/eighthIcon.svg';
 import ninthIcon from '../../assets/icons/ninthIcon.svg';
-import tenthIcon from '../../assets/icons/tenthIcon.svg';
+import tenthIcon from '../../assets/icons/tenthIcon.svg'; 
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import './hotelGallerry.scss';
 import './carousel.scss';
