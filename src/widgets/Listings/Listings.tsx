@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import starIcon from "../../assets/icons/starIcon.png";
 import like from "../../assets/icons/like.png";
 import notLike from "../../assets/icons/without like.png";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import scss from "./Listings.module.scss";
 
-import scss from "./Carts.module.scss";
-
-export interface Block {
+interface Block {
   images: string[];
   title: string;
   place: string;
@@ -18,6 +18,7 @@ export interface Block {
   price: number;
   day: number;
   rating: number;
+  coordinates: number[];
 }
 
 const blocks: Block[] = [
@@ -34,6 +35,7 @@ const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
+    coordinates: [42.728644, 77.255288],
   },
   {
     images: [
@@ -48,6 +50,7 @@ const blocks: Block[] = [
     price: 247139,
     day: 6,
     rating: 4.7,
+    coordinates: [42.635034, 76.757008],
   },
   {
     images: [
@@ -62,6 +65,7 @@ const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
+    coordinates: [42.553519, 76.458039],
   },
   {
     images: [
@@ -76,6 +80,7 @@ const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
+    coordinates: [42.275572, 77.903053],
   },
   {
     images: [
@@ -92,6 +97,7 @@ const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
+    coordinates: [42.119712, 76.984002],
   },
   {
     images: [
@@ -107,10 +113,12 @@ const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
+    coordinates: [42.28786, 76.341774],
   },
 ];
-const Carts = () => {
+const Listings = () => {
   const [likes, setLikes] = useState<number[]>([]); // ✅ Храним лайки в состоянии
+  const mapRef = useRef<any>(null);
 
   function addLike(id: number) {
     setLikes(
@@ -121,8 +129,18 @@ const Carts = () => {
     );
   }
 
+  const handleBoundsChange = () => {
+    if (mapRef.current) {
+      const bounds = mapRef.current.getBounds(); // [[southWestLat, southWestLng], [northEastLat, northEastLng]]
+      // const center = mapRef.current.getCenter(); // [lat, lng]
+      // const zoom = mapRef.current.getZoom();
+
+      console.log("Bounds:", bounds);
+    }
+  };
+
   return (
-    <div className={scss.Carts}>
+    <div className={scss.Listings}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.blocks}>
@@ -174,10 +192,36 @@ const Carts = () => {
               </div>
             ))}
           </div>
+          <div className={scss.map}>
+            <YMaps query={{ apikey: "655b74b4-94c5-4212-b86d-bd8f6fdae225" }}>
+              <Map
+                defaultState={{ center: [41.97, 77.29], zoom: 7 }}
+                width="100%"
+                height="500px"
+                position="sticky"
+                onBoundsChange={handleBoundsChange}
+                instanceRef={(ref) => (mapRef.current = ref)}
+              >
+                {blocks.map((store, idx) => (
+                  <Placemark
+                    key={idx}
+                    geometry={store.coordinates}
+                    properties={{
+                      iconContent: `${store.price.toLocaleString("ru-RU")} сом`,
+                    }}
+                    options={{
+                      preset: "islands#violetStretchyIcon",
+                      iconColor: "#ff5a5f",
+                    }}
+                  />
+                ))}
+              </Map>
+            </YMaps>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default Carts;
+export default Listings;

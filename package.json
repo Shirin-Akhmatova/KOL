@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.8.1",
     "axios": "^1.9.0",
     "date-fns": "^4.1.0",
     "i18next": "^25.1.2",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.1.0",
     "react-date-range": "^2.0.1",
     "react-dom": "^19.1.0",
@@ -21,7 +23,8 @@
     "react-router-dom": "^7.5.3",
     "redux": "^5.0.1",
     "sass": "^1.87.0",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.6",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
