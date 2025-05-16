@@ -1,0 +1,57 @@
+.priceFilterChartTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 6px;
+}
+.priceInputs {
+  margin-top: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.priceInput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  &Container {
+    position: relative;
+    padding: 15px 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 30px;
+  }
+  &Currency {
+    padding-right: 16px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    right: 0;
+  }
+  &Input {
+    padding-right: 40px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+  }
+  &Label {
+    color: #7b7b7b;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+  }
+}

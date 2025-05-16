@@ -1,13 +1,12 @@
 import { useState, type HTMLAttributes, type MouseEvent } from "react";
-import { filters } from "./filterByType.data";
 import styles from "./filterByType.module.scss";
-import type { IRoomTypeFilter } from "./filterByType.interface";
+import type { IRoomTypeFilter } from "../cartFilters.interface";
 
 interface RoomTypeFilterProp
   extends IRoomTypeFilter,
     HTMLAttributes<HTMLDivElement> {}
 
-function FilterByType() {
+function FilterByType({ filters }: { filters: IRoomTypeFilter[] }) {
   const [active, setActive] = useState<string>("");
 
   const clickFilterHandler = (
@@ -26,6 +25,7 @@ function FilterByType() {
     <div className={styles.roomTypeFiltersBlock}>
       {filters.map((type) => (
         <button
+          key={type.filterName}
           style={{ height: "auto" }}
           onClick={(e) => clickFilterHandler(e, type.filterName)}
         >
