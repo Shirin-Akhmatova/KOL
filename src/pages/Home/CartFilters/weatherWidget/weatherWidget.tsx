@@ -1,16 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { IWeatherWidget } from "./weatherWidget.interface";
 import styles from "./weatherWidget.module.scss";
-import { getWeather } from "./weatherWidget.data";
 
-function WeatherWidget() {
+function WeatherWidget({ weathers }: { weathers: IWeatherWidget[] }) {
   const [showWeather, setShowWeather] = useState<boolean>(false);
-  const [weathers, setWeathers] = useState<IWeatherWidget[] | null>(null);
-  useEffect(() => {
-    getWeather().then(setWeathers);
-  }, []);
 
-  if (!weathers) return;
   return (
     <>
       <div className={`${styles.weatherWidget}`}>
@@ -20,7 +14,7 @@ function WeatherWidget() {
           }`}
         >
           {weathers?.map((weather) => (
-            <WeatherItem weather={weather} />
+            <WeatherItem key={weather.date} weather={weather} />
           ))}
         </div>
         <button
