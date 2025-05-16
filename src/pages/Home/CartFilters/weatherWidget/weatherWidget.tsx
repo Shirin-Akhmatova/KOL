@@ -8,6 +8,18 @@ function WeatherWidget({ weathers }: { weathers: IWeatherWidget[] }) {
   return (
     <>
       <div className={`${styles.weatherWidget}`}>
+        <button
+          className={styles.weatherWidgetArrow}
+          onClick={() => setShowWeather((prev) => !prev)}
+        >
+          <img
+            className={`${styles.weatherWidgetArrowImg} ${
+              showWeather ? styles.close : ""
+            }`}
+            src="/imgs/svgs/arrow_left.svg"
+            alt="weather"
+          />
+        </button>
         <div
           className={`${styles.weatherWidgetList} ${
             showWeather ? styles.active : ""
