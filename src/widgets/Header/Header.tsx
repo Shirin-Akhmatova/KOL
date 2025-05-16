@@ -5,7 +5,7 @@ import LangIcon from "../../assets/icons/globe 3.svg";
 import Person from "../../assets/icons/person.svg";
 import BurgerMenu from "../../assets/icons/Burger.svg";
 import SearchIcon from "../../assets/icons/magnifyingglass 2.svg";
-import Calendar from "../Calendar/Calendar";
+// import Calendar from "../Calendar/Calendar";
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -100,7 +100,7 @@ function Header() {
             height: "415px",
           }}
         >
-          <Calendar />
+          {/* <Calendar /> */}
         </div>
       )}
     </>

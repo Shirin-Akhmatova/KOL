@@ -1,0 +1,21 @@
+.mapBtn {
+  position: fixed;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  background: #ff6b35;
+  z-index: 1000;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  &:hover {
+    background: #ee5d29;
+    transform: translateX(-50%) scale(1.05);
+  }
+}
