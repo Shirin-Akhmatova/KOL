@@ -2,7 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../../widgets/Layout/Layout";
 import Home from "../../pages/Home/Home";
 import About from "../../pages/About/About";
-import CardPage from "../../pages/cardPage/cardPage";
+import MapWithListings from "../../pages/MapWithListings/MapWithListings";
+import CardPage from "@/pages/cardPage/CardPage";
+
 export const myRouter = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +17,10 @@ export const myRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/map",
+        element: <MapWithListings />,
       },
       {
         path: "/cardPage",
