@@ -4,6 +4,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import starIcon from "../../assets/icons/starIcon.png";
 import like from "../../assets/icons/like.png";
 import notLike from "../../assets/icons/without like.png";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -138,7 +139,9 @@ const Carts = () => {
                   >
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
+                        <Link to="/cardPage">
                         <img src={image} alt="image" />
+                        </Link>
                       </SwiperSlide>
                     ))}
                   </Swiper>
