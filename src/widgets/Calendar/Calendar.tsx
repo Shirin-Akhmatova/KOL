@@ -188,7 +188,7 @@ const Calendar = () => {
                 <input
                   className={`year-input ${yearError && yearTouched ? "input-error" : ""}`}
                   value={inputYear}
-                  onChange={handleYearChange}   
+                  onChange={handleYearChange}
                   onBlur={handleYearSubmit}
                   onKeyDown={handleYearKeyDown}
                   autoFocus
