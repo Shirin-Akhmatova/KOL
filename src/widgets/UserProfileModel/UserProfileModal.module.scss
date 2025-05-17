@@ -1,0 +1,35 @@
+.userProfileModal_container {
+  position: fixed;
+  top: 62px;
+  right: 25px;
+  width: 283px;
+  height: 255px;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 15px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 2001;
+  gap: 15px;
+}
+
+.userProfileModal_container ul {
+  padding: 14px 0;
+  margin: 0;
+}
+
+.userProfileModal_container li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 16px;
+  color: #1a1a1a;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+
+.divider {
+  margin: 10px 0;
+  border: 1px solid #f2f2f2;
+}

@@ -8,7 +8,7 @@ function CardPage() {
     <div className='cardPage'>
       <HotelGallery/>
       <Feedbacks/>
-      <Map/>
+      <Map/>  
     </div>
   )
 }

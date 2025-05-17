@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import Logo from "../../assets/icons/KOL.svg";
 import LangIcon from "../../assets/icons/globe 3.svg";
@@ -6,24 +7,27 @@ import Person from "../../assets/icons/person.svg";
 import BurgerMenu from "../../assets/icons/Burger.svg";
 import SearchIcon from "../../assets/icons/magnifyingglass 2.svg";
 import SearchModal from "../SearchModal/SearchModal";
+import UserProfileModal from "../UserProfileModel/UserProfileModal";
+import Register from "../RegisterModal/RegisterModal";
 
 function Header() {
+  const navigate = useNavigate();
+
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true); // открывает модалку поисковика
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [scrolled]);
+  }, []);
 
   return (
     <>
@@ -31,17 +35,29 @@ function Header() {
         className={`${styles.header} ${scrolled ? styles.withBackground : ""}`}
       >
         <div className={styles.container}>
-          <a href="#">
+          <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
 
-          {!scrolled ? <h3>Живи у озера - дыши горами</h3> : null}
+          {!scrolled ? (
+            <h3 className={styles.title}>Живи у озера - дыши горами</h3>
+          ) : null}
 
           <div className={styles.mainContent}>
-            <img src={LangIcon} alt="LangIcon" />
+            <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
             <div className={styles.menu}>
-              <img src={BurgerMenu} alt="BurgerMenu" />
-              <img src={Person} alt="Person" />
+              <img
+                src={BurgerMenu}
+                alt="BurgerMenu"
+                className={styles.burgerIcon}
+                onClick={() => setIsUserProfileModalOpen((prev) => !prev)}
+              />
+              <img
+                src={Person}
+                alt="Person"
+                className={styles.personIcon}
+                onClick={() => navigate("/loginUserProfilePage")}
+              />
             </div>
           </div>
         </div>
@@ -103,6 +119,18 @@ function Header() {
       </header>
 
       {/* {isModalOpen && <SearchModal />} */}
+
+      {isUserProfileModalOpen && (
+        <UserProfileModal
+          onClose={() => setIsUserProfileModalOpen(false)}
+          onRegisterClick={() => {
+            setIsUserProfileModalOpen(false);
+            setIsRegisterOpen(true);
+          }}
+        />
+      )}
+
+      {isRegisterOpen && <Register onClose={() => setIsRegisterOpen(false)} />}
     </>
   );
 }

@@ -3,6 +3,8 @@
   top: 0;
   left: 0;
   width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
   padding-top: 12px;
   padding-bottom: 12px;
   background: transparent;
@@ -15,16 +17,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 50px;
+  width: 100%;
+  max-width: 1920px;
+  padding-inline: 25px;
+  margin: 0 auto;
 
-  h3 {
+  .title {
     font-family: Montserrat, sans-serif;
     font-size: 20px;
     line-height: 24px;
   }
 }
 
-img {
+.langIcon,
+.burgerIcon,
+.personIcon {
   cursor: pointer;
 }
 
@@ -130,10 +137,10 @@ img {
   top: 12px;
   left: 50%;
   transform: translateX(-50%) scale(0.9);
-  width: 530px;
+  width: 315px;
   height: 48px;
   border-radius: 19px;
-  z-index: 3000;
+  z-index: 101;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -226,5 +233,5 @@ img {
 }
 
 .searchBarEndScrolled {
-  gap: 196px;
+  gap: 0px;
 }

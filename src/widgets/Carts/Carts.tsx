@@ -140,7 +140,7 @@ const Carts = () => {
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
                         <Link to="/cardPage">
-                        <img src={image} alt="image" />
+                          <img src={image} alt="image" />
                         </Link>
                       </SwiperSlide>
                     ))}
