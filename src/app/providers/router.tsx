@@ -24,8 +24,11 @@ export const myRouter = createBrowserRouter([
       },
       {
         path: "/cardPage",
-        element: <CardPage/>
-      }
+        element: <CardPage />,
+      },
+      {
+        path: "/create-service",
+      },
     ],
   },
 ]);

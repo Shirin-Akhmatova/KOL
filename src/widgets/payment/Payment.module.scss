@@ -1,25 +1,48 @@
 .Payment {
-  padding: 3rem;
-  background: rgb(210, 198, 198);
+  padding: 2rem 3rem;
+  background: rgb(25, 135, 138);
   border-radius: 2rem;
   width: 800px;
+  height: 900px;
   h1 {
     font-size: 3rem;
     color: #d5d5d5;
   }
   .content {
     margin-left: 4rem;
+    h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-block: 2rem 1rem;
+    }
     .card {
       display: flex;
-      align-items: flex-start;
-      flex-direction: column;
-      margin-top: 2rem;
-      gap: 0.5rem;
-      h4 {
-        font-size: 1rem;
+      align-items: center;
+      gap: 1rem;
+      width: 500px;
+      margin-bottom: 2rem;
+      padding: 1.1rem;
+      border: 1px solid black;
+      border-radius: 1rem;
+      .check {
+        width: 1rem;
+        height: 1rem;
       }
-      p {
-        font-size: 0.8rem;
+      .visa {
+        padding: 0.7rem 1.2rem 0.4rem 1.2rem;
+        border: 1px solid black;
+        border-radius: 0.7rem;
+      }
+      .cardInfo {
+        display: flex;
+        flex-direction: column;
+      }
+      .cardNumber {
+        font-weight: 500;
+      }
+      span {
+        font-size: 1rem;
+        font-weight: 400;
       }
       button {
         font-size: 1rem;

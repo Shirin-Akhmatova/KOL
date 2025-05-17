@@ -45,3 +45,12 @@
 .read-the-docs {
   color: #888;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+a {
+  color: black;
+}

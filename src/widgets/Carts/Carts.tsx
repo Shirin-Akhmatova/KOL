@@ -30,7 +30,7 @@ const Carts = () => {
         <div className={scss.content}>
           <div className={scss.blocks}>
             {blocks.map((block, index) => (
-              <div className={scss.block} key={index}>
+              <Link to="/cardPage" className={scss.block} key={index}>
                 <div className={scss.images}>
                   <Swiper
                     modules={[Navigation, Pagination]}
@@ -41,9 +41,7 @@ const Carts = () => {
                   >
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
-                        <Link to="/cardPage">
                         <img src={image} alt="image" />
-                        </Link>
                       </SwiperSlide>
                     ))}
                   </Swiper>
@@ -76,7 +74,7 @@ const Carts = () => {
                   {block.price.toLocaleString("ru-RU")}
                   сом <p>за {block.day} ночей</p>
                 </h4>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
