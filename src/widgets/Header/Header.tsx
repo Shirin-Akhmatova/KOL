@@ -9,7 +9,6 @@ import SearchIcon from "../../assets/icons/magnifyingglass 2.svg";
 import SearchModal from "../SearchModal/SearchModal";
 import UserProfileModal from "../UserProfileModel/UserProfileModal";
 import Register from "../RegisterModal/RegisterModal";
-=======
 // import Calendar from "../Calendar/Calendar";
 
 function Header() {
@@ -19,7 +18,6 @@ function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-=======
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -45,8 +43,6 @@ function Header() {
           {!scrolled ? (
             <h3 className={styles.title}>Живи у озера - дыши горами</h3>
           ) : null}
-          <a href="#"><img src={Logo} alt="Logo" /></a>
-          {!scrolled && <h3>Живи у озера - дыши горами</h3>}
 
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />

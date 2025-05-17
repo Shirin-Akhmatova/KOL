@@ -2,9 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../../widgets/Layout/Layout";
 import Home from "../../pages/Home/Home";
 import About from "../../pages/About/About";
-import CardPage from "../../pages/cardPage/CardPage";
 import LoginUserProfilePage from "../../widgets/LoginUserProfilePage/LoginUserProfilePage";
-=======
 import MapWithListings from "../../pages/MapWithListings/MapWithListings";
 import CardPage from "@/pages/cardPage/CardPage";
 
