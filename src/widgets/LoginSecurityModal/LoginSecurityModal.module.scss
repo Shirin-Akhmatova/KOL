@@ -1,0 +1,99 @@
+.overlay {
+  padding: 41px 40px 0 0;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  z-index: 100;
+}
+
+.modal {
+  background: white;
+  width: 823px;
+  height: 916px;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 35px;
+  overflow-y: auto;
+}
+
+.title {
+  padding: 33px 0 0 69px;
+  font-size: 48px;
+  font-weight: 600;
+  color: #d5d5d5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 40px 150px 0 150px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 15px;
+
+    input,
+    select {
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+  }
+}
+
+.inputWithCheck {
+  position: relative;
+
+  input {
+    width: 100%;
+    padding-right: 30px;
+  }
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+
+  label {
+    flex: -1;
+  }
+}
+
+.birthDate {
+  display: flex;
+  gap: 15px;
+
+  select {
+    flex: 1;
+  }
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.account_settings {
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+
+  .deactivate_account {
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .deactivate_btn {
+    color: #e53935;
+    cursor: pointer;
+  }
+}

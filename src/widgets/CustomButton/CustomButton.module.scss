@@ -2,8 +2,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 14px;
+  justify-content: space-between;
+  padding: 14px 16px;
   background-color: white;
   border: 1px solid #222222;
   border-radius: 8px;
@@ -14,20 +14,26 @@
   height: 48px;
   font-family: Montserrat;
   font-weight: 500;
+  gap: 8px;
 
   &:hover {
     background-color: #2222220d;
   }
 }
 
-.icon {
-  position: absolute;
-  left: 16px;
+.icon,
+.iconRight {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
 }
 
 .text {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   pointer-events: none;
+  z-index: 0;
 }
