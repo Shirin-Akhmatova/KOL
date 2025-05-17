@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.8.1",
     "axios": "^1.9.0",
+    "chart.js": "^4.4.9",
     "date-fns": "^4.1.0",
     "i18next": "^25.1.2",
     "libphonenumber-js": "^1.12.8",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/node": "^22.15.18",
     "@types/react": "^19.1.2",
     "@types/react-date-range": "^1.4.10",
     "@types/react-dom": "^19.1.2",

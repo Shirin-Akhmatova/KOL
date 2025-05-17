@@ -4,6 +4,9 @@ import Home from "../../pages/Home/Home";
 import About from "../../pages/About/About";
 import CardPage from "../../pages/cardPage/CardPage";
 import LoginUserProfilePage from "../../widgets/LoginUserProfilePage/LoginUserProfilePage";
+=======
+import MapWithListings from "../../pages/MapWithListings/MapWithListings";
+import CardPage from "@/pages/cardPage/CardPage";
 
 export const myRouter = createBrowserRouter([
   {
@@ -17,6 +20,10 @@ export const myRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/map",
+        element: <MapWithListings />,
       },
       {
         path: "/cardPage",

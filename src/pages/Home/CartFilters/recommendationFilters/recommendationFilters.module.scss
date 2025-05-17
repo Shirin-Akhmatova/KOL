@@ -1,0 +1,49 @@
+.recommendationFilter {
+  cursor: pointer;
+  max-width: 188px;
+  display: flex;
+  align-items: flex-start;
+  transition: 0.3s;
+  padding: 15px;
+  gap: 15px;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  &Active {
+    background: #f7f7f7;
+    border: 1px solid #000000;
+  }
+  &Icon {
+    align-self: start;
+    width: 28px;
+    height: 28px;
+  }
+  &Content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+  }
+  &Title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #1a1a1a;
+  }
+  &Description {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #7c7c7c;
+  }
+}
+.recommendationFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+}

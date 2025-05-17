@@ -1,0 +1,69 @@
+.modalFiltersBtn {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 17px;
+    padding: 1px;
+    background: linear-gradient(
+      270deg,
+      #00b2a940,
+      #ff6b3540,
+      #00cbc140,
+      #ff7a4a40
+    );
+    background-size: 600% 600%;
+    animation: colorCycle 7s ease infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+
+  cursor: pointer;
+  padding: 16px 17px;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #1a1a1a;
+  &Img {
+    width: 16px;
+    height: 16px;
+  }
+}
+.modalFiltersFooter {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  &BtnLine {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+  }
+  &Btn {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    padding: 15px 10px;
+    gap: 6px;
+    background: #000000;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+  }
+}
