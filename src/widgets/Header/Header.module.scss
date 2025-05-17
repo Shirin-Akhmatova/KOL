@@ -21,13 +21,21 @@
   max-width: 1920px;
   padding-inline: 25px;
   margin: 0 auto;
-  max-width: 1920px;
-  padding-inline: 25px;
 
   .title {
     font-family: Montserrat, sans-serif;
     font-size: 20px;
     line-height: 24px;
+    color: black;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .titleHidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
   }
 }
 

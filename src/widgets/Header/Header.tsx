@@ -19,6 +19,7 @@ function Header() {
   const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isTitleVisible, setIsTitleVisible] = useState(true);
 
   const handleOpenModal = () => setIsModalOpen(true);
   const toggleCalendar = () => setIsCalendarOpen(!isCalendarOpen);
@@ -26,6 +27,7 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+      setIsTitleVisible(window.scrollY < 50);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -34,15 +36,21 @@ function Header() {
 
   return (
     <>
-      <header className={`${styles.header} ${scrolled ? styles.withBackground : ""}`}>
+      <header
+        className={`${styles.header} ${scrolled ? styles.withBackground : ""}`}
+      >
         <div className={styles.container}>
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
 
-          {!scrolled ? (
-            <h3 className={styles.title}>Живи у озера - дыши горами</h3>
-          ) : null}
+          <h3
+            className={`${styles.title} ${
+              scrolled ? styles.titleScrolled : ""
+            } ${!isTitleVisible ? styles.titleHidden : ""}`}
+          >
+            Живи у озера - дыши горами
+          </h3>
 
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
@@ -63,7 +71,11 @@ function Header() {
           </div>
         </div>
 
-        <div className={`${styles.searchBar} ${scrolled ? styles.searchBarScrolled : ""}`}>
+        <div
+          className={`${styles.searchBar} ${
+            scrolled ? styles.searchBarScrolled : ""
+          }`}
+        >
           <button className={styles.searchItem}>
             {!scrolled && <span className={styles.label}>Где</span>}
             <span className={styles.placeholder}>
@@ -92,14 +104,24 @@ function Header() {
 
           <div className={styles.divider} />
 
-          <div className={`${styles.searchBarEnd} ${scrolled ? styles.searchBarEndScrolled : ""}`}>
-            <button type="button" className={styles.searchItem} onClick={handleOpenModal}>
+          <div
+            className={`${styles.searchBarEnd} ${
+              scrolled ? styles.searchBarEndScrolled : ""
+            }`}
+          >
+            <button
+              type="button"
+              className={styles.searchItem}
+              onClick={handleOpenModal}
+            >
               {!scrolled && <span className={styles.label}>Кто</span>}
               <span className={styles.placeholder}>Кто едет?</span>
             </button>
             <button
               type="button"
-              className={`${styles.searchButton} ${scrolled ? styles.searchButtonScrolled : ""}`}
+              className={`${styles.searchButton} ${
+                scrolled ? styles.searchButtonScrolled : ""
+              }`}
               onClick={handleOpenModal}
             >
               <img src={SearchIcon} alt="SearchIcon" />
