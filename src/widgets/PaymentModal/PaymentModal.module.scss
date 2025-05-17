@@ -1,0 +1,42 @@
+.overlay {
+  padding: 41px 40px 0 0;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  z-index: 100;
+}
+
+.modal {
+  background: white;
+  width: 823px;
+  height: 916px;
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 35px;
+  overflow-y: auto;
+}
+
+.title {
+  padding: 33px 0 0 69px;
+  font-size: 48px;
+  font-weight: 600;
+  color: #d5d5d5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 40px 150px 0 150px;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
