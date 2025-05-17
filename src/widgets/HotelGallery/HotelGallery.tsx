@@ -24,7 +24,7 @@ import './carousel.scss';
 
 const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
 
-export const HotelGallery = () => {
+const HotelGallery = () => {
   const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
 
@@ -192,3 +192,5 @@ export const HotelGallery = () => {
     </div>
   );
 };
+
+export default HotelGallery;

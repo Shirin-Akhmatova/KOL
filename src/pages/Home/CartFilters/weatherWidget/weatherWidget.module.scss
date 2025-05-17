@@ -1,7 +1,33 @@
 .weatherWidget {
   display: flex;
+  position: relative;
+  .weatherWidgetArrow {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 15px;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    width: 19px;
+    height: 19px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+    &Img {
+      &.close {
+        transform: rotate(180deg);
+      }
+      width: 8px;
+      height: 8px;
+    }
+  }
+
   .weatherWidgetList {
-    gap: 4px;
+    gap: 20px;
     display: flex;
     opacity: 0;
     transform: translateX(20px);
@@ -10,7 +36,7 @@
     transition: 0.5s;
     width: 0;
     &.active {
-      width: 250px;
+      width: 340px;
       opacity: 1;
       transform: translateX(0);
       .weatherWidget {
@@ -37,8 +63,8 @@
     color: #6c6c6c;
   }
   &Img {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
   }
 }
 .currentWeather {

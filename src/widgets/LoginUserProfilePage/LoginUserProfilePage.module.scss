@@ -1,0 +1,210 @@
+.loginUserProfilePage_container {
+  padding: 144px 0 187px 0;
+  background: #f2f2f2;
+  width: 100%;
+  max-width: 1920px;
+  padding-inline: 40px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.loginUserProfilePage_wrapper {
+  align-items: center;
+  width: 22%;
+  max-width: 497px;
+  height: 100%;
+  max-height: 916px;
+  justify-content: space-between;
+  display: flex;
+  padding-bottom: 108px;
+}
+
+.loginUserProfilePage_circleAvatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  font-size: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &:hover .cameraIconWrapper {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: all;
+  }
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loginUserProfilePage_info {
+  text-align: center;
+
+  h1 {
+    font-weight: 700;
+    font-size: 45px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+  }
+  p {
+    padding-top: 7px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+  }
+  h3 {
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #000;
+  }
+}
+
+.loginUserProfilePage_personalInfo {
+  gap: 40px;
+  max-width: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  h6 {
+    font-weight: 600;
+    font-size: 22px;
+    font-family: Montserrat;
+  }
+}
+
+.loginUserProfilePage_fixedInfo {
+  gap: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginUserProfilePage_settings {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  h6 {
+    font-weight: 600;
+    font-size: 22px;
+    font-family: Montserrat;
+    cursor: pointer;
+    position: relative;
+    width: fit-content;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0;
+      height: 2px;
+      background-color: black;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
+
+.loginUserProfilePage_divider {
+  border: 1px solid #e1e1e1;
+}
+
+.loginUserProfilePage_emailAndNumber {
+  display: flex;
+  gap: 12px;
+
+  p {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: Montserrat;
+  }
+}
+
+.previewOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  cursor: pointer;
+}
+
+.previewModal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  max-width: 40%;
+  max-height: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: default;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+    object-fit: contain;
+  }
+}
+
+.cameraIconWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  border-radius: 50px;
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2002;
+  opacity: 0;
+  pointer-events: none;
+
+  img {
+    width: 34px;
+    height: 21px;
+    display: block;
+  }
+}
+
+.avatarOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 25%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.loginUserProfilePage_circleAvatar:hover .avatarOverlay {
+  opacity: 1;
+  pointer-events: all;
+}

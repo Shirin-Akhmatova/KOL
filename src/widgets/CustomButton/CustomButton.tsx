@@ -10,6 +10,7 @@ interface CustomButtonProps {
   buttonColor?: string;
   textColor?: string;
   borderColor?: string;
+  iconRight?: React.ReactNode;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -21,8 +22,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   buttonColor,
   textColor,
   borderColor,
+  iconRight,
 }) => {
   const defaultStyle: React.CSSProperties = {
+    height: "52px",
     background: buttonColor,
     color: textColor || "#000",
     border: `1px solid ${borderColor || "#222222"}`,
@@ -30,14 +33,15 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   };
 
   return (
-    <div
+    <button
       className={`${styles.customButton} ${className || ""}`}
       style={defaultStyle}
+      onClick={onClick}
     >
       {icon && <span className={styles.icon}>{icon}</span>}
       <span className={styles.text}>{text}</span>
-      {onClick && <button onClick={onClick}></button>}
-    </div>
+      {iconRight && <span className={styles.iconRight}>{iconRight}</span>}
+    </button>
   );
 };
 

@@ -3,8 +3,6 @@ import { useState } from "react";
 import Carts from "../../widgets/Carts/Carts";
 import MapBtn from "@/shared/ui/buttons/selectBtn/MapBtn";
 import MapGeo from "@/widgets/Carts/MapGeo";
-import ObjectsModal from "@/widgets/ObjectsModal/ObjectsModal";
-// import CartFilters from "./CartFilters/CartFilters";
 function Home() {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -12,7 +10,6 @@ function Home() {
       {/* <CartFilters /> */}
       {isOpen ? <MapGeo /> : <Carts />}
       <MapBtn setIsOpen={setIsOpen} isOpen={isOpen} />
-      <ObjectsModal />
     </div>
   );
 }

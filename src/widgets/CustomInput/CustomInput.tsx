@@ -15,6 +15,7 @@ interface CustomInputProps {
   helperText?: string;
   errorText?: string;
   showCalendarIcon?: boolean;
+  iconRight?: React.ReactNode;
   CalendarComponent?: React.FC<{ onSelect: (date: string) => void }>;
   onDateChange?: (date: string) => void;
 }
@@ -32,12 +33,15 @@ const CustomInput: React.FC<CustomInputProps> = ({
   helperText,
   errorText,
   showCalendarIcon = false,
+  iconRight,
   CalendarComponent,
   onDateChange,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
-  const isFilled = value.length > 0;
+
   const showError = !!errorText;
+
+  // Убираем showLabel — не рендерим label над инпутом
 
   const toggleCalendar = () => setShowCalendar((prev) => !prev);
 
@@ -48,22 +52,19 @@ const CustomInput: React.FC<CustomInputProps> = ({
 
   return (
     <div className={`${styles.inputWrapper} ${className || ""}`}>
-      {label && (
-        <label className={`${styles.label} ${isFilled ? styles.floating : ""}`}>
-          {label}
-        </label>
-      )}
+      {/* Убираем вывод label над инпутом */}
 
       <div className={styles.inputContainer}>
         <input
           type={type || "text"}
           value={value}
           onChange={onChange}
-          className={`${styles.input} ${isFilled ? styles.filled : ""} ${
-            showError ? styles.errorInput : ""
-          }`}
-          placeholder={placeholder}
+          className={`${styles.input} ${
+            value.length > 0 ? styles.filled : ""
+          } ${showError ? styles.errorInput : ""}`}
+          placeholder={placeholder || label} // плейсхолдер по дефолту — label
           style={{
+            height: "52px",
             color: textColor,
             border: `1px solid ${showError ? "#d32f2f" : borderColor}`,
             ...style,
@@ -78,6 +79,17 @@ const CustomInput: React.FC<CustomInputProps> = ({
           >
             <img src={calendarIcon} alt="calendar" />
           </button>
+        )}
+
+        {iconRight && (
+          <div
+            className={styles.iconRight}
+            style={{
+              right: showCalendarIcon ? "40px" : "12px",
+            }}
+          >
+            {iconRight}
+          </div>
         )}
 
         {showCalendar && CalendarComponent && (

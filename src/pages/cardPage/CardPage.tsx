@@ -1,11 +1,12 @@
 import "./cardPage.scss";
-// import { HotelGallery } from '../../widgets/HotelGallery/HotelGallery'
+import HotelGallery from "../../widgets/HotelGallery/HotelGallery";
 import Feedbacks from "../../widgets/feedbacks/Feedbacks";
 import Map from "../../widgets/map/Map";
+
 function CardPage() {
   return (
     <div className="cardPage">
-      {/* <HotelGallery/> */}
+      <HotelGallery />
       <Feedbacks />
       <Map />
     </div>
