@@ -1,11 +1,12 @@
 import SelectBtn from "@/shared/ui/buttons/selectBtn/selectBtn";
 import styles from "./selectedFilters.module.scss";
-import globalStyles from "../cardFilters.module.scss";
+import globalStyles from "../../cardFilters.module.scss";
 import { useState } from "react";
+import useFilters from "@/shared/hooks/useFilters";
 
 interface ISelectedFiltersProps<T extends object> {
   data: T[];
-  filter: string;
+  filterName: string;
   title: string;
 }
 interface IFilter {
@@ -15,10 +16,11 @@ interface IFilter {
 
 function SelectedFilters<T extends object>({
   data,
-  filter,
+  filterName,
   title,
 }: ISelectedFiltersProps<T>) {
   const [selectedFilters, setSelectedFilters] = useState<IFilter[]>([]);
+  const { getFilter, setFilters } = useFilters();
 
   const dataTransform: IFilter[] = data.map((item) => {
     const titleKey = Object.keys(item).find((key) =>
@@ -32,31 +34,32 @@ function SelectedFilters<T extends object>({
       icon: item[iconKey as keyof typeof item] as string,
     };
   });
-  const isExistFilter = (item: IFilter) => {
-    return selectedFilters.some(
-      (filter) => filter.title === item.title && filter.icon === item.icon
-    );
+  const isExistFilter = (item: string, idx: number) => {
+    const filters = getFilter(`${filterName}_${idx}`) || [];
+    return filters.includes(item);
   };
-  const clickHandler = (item: IFilter) => {
-    const isExist = isExistFilter(item);
+  const clickHandler = (item: IFilter, idx: number) => {
+    const isExist = isExistFilter(item.title, idx);
     if (isExist) {
-      setSelectedFilters((prev) =>
-        prev.filter((filter) => JSON.stringify(filter) !== JSON.stringify(item))
-      );
+      setFilters({
+        [`${filterName}_${idx}`]: "",
+      });
     } else {
-      setSelectedFilters((prev) => [...prev, item]);
+      setFilters({
+        [`${filterName}_${idx}`]: item.title,
+      });
     }
   };
   return (
     <div className={styles.selectedFilters}>
       <h3 className={`${globalStyles.title} ${globalStyles.mb20}`}>{title}</h3>
       <div className={styles.selectedFiltersList}>
-        {dataTransform.map((item) => (
+        {dataTransform.map((item, idx) => (
           <SelectBtn
             key={item.title}
             icon={item.icon}
-            active={isExistFilter(item)}
-            onClick={() => clickHandler(item)}
+            active={isExistFilter(item.title, idx)}
+            onClick={() => clickHandler(item, idx)}
           >
             {item.title}
           </SelectBtn>

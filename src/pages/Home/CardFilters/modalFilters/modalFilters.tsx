@@ -4,8 +4,10 @@ import PopupWindow from "@/shared/ui/PopupWindow/popupWindow";
 import { useState } from "react";
 import styles from "./modalFilters.module.scss";
 import globalStyles from "../cardFilters.module.scss";
-import SelectedFilters from "../selectedFilters/selectedFilters";
-import RecommendationFilters from "../recommendationFilters/recommendationFilters";
+import SelectedFilters from "./selectedFilters/selectedFilters";
+import RecommendationFilters from "./recommendationFilters/recommendationFilters";
+import MapFilter from "./mapFilter/mapFilter";
+import useFilters from "@/shared/hooks/useFilters";
 
 const ModalFiltersBtn = ({
   modalFilters,
@@ -41,8 +43,10 @@ function ModalFiltersFooter({
 }: {
   setIsOpenModal: (isOpenModal: boolean) => void;
 }) {
+  const { clear } = useFilters();
+
   const clearFilters = () => {
-    setIsOpenModal(false);
+    clear();
   };
   const showAllFilters = () => {
     setIsOpenModal(false);
@@ -85,13 +89,13 @@ function ModalFilters({
       <div className={globalStyles.hr}></div>
       <SelectedFilters
         data={modalFilters.facilities}
-        filter="facilities"
+        filterName="facilities"
         title="Удобства"
       />
       <div className={globalStyles.hr}></div>
       <SelectedFilters
         data={modalFilters.booking}
-        filter="booking"
+        filterName="booking"
         title="Возможности бронирования"
       />
       <div className={globalStyles.hr}></div>
@@ -99,6 +103,8 @@ function ModalFilters({
         recommendation={modalFilters.recommendation}
         title="Отличное жилье"
       />
+      <div className={globalStyles.hr}></div>
+      <MapFilter title="Район" />
     </PopupWindow>
   );
 }
