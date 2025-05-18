@@ -5,9 +5,7 @@ import starIcon from "../../assets/icons/star.svg";
 import like from "../../assets/icons/like.png";
 import notLike from "../../assets/icons/without like.png";
 import { Link } from "react-router-dom";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import "swiper/swiper-bundle.css";
 
 import scss from "./Carts.module.scss";
 import { blocks } from "../mockData";

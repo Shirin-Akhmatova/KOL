@@ -1,4 +1,4 @@
-import type { IModalFilters, IRoomTypeFilter } from "./cartFilters.interface";
+import type { IModalFilters, IRoomTypeFilter } from "./cardFilters.interface";
 
 const roomTypeFilters: IRoomTypeFilter[] = [
   {

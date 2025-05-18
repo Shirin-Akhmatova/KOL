@@ -1,48 +1,50 @@
 import { useState, type ButtonHTMLAttributes } from "react";
-import type { IRecommendationFilter } from "../cartFilters.interface";
+import type { IRecommendationFilter } from "../../cardFilters.interface";
 import styles from "./recommendationFilters.module.scss";
-import globalStyles from "../cartFilters.module.scss";
+import globalStyles from "../../cardFilters.module.scss";
+import useFilters from "@/shared/hooks/useFilters";
+
 interface IRecommendationFiltersProps {
   recommendation: IRecommendationFilter[];
   title: string;
 }
 
+const filterName = "recommendation";
+
 function RecommendationFilters({
   recommendation,
   title,
 }: IRecommendationFiltersProps) {
-  const [activeRecommendation, setActiveRecommendation] = useState<
-    IRecommendationFilter[]
-  >([]);
-  const isExist = (recommendation: IRecommendationFilter) => {
-    return activeRecommendation.some(
-      (item) =>
-        item.recommendationTitle === recommendation.recommendationTitle &&
-        item.recommendationDescription ===
-          recommendation.recommendationDescription &&
-        item.icon === recommendation.icon
-    );
+  const { getFilter, setFilters } = useFilters();
+  const isExist = (recommendation: string, idx: number) => {
+    const filters = getFilter(`${filterName}_${idx}`) || [];
+    return filters.includes(recommendation);
   };
-  const clickHandler = (recommendation: IRecommendationFilter) => {
-    if (isExist(recommendation)) {
-      setActiveRecommendation(
-        activeRecommendation.filter(
-          (item) => JSON.stringify(item) !== JSON.stringify(recommendation)
-        )
-      );
+
+  const clickHandler = (recommendation: IRecommendationFilter, idx: number) => {
+
+    if (isExist(recommendation.recommendationTitle, idx)) {
+      console.log(`${filterName}_${idx}, уже существует`);
+
+      setFilters({
+        [`${filterName}_${idx}`]: "",
+      });
     } else {
-      setActiveRecommendation([...activeRecommendation, recommendation]);
+      setFilters({
+        [`${filterName}_${idx}`]: recommendation.recommendationTitle,
+      });
     }
   };
   return (
     <div>
       <h3 className={`${globalStyles.title} ${globalStyles.mb20}`}>{title}</h3>
       <div className={styles.recommendationFilters}>
-        {recommendation.map((item) => (
+        {recommendation.map((item, index) => (
           <RecommendationBtn
+            key={item.recommendationTitle}
             recommendation={item}
-            isActive={isExist(item)}
-            onClick={() => clickHandler(item)}
+            isActive={isExist(item.recommendationTitle, index)}
+            onClick={() => clickHandler(item, index)}
           />
         ))}
       </div>

@@ -1,8 +1,9 @@
 import Chart from "chart.js/auto";
 import { useEffect, useRef, useState, type InputHTMLAttributes } from "react";
 import styles from "./PriceFilterChart.module.scss";
-import globalStyles from "../../cartFilters.module.scss";
-import type { IPrice } from "../../cartFilters.interface";
+import globalStyles from "../../cardFilters.module.scss";
+import type { IPrice } from "../../cardFilters.interface";
+import useFilters from "@/shared/hooks/useFilters";
 
 type Props = {
   title?: string;
@@ -13,6 +14,9 @@ type Props = {
   priceMax: number;
   onChange?: (range: { min: number; max: number }) => void;
 };
+
+const filterNameMin = "priceMin";
+const filterNameMax = "priceMax";
 
 export default function PriceFilterChart({
   data,
@@ -26,9 +30,13 @@ export default function PriceFilterChart({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<Chart | null>(null);
-
-  const [selectedMin, setSelectedMin] = useState<number>(priceMin);
-  const [selectedMax, setSelectedMax] = useState<number>(priceMax);
+  const { getFilter, setFilter } = useFilters();
+  const [selectedMin, setSelectedMin] = useState<number>(
+    Number(getFilter(filterNameMin)) || priceMin
+  );
+  const [selectedMax, setSelectedMax] = useState<number>(
+    Number(getFilter(filterNameMax)) || priceMax
+  );
 
   // Преобразуем данные в частотную гистограмму
 
@@ -103,8 +111,12 @@ export default function PriceFilterChart({
             Math.abs(clickedPrice - selectedMax)
           ) {
             setSelectedMax(clickedPrice);
+            setFilter(filterNameMax, String(clickedPrice));
+            console.log("изменилось максимум");
           } else {
             setSelectedMin(clickedPrice);
+            setFilter(filterNameMin, String(clickedPrice));
+            console.log("изменилось минимум");
           }
 
           if (onChange) {

@@ -1,6 +1,6 @@
 import { useState, type HTMLAttributes, type MouseEvent } from "react";
 import styles from "./filterByType.module.scss";
-import type { IRoomTypeFilter } from "../cartFilters.interface";
+import type { IRoomTypeFilter } from "../cardFilters.interface";
 
 interface RoomTypeFilterProp
   extends IRoomTypeFilter,
