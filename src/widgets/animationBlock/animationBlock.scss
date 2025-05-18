@@ -1,0 +1,136 @@
+  * {
+    box-sizing: border-box;
+  }
+
+  .animation-block {
+    display: flex;
+    flex-direction: column;
+
+    .section-title {
+      color: rgb(0, 0, 0);
+      font-family: Montserrat;
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 60px;
+      letter-spacing: 0.25px;
+      text-align: left;
+      margin-bottom: 24px;
+    }
+
+    .card-list-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 1166.89px;
+      height: 241px;
+      margin: 0 auto;
+    }
+
+    .card-list {
+      display: flex;
+      gap: 44px;
+      width: max-content;
+      will-change: transform;
+      user-select: none;
+      pointer-events: none; // отключим взаимодействие, чтобы hover на зонах не мешал
+      
+    }
+
+    .card {
+      width: 198.39px;
+      height: 240.97px;
+      position: relative;
+      flex-shrink: 0;
+      border-radius: 14.52px 14.52px 11.61px 11.61px;
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      pointer-events: auto; // разрешим hover для карточек
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+        cursor: pointer;
+      }
+
+      .image-placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 180px;
+        background: rgb(176, 176, 176);
+        border-radius: 14.52px 14.52px 0 0;
+      }
+
+      .card-info {
+        position: absolute;
+        bottom: 11.56px;
+        width: 100%;
+        left: 7.74px;
+        background: white;
+        border-radius: 0 0 14.52px 14.52px;
+
+        .title {
+          color: #222222;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+          text-align: left;
+          margin-bottom: 4px;
+        }
+
+        .subtitle {
+          display: flex;
+          gap: 4px;
+          align-items: center;
+
+          .price {
+            color: #222222;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 16px;
+            text-align: left;
+          }
+
+          .dot {
+            width: 1.94px;
+            height: 1.94px;
+            background: rgb(94, 94, 94);
+            border-radius: 50%;
+            display: inline-block;
+          }
+
+          .date {
+            color: #5e5e5e;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
+            text-align: left;
+          }
+        }
+      }
+    }
+
+    .hover-zone {
+      position: absolute;
+      top: 0;
+      width: 20%;
+      height: 100%;
+      z-index: 5;
+
+      &.left {
+        left: 0;
+        cursor: w-resize;
+      }
+
+      &.right {
+        right: 0;
+        cursor: e-resize;
+      }
+    }
+  }
