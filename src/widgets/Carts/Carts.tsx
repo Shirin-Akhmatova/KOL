@@ -28,7 +28,7 @@ const Carts = () => {
         <div className={scss.content}>
           <div className={scss.blocks}>
             {blocks.map((block, index) => (
-              <Link to="/cardPage" className={scss.block} key={index}>
+              <div className={scss.block} key={index}>
                 <div className={scss.images}>
                   <Swiper
                     modules={[Navigation, Pagination]}
@@ -39,7 +39,9 @@ const Carts = () => {
                   >
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
-                        <img src={image} alt="image" />
+                        <Link to="/cardPage">
+                          <img src={image} alt="image" />
+                        </Link>
                       </SwiperSlide>
                     ))}
                   </Swiper>
@@ -59,20 +61,22 @@ const Carts = () => {
                     />
                   )}
                 </div>
-                <div className={scss.info}>
-                  <h4>{block.title}</h4>
-                  <span>
-                    <img src={starIcon} alt="" />
-                    {block.rating}
-                  </span>
-                </div>
-                <p>{block.place}</p>
-                <p>{block.data}</p>
-                <h4 className={scss.price}>
-                  {block.price.toLocaleString("ru-RU")}
-                  сом <p>за {block.day} ночей</p>
-                </h4>
-              </Link>
+                <Link to="/cardPage">
+                  <div className={scss.info}>
+                    <h4>{block.title}</h4>
+                    <span>
+                      <img src={starIcon} alt="" />
+                      {block.rating}
+                    </span>
+                  </div>
+                  <p>{block.place}</p>
+                  <p>{block.data}</p>
+                  <h4 className={scss.price}>
+                    {block.price.toLocaleString("ru-RU")}
+                    сом <p>за {block.day} ночей</p>
+                  </h4>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

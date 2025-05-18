@@ -7,6 +7,7 @@
 }
 
 .container {
+  margin: 0 auto;
   max-width: 1920px;
   padding-inline: 25px;
 }
@@ -54,4 +55,3 @@
 a {
   color: black;
 }
-
