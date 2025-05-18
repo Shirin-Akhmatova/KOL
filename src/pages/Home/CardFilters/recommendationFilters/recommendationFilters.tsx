@@ -1,7 +1,7 @@
 import { useState, type ButtonHTMLAttributes } from "react";
-import type { IRecommendationFilter } from "../cartFilters.interface";
+import type { IRecommendationFilter } from "../cardFilters.interface";
 import styles from "./recommendationFilters.module.scss";
-import globalStyles from "../cartFilters.module.scss";
+import globalStyles from "../cardFilters.module.scss";
 interface IRecommendationFiltersProps {
   recommendation: IRecommendationFilter[];
   title: string;

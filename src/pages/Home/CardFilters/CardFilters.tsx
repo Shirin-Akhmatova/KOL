@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import FilterByType from "./filterByType/filterByType";
 import WeatherWidget from "./weatherWidget/weatherWidget";
-import { modalFilters } from "./cartFilters.data";
-import type { IModalFilters } from "./cartFilters.interface";
+import { modalFilters } from "./cardFilters.data";
+import type { IModalFilters } from "./cardFilters.interface";
 import { getWeather } from "./weatherWidget/weatherWidget.data";
 import type { IWeatherWidget } from "./weatherWidget/weatherWidget.interface";
-import styles from "./cartFilters.module.scss";
+import styles from "./cardFilters.module.scss";
 import ModalFiltersBtn from "./modalFilters/modalFilters";
 
 function CartFilters() {

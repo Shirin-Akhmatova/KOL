@@ -1,9 +1,9 @@
 import PriceFilterChart from "./priceFilterChart/priceFilterChart";
-import type { IModalFilters } from "../cartFilters.interface";
+import type { IModalFilters } from "../cardFilters.interface";
 import PopupWindow from "@/shared/ui/PopupWindow/popupWindow";
 import { useState } from "react";
 import styles from "./modalFilters.module.scss";
-import globalStyles from "../cartFilters.module.scss";
+import globalStyles from "../cardFilters.module.scss";
 import SelectedFilters from "../selectedFilters/selectedFilters";
 import RecommendationFilters from "../recommendationFilters/recommendationFilters";
 

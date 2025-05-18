@@ -1,8 +1,8 @@
 import Chart from "chart.js/auto";
 import { useEffect, useRef, useState, type InputHTMLAttributes } from "react";
 import styles from "./PriceFilterChart.module.scss";
-import globalStyles from "../../cartFilters.module.scss";
-import type { IPrice } from "../../cartFilters.interface";
+import globalStyles from "../../cardFilters.module.scss";
+import type { IPrice } from "../../cardFilters.interface";
 
 type Props = {
   title?: string;

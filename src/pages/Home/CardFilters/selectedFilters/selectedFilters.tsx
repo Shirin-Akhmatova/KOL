@@ -1,6 +1,6 @@
 import SelectBtn from "@/shared/ui/buttons/selectBtn/selectBtn";
 import styles from "./selectedFilters.module.scss";
-import globalStyles from "../cartFilters.module.scss";
+import globalStyles from "../cardFilters.module.scss";
 import { useState } from "react";
 
 interface ISelectedFiltersProps<T extends object> {
