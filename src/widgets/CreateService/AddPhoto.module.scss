@@ -1,0 +1,65 @@
+.AddPhoto {
+  .photoGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .smallGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .photoBox {
+    background-color: #eee;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.large {
+      width: 100%;
+      aspect-ratio: 4 / 2;
+    }
+
+    &.small {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+    }
+
+    .previewImage {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    span {
+      font-size: 24px;
+      color: #999;
+    }
+
+    .removeButton {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: rgba(0, 0, 0, 0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
