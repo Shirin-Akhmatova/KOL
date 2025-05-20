@@ -22,6 +22,7 @@ import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import './hotelGallerry.scss';
 import './carousel.scss';
 import AnimationBlock from '../animationBlock/AnimationBlock';
+import Toggle from '@/shared/ui/toggle/Toggle';
 
 const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
 
@@ -192,6 +193,7 @@ const HotelGallery = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
