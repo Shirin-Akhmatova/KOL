@@ -1,136 +1,167 @@
-  * {
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
+}
+
+.animation-block {
+  display: flex;
+  flex-direction: column;
+
+  .section-title {
+    color: rgb(0, 0, 0);
+    font-family: Montserrat;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 60px;
+    letter-spacing: 0.25px;
+    text-align: left;
+    margin-bottom: 24px;
   }
 
-  .animation-block {
-    display: flex;
-    flex-direction: column;
+  .card-list-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 1166.89px;
+    height: 241px;
+    margin: 0 auto;
+    padding: 0 70px;
 
-    .section-title {
-      color: rgb(0, 0, 0);
-      font-family: Montserrat;
-      font-size: 40px;
-      font-weight: 700;
-      line-height: 60px;
-      letter-spacing: 0.25px;
-      text-align: left;
-      margin-bottom: 24px;
-    }
-
-    .card-list-wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 1166.89px;
-      height: 241px;
-      margin: 0 auto;
-    }
-
-    .card-list {
-      display: flex;
-      gap: 44px;
-      width: max-content;
-      will-change: transform;
-      user-select: none;
-      pointer-events: none; // отключим взаимодействие, чтобы hover на зонах не мешал
-      
-    }
-
-    .card {
-      width: 198.39px;
-      height: 240.97px;
-      position: relative;
-      flex-shrink: 0;
-      border-radius: 14.52px 14.52px 11.61px 11.61px;
-      background: white;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      pointer-events: auto; // разрешим hover для карточек
-
-      &:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-        z-index: 10;
-        cursor: pointer;
-      }
-
-      .image-placeholder {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 180px;
-        background: rgb(176, 176, 176);
-        border-radius: 14.52px 14.52px 0 0;
-      }
-
-      .card-info {
-        position: absolute;
-        bottom: 11.56px;
-        width: 100%;
-        left: 7.74px;
-        background: white;
-        border-radius: 0 0 14.52px 14.52px;
-
-        .title {
-          color: #222222;
-          font-family: 'Montserrat', sans-serif;
-          font-size: 16px;
-          font-weight: 600;
-          line-height: 20px;
-          text-align: left;
-          margin-bottom: 4px;
-        }
-
-        .subtitle {
-          display: flex;
-          gap: 4px;
-          align-items: center;
-
-          .price {
-            color: #222222;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            font-weight: 400;
-            line-height: 16px;
-            text-align: left;
-          }
-
-          .dot {
-            width: 1.94px;
-            height: 1.94px;
-            background: rgb(94, 94, 94);
-            border-radius: 50%;
-            display: inline-block;
-          }
-
-          .date {
-            color: #5e5e5e;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 14px;
-            text-align: left;
-          }
-        }
-      }
-    }
-
-    .hover-zone {
+    // Анимированные боковые свечения
+    &::before,
+    &::after {
+      content: '';
       position: absolute;
       top: 0;
-      width: 20%;
+      width: 80px;
       height: 100%;
-      z-index: 5;
+      z-index: 6;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
 
-      &.left {
-        left: 0;
-        cursor: w-resize;
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+    }
+
+    &.dragging::before,
+    &.dragging::after {
+      opacity: 0;
+    }
+  }
+
+  .card-list {
+    display: flex;
+    gap: 44px;
+    width: max-content;
+    will-change: transform;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .card {
+    width: 198.39px;
+    height: 240.97px;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 14.52px 14.52px 11.61px 11.61px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+    pointer-events: auto;
+    transform-style: preserve-3d;
+
+    &:hover {
+      transform: scale(1.06) rotateX(1deg) rotateY(1deg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border: 1.5px solid rgba(255, 168, 0, 0.4);
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .image-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #e0e0e0, #cacaca);
+      border-radius: 14.52px 14.52px 0 0;
+    }
+
+    .card-info {
+      position: absolute;
+      bottom: 11.56px;
+      width: 100%;
+      left: 7.74px;
+      background: white;
+      border-radius: 0 0 14.52px 14.52px;
+      padding-right: 7px;
+
+      .title {
+        color: #222222;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: left;
+        margin-bottom: 4px;
       }
 
-      &.right {
-        right: 0;
-        cursor: e-resize;
+      .subtitle {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+
+        .price {
+          color: #222222;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 16px;
+          text-align: left;
+        }
+
+        .dot {
+          width: 1.94px;
+          height: 1.94px;
+          background: rgb(94, 94, 94);
+          border-radius: 50%;
+          display: inline-block;
+        }
+
+        .date {
+          color: #5e5e5e;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 14px;
+          text-align: left;
+        }
       }
     }
   }
+
+  .hover-zone {
+    position: absolute;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    z-index: 7;
+
+    &.left {
+      left: 0;
+      cursor: w-resize;
+    }
+
+    &.right {
+      right: 0;
+      cursor: e-resize;
+    }
+  }
+}

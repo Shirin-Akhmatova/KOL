@@ -8,13 +8,14 @@
 }
 
 .title {
-  color: #1a1a1a;
-  font-family: Roboto, sans-serif;
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 42px;
-  text-align: left;
-  margin-bottom: 30px;
+/* H3 */
+color: rgb(26, 26, 26);
+font-family: Montserrat;
+font-size: 40px;
+font-weight: 700;
+line-height: 60px;
+letter-spacing: 0.25px;
+text-align: left;
 }
 
 .grid {
@@ -72,32 +73,36 @@ flex-direction: column;
 gap: 18px;
 
   h1 {
-    color: rgb(26, 26, 26);
-    font-family: Roboto;
-    font-size: 36px;
-    font-weight: 500;
-    line-height: 42px;
-    text-align: left;
+   /* H3 */
+color: rgb(26, 26, 26);
+font-family: Montserrat;
+font-size: 40px;
+font-weight: 700;
+line-height: 60px;
+letter-spacing: 0.25px;
+text-align: left;
   }
 
   p {
-    color: rgb(102, 102, 102);
-    font-family: AirbnbCereal_W_Bk;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 31px;
-    text-align: left;
+  /* B2 */
+color: rgb(102, 102, 102);
+font-family: Montserrat;
+font-size: 16px;
+font-weight: 400;
+line-height: 28px;
+letter-spacing: 0.5px;
+text-align: left;
   }
 
   h5 {
-    color: rgb(26, 26, 26);
-    font-family: AirbnbCereal_W_Bk;
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 134.48%;
-    text-align: left;
-    width: 714px;
-height: 192px;
+    /* B1 */
+color: rgb(26, 26, 26);
+font-family: Montserrat;
+font-size: 18px;
+font-weight: 400;
+line-height: 32px;
+letter-spacing: 0.5px;
+text-align: left;
 
   }
 }
@@ -130,22 +135,20 @@ img{
 height: 57px;
 }
       h3 {
-        font-size: 20px;
-        font-weight: bold;
-        color: rgb(26, 26, 26);
-font-family: Roboto;
+     color: rgb(26, 26, 26);
+font-family: Montserrat;
 font-size: 22px;
 font-weight: 500;
 line-height: 107.71%;
 letter-spacing: 0%;
-text-align: left;
+text-align: center;
 
       }
     }
 
     h2 {
       color: rgb(26, 26, 26);
-      font-family: Roboto;
+      font-family:Montserrat;
       font-size: 22px;
       font-weight: 500;
       line-height: 124%;
