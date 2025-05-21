@@ -37,6 +37,7 @@ export default function PersonalInfoModal({ isOpen, onClose }: Props) {
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              style={{ height: "44px" }}
             />
           </label>
 
@@ -47,6 +48,7 @@ export default function PersonalInfoModal({ isOpen, onClose }: Props) {
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              style={{ height: "44px" }}
             />
           </label>
 
@@ -58,6 +60,7 @@ export default function PersonalInfoModal({ isOpen, onClose }: Props) {
               value={formattedPhone}
               onChange={(e) => setPhone(e.target.value)}
               iconRight={<img src={checkIcon} alt="checkIcon" />}
+              style={{ height: "44px" }}
             />
           </label>
 
@@ -69,6 +72,7 @@ export default function PersonalInfoModal({ isOpen, onClose }: Props) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               iconRight={<img src={checkIcon} alt="checkIcon" />}
+              style={{ height: "44px" }}
             />
           </label>
 

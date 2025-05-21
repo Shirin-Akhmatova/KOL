@@ -32,6 +32,7 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
               type="text"
               value={login}
               onChange={(e) => setLogin(e.target.value)}
+              style={{ height: "42px" }}
             />
           </label>
 
@@ -43,23 +44,30 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               iconRight={<img src={eyeIcon} />}
+              style={{ height: "42px" }}
             />
           </label>
 
-          <label style={{ marginTop: "90px" }}>
+          <label style={{ marginTop: "42px" }}>
             Social networks
             <div className={styles.socials}>
               <CustomButton
                 text="Google"
                 icon={<img src={googleIcon} />}
                 iconRight={<img src={checkIcon} />}
+                style={{ height: "40px" }}
               />
               <CustomButton
                 text="Apple"
                 icon={<img src={appleIcon} />}
                 iconRight={<img src={checkIcon} />}
+                style={{ height: "40px" }}
               />
-              <CustomButton text="eMail" icon={<img src={emailIcon} />} />
+              <CustomButton
+                text="eMail"
+                icon={<img src={emailIcon} />}
+                style={{ height: "40px" }}
+              />
             </div>
           </label>
 

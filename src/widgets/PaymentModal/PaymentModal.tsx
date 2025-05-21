@@ -23,7 +23,7 @@ const Payment = ({ isOpen, onClose }: Props) => {
             style={{
               border: "none",
               width: "304px",
-              height: "48px",
+              height: "40px",
               marginBottom: "61px",
             }}
           />
@@ -33,7 +33,7 @@ const Payment = ({ isOpen, onClose }: Props) => {
             text="Add payment methods"
             buttonColor="linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
             textColor="#fff"
-            style={{ border: "none", width: "378px", height: "48px" }}
+            style={{ border: "none", width: "378px", height: "40px" }}
           />
         </div>
       </div>

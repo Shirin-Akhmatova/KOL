@@ -7,6 +7,7 @@ import PersonalInfoModal from "../PersonalInfoModal/PersonalInfoModal";
 import LoginSecurityModal from "../LoginSecurityModal/LoginSecurityModal";
 import NotificationsModal from "../NotificationsModal/NotificationsModal";
 import Payment from "../PaymentModal/PaymentModal";
+import ObjectsModal from "../ObjectsModal/ObjectsModal";
 
 function LoginUserProfilePage() {
   const [image, setImage] = useState<string | null>(null);
@@ -18,6 +19,7 @@ function LoginUserProfilePage() {
   const [isNotificationsModalOpen, setIsNotificationsModalOpen] =
     useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
+  const [isObjectsModalOpen, setIsObjectsModalOpen] = useState(false);
 
   const handleAvatarClick = () => {
     if (image) {
@@ -102,7 +104,12 @@ function LoginUserProfilePage() {
           >
             Payment methods
           </h6>
-          <h6>Object’s list</h6>
+          <h6
+            onClick={() => setIsObjectsModalOpen(true)}
+            style={{ cursor: "pointer" }}
+          >
+            Object’s list
+          </h6>
         </div>
       </div>
 
@@ -152,6 +159,12 @@ function LoginUserProfilePage() {
       <Payment
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
+      />
+
+      {/* Objects Modal */}
+      <ObjectsModal
+        isOpen={isObjectsModalOpen}
+        onClose={() => setIsObjectsModalOpen(false)}
       />
     </div>
   );
