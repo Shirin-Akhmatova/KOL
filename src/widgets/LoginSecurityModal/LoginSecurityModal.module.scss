@@ -10,15 +10,15 @@
 
 .modal {
   background: white;
-  width: 823px;
-  height: 916px;
+  width: 813px;
+  height: 786px;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 35px;
   overflow-y: auto;
 }
 
 .title {
-  padding: 33px 0 0 69px;
+  padding: 28px 0 0 58px;
   font-size: 48px;
   font-weight: 600;
   color: #d5d5d5;
@@ -27,7 +27,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 22px;
   padding: 40px 150px 0 150px;
 
   label {
@@ -77,11 +77,11 @@
 .socials {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 18px;
 }
 
 .account_settings {
-  padding-top: 90px;
+  padding-top: 42px;
   display: flex;
   flex-direction: column;
   font-weight: 500;

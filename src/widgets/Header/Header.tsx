@@ -7,7 +7,7 @@ import Person from "../../assets/icons/person.svg";
 import BurgerMenu from "../../assets/icons/Burger.svg";
 import SearchIcon from "../../assets/icons/magnifyingglass 2.svg";
 import SearchModal from "../SearchModal/SearchModal";
-import UserProfileModal from "../UserProfileModel/UserProfileModal";
+import UserProfileModal from "../UserProfileModal/UserProfileModal";
 import Register from "../RegisterModal/RegisterModal";
 import Calendar from "../Calendar/Calendar";
 
