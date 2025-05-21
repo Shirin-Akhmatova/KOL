@@ -1,0 +1,38 @@
+// color styles light theme
+
+$color-primary: #00B2A9;
+$color-accent: #35ff5a;
+$color-text-primary: #1A1A1A;
+$color-text-secondary: #666666;
+$color-background: #F9F9F9;
+$color-surface: #FFFFFF;
+$color-danger: #E53935;
+$color-success: #43A047;
+$color-map-button-gradient: linear-gradient(to right, #FF6B35, #FF875C, #FF6B35);
+$color-footer-background: #E1E1E1;
+
+:root {
+    --color-primary: #{$color-primary};
+    --color-accent: #{$color-accent};
+    --color-text-primary: #{$color-text-primary};
+    --color-text_secondary: #{$color-text-secondary};
+    --color-background: #{$color-background};
+    --color-surface: #{$color-surface};
+    --color-danger: #{$color-danger};
+    --color-success: #{$color-success};
+    --color-map-button-gradient: #{$color-map-button-gradient};
+    --color-footer-background: #{$color-footer-background};
+}
+
+// color styles darkt theme
+
+// $color-primary-dark: #00B2A9;
+// $color-accent-dark: #FF6B35;
+// $color-text-primary-dark: #1A1A1A;
+// $color-text_secondary-dark: #666666;
+// $color-background-dark: #F9F9F9;
+// $color-surface-dark: #FFFFFF;
+// $color-danger-dark: #E53935;
+// $color-success-dark: #43A047;
+// $color-map-button-gradient-dark: linear-gradient(to right, #FF6B35, #FF875C, #FF6B35);
+// $color-footer-background-dark: #E1E1E1;
