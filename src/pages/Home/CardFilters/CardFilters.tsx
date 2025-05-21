@@ -21,10 +21,12 @@ function CartFilters() {
   if (!modalFiltersState || !weathers) return null;
   const { roomTypeFilters, ...rest } = modalFiltersState;
   return (
-    <div className={styles.cartFilters}>
-      <FilterByType filters={roomTypeFilters} />
-      <WeatherWidget weathers={weathers} />
-      <ModalFiltersBtn modalFilters={rest} />
+    <div className={styles.cardFiltersHr}>
+      <div className={`container ${styles.cardFilters}`}>
+        <FilterByType filters={roomTypeFilters} />
+        <WeatherWidget weathers={weathers} />
+        <ModalFiltersBtn modalFilters={rest} />
+      </div>
     </div>
   );
 }

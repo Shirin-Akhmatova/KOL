@@ -41,6 +41,12 @@ export default function PriceFilterChart({
   // Преобразуем данные в частотную гистограмму
 
   useEffect(() => {
+    setFilter(filterNameMax, String(selectedMax));
+  }, [selectedMax]);
+  useEffect(() => {
+    setFilter(filterNameMin, String(selectedMin));
+  }, [selectedMin]);
+  useEffect(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -111,11 +117,9 @@ export default function PriceFilterChart({
             Math.abs(clickedPrice - selectedMax)
           ) {
             setSelectedMax(clickedPrice);
-            setFilter(filterNameMax, String(clickedPrice));
             console.log("изменилось максимум");
           } else {
             setSelectedMin(clickedPrice);
-            setFilter(filterNameMin, String(clickedPrice));
             console.log("изменилось минимум");
           }
 
