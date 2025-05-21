@@ -11,7 +11,9 @@ const getWeather = async (): Promise<IWeatherWidget[]> => {
   const days: IWeatherWidget[] = data.forecast.forecastday.map((day: any) => {
     const dateObj = new Date(day.date);
     const weekday = dateObj.toLocaleDateString("ru-RU", { weekday: "short" });
-
+    const isDay = data.current.is_day === 1 ? "day" : "night";
+    const match = day.day.condition.icon.match(/(\d+)\.png$/);
+    const iconId = match ? Number(match[1]) : null;
     return {
       date: day.date,
       weekday: weekday,
@@ -20,8 +22,10 @@ const getWeather = async (): Promise<IWeatherWidget[]> => {
         max: day.day.maxtemp_c,
       },
       icon: `https:${day.day.condition.icon}`,
+      iconId,
       condition: day.day.condition.text,
-      city: data.location.name 
+      city: data.location.name,
+      timeOfDay: isDay,
     };
   });
   return days;

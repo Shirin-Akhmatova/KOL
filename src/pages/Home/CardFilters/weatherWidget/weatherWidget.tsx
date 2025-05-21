@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { IWeatherWidget } from "./weatherWidget.interface";
 import styles from "./weatherWidget.module.scss";
+import { getCustomIconByIdAndDayTime } from "./utils";
 
 function WeatherWidget({ weathers }: { weathers: IWeatherWidget[] }) {
   const [showWeather, setShowWeather] = useState<boolean>(false);
@@ -41,11 +42,16 @@ function WeatherWidget({ weathers }: { weathers: IWeatherWidget[] }) {
 }
 
 function WeatherItem({ weather }: { weather: IWeatherWidget }) {
-  const { weekday, icon, condition, temp } = weather;
+  const { weekday, icon, condition, temp, iconId, timeOfDay } = weather;
+  const customIcon = getCustomIconByIdAndDayTime(iconId, timeOfDay);
   return (
     <div className={styles.weatherItem}>
       <span className={styles.weatherItemSpan}>{weekday}</span>
-      <img className={styles.weatherItemImg} src={icon} alt={condition} />
+      <img
+        className={styles.weatherItemImg}
+        src={customIcon || icon}
+        alt={condition}
+      />
       <span className={styles.weatherItemSpan}>
         {Math.round(temp.max)}&#176;
       </span>
@@ -54,10 +60,16 @@ function WeatherItem({ weather }: { weather: IWeatherWidget }) {
 }
 
 function CurrentWeather({ weather }: { weather: IWeatherWidget }) {
-  const { icon, condition, temp, city } = weather;
+  const { icon, condition, temp, city, iconId, timeOfDay } = weather;
+  const customIcon = getCustomIconByIdAndDayTime(iconId, timeOfDay);
+
   return (
     <div className={styles.currentWeather}>
-      <img className={styles.currentWeatherImg} src={icon} alt={condition} />
+      <img
+        className={styles.currentWeatherImg}
+        src={customIcon || icon}
+        alt={condition}
+      />
       <div className={styles.currentWeatherInfo}>
         <span className={styles.currentWeatherInfoCity}>{city}</span>
         <span className={styles.currentWeatherInfoTemp}>
