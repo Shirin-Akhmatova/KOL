@@ -1,0 +1,130 @@
+.socialLable {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #000000;
+  cursor: pointer;
+  &Img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.footerColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  &Title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.15px;
+    color: #1a1a1a;
+  }
+  &Items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #1a1a1a;
+    .footerColumnItem {
+      &Link {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+  }
+}
+
+.footer {
+  background: #e1e1e1;
+  &Top {
+    padding: 74px 0 68px;
+    display: flex;
+    align-items: center;
+    &Left {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      &Img {
+        width: 200px;
+        height: 80px;
+      }
+      &Text {
+        max-width: 262px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: #000000;
+      }
+    }
+    &Right {
+      width: 60%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &BottomHr {
+    border-top: 1px solid #b7b7b7;
+  }
+  &Bottom {
+    height: 66px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 47px;
+    .companyTerms {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      color: #000000;
+      & > li {
+        &:not(:first-child) {
+          position: relative;
+          &::before {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            content: "";
+            width: 3px;
+            height: 3px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            left: -7px;
+          }
+        }
+      }
+    }
+    .companySocials {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .companyLogo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 65px;
+      height: 45px;
+    }
+  }
+}
