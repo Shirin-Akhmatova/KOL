@@ -19,7 +19,7 @@
   &Container {
     position: relative;
     padding: 15px 16px;
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--color-footer-background);
     border-radius: 30px;
   }
   &Currency {
@@ -28,7 +28,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #000000;
+    color: var(--color-text-primary);
     width: 50px;
     display: flex;
     align-items: center;
@@ -44,10 +44,10 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #000000;
+    color: var(--color-text-primary);
   }
   &Label {
-    color: #7b7b7b;
+    color: var(--color-text_secondary);
     font-style: normal;
     font-weight: 600;
     font-size: 12px;

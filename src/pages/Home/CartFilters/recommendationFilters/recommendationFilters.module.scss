@@ -6,15 +6,15 @@
   transition: 0.3s;
   padding: 15px;
   gap: 15px;
-  background: #ffffff;
-  border: 1px solid #dddddd;
+  background: var(--color-surface);
+  border: 1px solid var(--color-footer-background);
   border-radius: 10px;
   display: flex;
   align-items: center;
   gap: 10px;
   &Active {
-    background: #f7f7f7;
-    border: 1px solid #000000;
+    background: var(--color-background);  
+    border: 1px solid var(--color-text-primary);
   }
   &Icon {
     align-self: start;
@@ -32,14 +32,14 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
   }
   &Description {
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #7c7c7c;
+    color: var(--color-text_secondary);
   }
 }
 .recommendationFilters {

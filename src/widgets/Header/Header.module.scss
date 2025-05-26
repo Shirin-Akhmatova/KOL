@@ -10,7 +10,7 @@
   background: transparent;
   transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
   z-index: 2000;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .container {
@@ -51,7 +51,7 @@ img {
     width: 86px;
     height: 48px;
     border-radius: 22px;
-    background: white;
+    background: var(--color-surface);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -67,17 +67,13 @@ img {
     inset: 0;
     border-radius: 22px;
     padding: 2px;
-    background: linear-gradient(
-      270deg,
-      #00b2a940,
-      #ff6b3540,
-      #00cbc140,
-      #ff7a4a40
-    );
+    background: var(--color-border-gradient-animation);
     background-size: 600% 600%;
     animation: colorCycle 7s ease infinite;
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+    mask: linear-gradient(var(--color-surface) 0 0) content-box,
+          linear-gradient(var(--color-surface) 0 0);
+    -webkit-mask: linear-gradient(var(--color-surface) 0 0) content-box,
+                  linear-gradient(var(--color-surface) 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     z-index: -1;
@@ -93,7 +89,7 @@ img {
   width: 850px;
   height: 66px;
   border-radius: 22px;
-  background: white;
+  background: var(--color-surface);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -110,16 +106,11 @@ img {
   inset: 0;
   border-radius: 25px;
   padding: 2px;
-  background: linear-gradient(
-    270deg,
-    #00b2a940,
-    #ff6b3540,
-    #00cbc140,
-    #ff7a4a40
-  );
+  background:  var(--color-border-gradient-animation);
   background-size: 600% 600%;
   animation: colorCycle 5s ease infinite;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: var(--color-mask-gradient);
+  -webkit-mask: var(--color-mask-gradient);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   z-index: -1;
@@ -136,7 +127,7 @@ img {
   height: 48px;
   border-radius: 19px;
   z-index: 3000;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px var(--color-shadow);
 }
 
 .searchBarScrolled::before {
@@ -166,7 +157,7 @@ img {
     font-family: Montserrat, sans-serif;
     font-weight: bold;
     font-size: 11.81px;
-    color: black;
+    color: var(--color-text-primary);
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
@@ -177,7 +168,7 @@ img {
   }
 
   .placeholder {
-    color: #666666;
+    color: var(--color-text-secondary);
     font-size: 14px;
   }
 }
@@ -185,7 +176,7 @@ img {
 .divider {
   width: 1px;
   height: 50px;
-  background-color: #dddddd;
+  background-color: var(--color-footer-background);
 }
 
 .searchBarScrolled .divider {
@@ -196,7 +187,7 @@ img {
   width: 48px;
   height: 48px;
   border-radius: 22px;
-  background-color: #16bbb4;
+  background-color: var(--color-primary);
   display: flex;
   align-items: center;
   justify-content: center;

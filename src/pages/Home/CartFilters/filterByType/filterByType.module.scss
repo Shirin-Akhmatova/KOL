@@ -21,7 +21,7 @@
     transform: translateX(-50%);
     width: 0%;
     height: 2px;
-    background: #0000002f;
+    background: var(--color-text-primary);
   }
   &:hover {
     &::before {
@@ -30,7 +30,7 @@
   }
   &.active {
     &::before {
-      background: #000000;
+      background: var(--color-text-primary);
       width: 100%;
     }
   }
@@ -47,6 +47,6 @@
     font-size: 12px;
     line-height: 16px;
     text-align: center;
-    color: #666666;
+    color: var(--color-text_secondary);
   }
 }
