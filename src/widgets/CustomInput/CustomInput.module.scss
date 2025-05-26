@@ -5,7 +5,7 @@
 }
 
 .errorInput {
-  border-color: #d32f2f !important;
+  border-color: var(--input-error) !important;
 }
 
 .label {
@@ -14,21 +14,21 @@
   top: 6px;
   left: 12px;
   font-size: 12px;
-  color: #888;
+  color: var(--color-text-secondary);
   pointer-events: none;
-  background-color: white;
+  background-color: var(--color-surface);
   transition: all 0.2s ease;
 }
 
 .floating {
-  color: #555;
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
 .helperText {
   font-family: Montserrat;
   font-size: 12px;
-  color: #666;
+  color: var(--color-text-secondary);
   margin-top: 4px;
   margin-left: 4px;
 }
@@ -36,13 +36,13 @@
 .errorText {
   font-family: Montserrat;
   font-size: 12px;
-  color: #d32f2f;
+  color: var(--color-danger);
   margin-top: 4px;
   margin-left: 4px;
 }
 
 .filled {
-  border-color: #222222 !important;
+  border-color: var(--color-text-primary) !important;
 }
 
 .inputContainer {
@@ -54,7 +54,7 @@
   padding: 20px 40px 20px 12px;
   font-size: 16px;
   border-radius: 8px;
-  border: 1px solid #b0b0b0;
+  border: 1px solid var(--color-footer-backgroundz);
   outline: none;
   box-sizing: border-box;
   font-family: Montserrat;

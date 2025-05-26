@@ -66,8 +66,9 @@ table {
 body {
   font-family: "Montserrat", sans-serif;
   line-height: 1.5;
-  color: #333;
-  background-color: #fff;
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  overflow-x: hidden;
 }
 
 input,
@@ -100,7 +101,12 @@ input:active {
   box-shadow: none;
 }
 
-body {
-  overflow-x: hidden;
-  /* overflow-y: auto; */
+input[type="number"] {
+  -webkit-appearance: textfield;
+  appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
