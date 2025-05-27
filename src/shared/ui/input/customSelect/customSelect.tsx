@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import { clsx } from "clsx";
 import { useOutsideClick } from "@/shared/hooks/useOutsideClick";
 import styles from "./customSelect.module.scss";

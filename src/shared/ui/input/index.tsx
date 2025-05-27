@@ -1,5 +1,4 @@
 import type {
-  HTMLAttributes,
   InputHTMLAttributes,
   TextareaHTMLAttributes,
 } from "react";

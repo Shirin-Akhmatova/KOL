@@ -7,7 +7,6 @@ type SwitchProps = {
   onChange: (checked: boolean) => void;
   className?: string;
   disabled?: boolean;
-  label?: string;
 };
 
 export const Switch: React.FC<SwitchProps> = ({
@@ -15,7 +14,6 @@ export const Switch: React.FC<SwitchProps> = ({
   onChange,
   className,
   disabled = false,
-  label,
 }) => {
   return (
     <label
