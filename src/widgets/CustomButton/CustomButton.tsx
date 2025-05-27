@@ -11,6 +11,7 @@ interface CustomButtonProps {
   textColor?: string;
   borderColor?: string;
   iconRight?: React.ReactNode;
+  disabled?: boolean;  // добавили проп disabled
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -23,20 +24,31 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   textColor,
   borderColor,
   iconRight,
+  disabled = false, // по умолчанию false
 }) => {
+  // Если disabled, кнопка серая и курсор "неактивный"
   const defaultStyle: React.CSSProperties = {
     height: "52px",
-    background: buttonColor,
-    color: textColor || "#000",
-    border: `1px solid ${borderColor || "#222222"}`,
+    background: disabled ? "#ccc" : buttonColor,
+    color: disabled ? "#888" : textColor || "#000",
+    border: `1px solid ${disabled ? "#ccc" : borderColor || "#222222"}`,
+    cursor: disabled ? "not-allowed" : "pointer",
     ...style,
+  };
+
+  // При disabled onClick не вызываем
+  const handleClick = () => {
+    if (!disabled && onClick) {
+      onClick();
+    }
   };
 
   return (
     <button
       className={`${styles.customButton} ${className || ""}`}
       style={defaultStyle}
-      onClick={onClick}
+      onClick={handleClick}
+      disabled={disabled}  // атрибут disabled html
     >
       {icon && <span className={styles.icon}>{icon}</span>}
       <span className={styles.text}>{text}</span>

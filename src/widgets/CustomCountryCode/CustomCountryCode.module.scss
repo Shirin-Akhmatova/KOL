@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: pointer; 
 }
 
 .inputField {
@@ -26,9 +26,10 @@
 }
 
 .floatingLabel {
+  // border: 2px solid red;
   position: absolute;
   left: 12px;
-  top: 16px;
+  top: 10px;
   color: #717171;
   font-size: 12px;
   font-weight: 400;

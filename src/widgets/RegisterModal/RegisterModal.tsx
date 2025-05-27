@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
 import appleIcon from "../../assets/icons/apple.svg";
@@ -7,11 +7,17 @@ import exitIcon from "../../assets/icons/exitIcon.svg";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
 import CustomCountryCode from "../CustomCountryCode/CustomCountryCode";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import SmsModal from "../SmsModal/SmsModal";
+
+
 
 interface RegisterProps {
   onClose?: () => void;
 }
 
+// Форматируем номер как XXX XXX XXXX
 const formatPhoneNumber = (num: string) => {
   const cleaned = num.replace(/\D/g, "");
   const part1 = cleaned.slice(0, 3);
@@ -23,32 +29,38 @@ const formatPhoneNumber = (num: string) => {
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
+  const [showModal, setShowModal] = useState(false);
 
-  const isValid = phoneNumber.trim().length > 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!isValid) return;
-    console.log(`Phone: ${countryCode} ${phoneNumber}`);
-  };
+  // Проверка валидности номера: для +996 — 9 цифр
+  const isValid = phoneNumber.length === 9;
 
-  const handleCountrySelect = (code: string, country: string) => {
+const handleSubmit = (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!isValid) return;
+
+  console.log(`Phone: ${countryCode} ${phoneNumber}`);
+  
+  toast.success("Номер успешно отправлен!");
+    setShowModal(true);
+};
+
+
+  const handleCountrySelect = (code: string) => {
     setCountryCode(code);
-    setPhoneNumber("");
+    setPhoneNumber(""); // сброс номера при смене страны
   };
 
-  const displayValue = phoneNumber
-    ? `${countryCode} ${formatPhoneNumber(phoneNumber)}`
-    : "";
+  const displayValue = `${countryCode} ${formatPhoneNumber(phoneNumber)}`;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
-
+    // Убираем код страны из ввода, если он есть
     if (val.startsWith(countryCode)) {
       val = val.slice(countryCode.length).trim();
     }
+    // Оставляем только цифры
     val = val.replace(/\D/g, "");
-
     setPhoneNumber(val);
   };
 
@@ -78,8 +90,9 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <CustomButton
             text="Continue"
             textColor="#fff"
-            buttonColor="linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
-            style={{ border: "none" }}
+            buttonColor={isValid ? "linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)" : "#ccc"}
+            style={{ border: "none", cursor: isValid ? "pointer" : "not-allowed" }}
+            disabled={!isValid}
           />
         </form>
 
@@ -88,18 +101,25 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
         <div className={styles.buttonsWrapper}>
           <CustomButton
             text="Continue with Google"
-            icon={<img src={googleIcon} />}
+            icon={<img src={googleIcon} alt="google" />}
           />
           <CustomButton
             text="Continue with Apple"
-            icon={<img src={appleIcon} />}
+            icon={<img src={appleIcon} alt="apple" />}
           />
           <CustomButton
             text="Continue with eMail"
-            icon={<img src={emailIcon} />}
+            icon={<img src={emailIcon} alt="email" />}
           />
         </div>
       </div>
+      {showModal && (
+  <SmsModal
+    onClose={() => setShowModal(false)}
+    phoneNumber={`${countryCode} ${formatPhoneNumber(phoneNumber)}`}
+  />
+)}
+
     </div>
   );
 };
