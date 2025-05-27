@@ -1,0 +1,114 @@
+$primary-color: #00b2a9;
+$dark-color: #222222;
+$destructive-color: #e53935;
+$secondary-color: #898989;
+$orange-gradient: linear-gradient(180deg, #ff9050 0%, #ff7500 100%);
+
+@mixin outline($color) {
+  border: 1px solid $color;
+  color: $color;
+  &:hover {
+    background: $color;
+    color: #fff;
+  }
+}
+@mixin solid($color) {
+  background: $color;
+  &:hover {
+    background: rgba($color, 0.8);
+  }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px;
+  transition: all 0.5s ease;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  cursor: pointer;
+  &.icon {
+    gap: 10px;
+  }
+  &.orangeGradientShine {
+    position: relative;
+    gap: 10px;
+    background: $orange-gradient;
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    transition: background 0.3s ease;
+
+    // Эффект блика
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      );
+      transform: skewX(-20deg);
+    }
+
+    &:hover::before {
+      animation: shine 1s ease;
+    }
+  }
+  &.dark {
+    &.outline {
+      @include outline($dark-color);
+    }
+    &.solid {
+      @include solid($dark-color);
+    }
+    border-radius: 8px;
+  }
+  &.primary {
+    &.outline {
+      @include outline($primary-color);
+    }
+    &.solid {
+      @include solid($primary-color);
+    }
+    border-radius: 10px;
+  }
+  &.destructive {
+    &.outline {
+      @include outline($destructive-color);
+    }
+    &.solid {
+      @include solid($destructive-color);
+    }
+    border-radius: 8px;
+  }
+  &.secondary {
+    &.outline {
+      @include outline($secondary-color);
+    }
+    &.solid {
+      @include solid($secondary-color);
+    }
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
