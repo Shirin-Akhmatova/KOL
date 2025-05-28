@@ -1,8 +1,6 @@
 .calendar {
   width: 446px;
-height: 415px;
   height: 415px;
-  overflow-y: auto;
   background-color: white;
   border-radius: 36px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -12,7 +10,8 @@ height: 415px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 999;
+  z-index: 1000;
+  overflow: hidden;
 
   &::-webkit-scrollbar {
     display: none;
@@ -23,12 +22,12 @@ height: 415px;
     justify-content: space-between;
     align-items: center;
     color: rgb(0, 0, 0);
-font-family: Montserrat;
-font-size: 16px;
-font-weight: 400;
-line-height: 20px;
-letter-spacing: 0%;
-text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
     margin-bottom: 24px;
 
     .nav-btn {
@@ -67,12 +66,12 @@ text-align: center;
     .month-input,
     .year-input {
       color: rgb(0, 0, 0);
-font-family: Montserrat;
-font-size: 16px;
-font-weight: 400;
-line-height: 20px;
-letter-spacing: 0%;
-text-align: center;
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: 0%;
+      text-align: center;
       width: auto;
       max-width: 100px;
       border: 1px solid #16bbb4;
@@ -86,7 +85,7 @@ text-align: center;
     grid-template-columns: repeat(7, 1fr);
     gap: 0;
     width: 336px;
-height: 303px;
+    height: 303px;
     margin: 0 auto;
   }
 
@@ -98,14 +97,7 @@ height: 303px;
     line-height: 17px;
     letter-spacing: 0%;
     text-align: center;
-  }
-
-  .day-name {
-    text-align: center;
-    font-weight: 500;
-    font-size: 16px;
     padding: 8px 0;
-    color: #888;
   }
 
   .day {
@@ -116,14 +108,12 @@ height: 303px;
     align-items: center;
     justify-content: center;
     color: rgb(49, 49, 49);
-font-family: Montserrat;
-font-size: 16px;
-font-weight: 400;
-line-height: 20px;
-letter-spacing: 0%;
-text-align: center;
+    font-family: Montserrat;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0%;
+    text-align: center;
     cursor: pointer;
     z-index: 1;
 
@@ -192,21 +182,20 @@ text-align: center;
     transition: all 0.3s ease;
   }
 
-  // Место под ошибку, зарезервированное всегда
   .error-placeholder {
     font-size: 14px;
     color: #ff4d4f;
     transition: opacity 0.3s ease;
     opacity: 0;
     pointer-events: none;
-    height: 0; // скрываем высоту по умолчанию
+    height: 0;
     overflow: hidden;
     margin-top: 0;
   }
   
   .error-placeholder.visible {
     opacity: 1;
-    height: 18px; // показываем высоту при наличии ошибки
+    height: 18px;
     margin-top: 4px;
   }
   
@@ -221,3 +210,13 @@ text-align: center;
     }
   }
 }
+
+.calendar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+} 

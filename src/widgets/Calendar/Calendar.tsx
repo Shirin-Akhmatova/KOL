@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "./Calendar.scss";
 
-const Calendar = () => {
+interface CalendarProps {
+  onClose: () => void;
+}
+
+const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
   const [selectedStart, setSelectedStart] = useState<Date | null>(null);
   const [selectedEnd, setSelectedEnd] = useState<Date | null>(null);
   const [date, setDate] = useState(new Date());
@@ -14,6 +18,22 @@ const Calendar = () => {
   const [yearError, setYearError] = useState("");
   const [monthTouched, setMonthTouched] = useState(false);
   const [yearTouched, setYearTouched] = useState(false);
+  
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  // Обработчик клика вне календаря
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [onClose]);
 
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -152,7 +172,7 @@ const Calendar = () => {
   const daysArray = Array.from({ length: 42 }, (_, i) => i);
 
   return (
-    <div className="calendar">
+    <div className="calendar" ref={calendarRef}>
       <div className="calendar-header">
         <button onClick={handlePrevMonth} className="nav-btn" aria-label="Предыдущий месяц">
           <FiChevronLeft size={24} />
