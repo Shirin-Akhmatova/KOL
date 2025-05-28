@@ -78,32 +78,44 @@ const blocks = [
   },
 ];
 
-const ObjectsModal = () => {
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ObjectsModal = ({ isOpen, onClose }: Props) => {
+  if (!isOpen) return null;
+
   return (
-    <div className={scss.ObjectsModal}>
-      <h1>Your object's</h1>
-      <div className={scss.content}>
-        <Link to="/create-service" className={scss.create}>
-          <img src={create} alt="create" />
-          <button>Create a Service</button>
-        </Link>
-        {blocks.map((block, index) => (
-          <Link to="/cardPage" className={scss.card} key={index}>
-            <img src={block.image} alt="block" />
-            <div className={scss.info}>
-              <div>
-                <h3>{block.title}</h3>
-                <div className={scss.rating}>
-                  <img src={starIcon} alt="" />
-                  <span>{block.rating}</span>
-                  <span>{`(${block.feedbacks})`}</span>
-                </div>
-              </div>
-              <p>{block.description}</p>
-              <span>{block.price} сом/ночь</span>
-            </div>
+    <div className={scss.ObjectsModal} onClick={onClose}>
+      <div className={scss.modal} onClick={(e) => e.stopPropagation()}>
+        <h1>Your object’s</h1>
+
+        <div className={scss.content}>
+          <Link to="/create-service" className={scss.create}>
+            <img src={create} alt="create" />
+            <button>Create a Service</button>
           </Link>
-        ))}
+          {blocks.map((block, index) => (
+            <Link to="/cardPage" className={scss.card} key={index}>
+              <img src={block.image} alt="block" />
+              <div className={scss.info}>
+                <div>
+                  <h3>{block.title}</h3>
+                  <div className={scss.rating}>
+                    <img src={starIcon} alt="star" />
+                    <span>{block.rating}</span>
+                    <span>{`(${block.feedbacks})`}</span>
+                  </div>
+                </div>
+                <p>{block.description}</p>
+                <span>{block.price} сом/ночь</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className={scss.gradient}></div>
       </div>
     </div>
   );

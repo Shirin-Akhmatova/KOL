@@ -6,8 +6,10 @@ interface IWeatherWidget {
     max: number;
   };
   icon: string;
+  iconId: number;
   condition: string;
   city: string;
+  timeOfDay: "night" | "day";
 }
 
 export type { IWeatherWidget };

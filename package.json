@@ -10,19 +10,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@reduxjs/toolkit": "^2.8.1",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
+    "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "i18next": "^25.1.2",
     "libphonenumber-js": "^1.12.8",
     "mui-tel-input": "^9.0.0",
-    "react": "^19.1.0",
+    "react": "^18.2.0",
     "react-date-range": "^2.0.1",
-    "react-dom": "^19.1.0",
+    "react-dom": "^18.2.0",
     "react-easy-crop": "^5.4.1",
-    "react-hook-form": "^7.56.3",
+    "react-hook-form": "^7.56.4",
     "react-i18next": "^15.5.1",
     "react-icon": "^1.0.0",
     "react-icons": "^5.5.0",
@@ -35,7 +39,9 @@
     "redux": "^5.0.1",
     "sass": "^1.87.0",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.2.6"
+    "swiper": "^11.2.6",
+    "uuid": "^11.1.0",
+    "yandex-maps": "^0.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

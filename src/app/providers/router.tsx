@@ -5,6 +5,7 @@ import About from "../../pages/About/About";
 import LoginUserProfilePage from "../../widgets/LoginUserProfilePage/LoginUserProfilePage";
 import MapWithListings from "../../pages/MapWithListings/MapWithListings";
 import CardPage from "@/pages/cardPage/CardPage";
+import CreateService from "@/pages/CreateService/CreateService";
 
 export const myRouter = createBrowserRouter([
   {
@@ -33,6 +34,7 @@ export const myRouter = createBrowserRouter([
       },
       {
         path: "/create-service",
+        element: <CreateService />,
       },
     ],
   },

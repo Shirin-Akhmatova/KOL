@@ -1,13 +1,23 @@
-import { useState, type HTMLAttributes, type MouseEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type HTMLAttributes,
+  type MouseEvent,
+} from "react";
 import styles from "./filterByType.module.scss";
 import type { IRoomTypeFilter } from "../cardFilters.interface";
+import useFilters from "@/shared/hooks/useFilters";
 
 interface RoomTypeFilterProp
   extends IRoomTypeFilter,
     HTMLAttributes<HTMLDivElement> {}
 
+const filterName = "roomType";
+
 function FilterByType({ filters }: { filters: IRoomTypeFilter[] }) {
-  const [active, setActive] = useState<string>("");
+  const { getFilter, setFilter } = useFilters();
+  const currentFilter = getFilter(filterName) as string;
+  const [active, setActive] = useState<string>(currentFilter);
 
   const clickFilterHandler = (
     e: MouseEvent<HTMLButtonElement>,
@@ -20,6 +30,10 @@ function FilterByType({ filters }: { filters: IRoomTypeFilter[] }) {
       setActive("");
     }
   };
+
+  useEffect(() => {
+    setFilter(filterName, active);
+  }, [active]);
 
   return (
     <div className={styles.roomTypeFiltersBlock}>
