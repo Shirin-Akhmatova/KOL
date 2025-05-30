@@ -11,13 +11,13 @@
     padding: 1.5rem;
     border-radius: 1rem;
     border: none;
-    box-shadow: 0 0 1.25rem rgba(0, 0, 0, 0.2);
+    box-shadow: var(--box-shadow);
     opacity: 0;
     transition: all .3s ease;
 
     &::backdrop {
-      background: rgba(0, 0, 0, .5);
-      backdrop-filter: blur(2px);
+      background: var(--overlay-color-pop-up);
+      backdrop-filter: var(--overlay-blur-pop-up);;
     }
 
     &[open] {
@@ -43,68 +43,58 @@
         border-radius: 0.6rem;
         padding: 0.75rem;
   
-        &[type="number"] {
-          -webkit-appearance: textfield;
-          appearance: textfield;
-          &::-webkit-outer-spin-button,
-          &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
-        }
-  
         &:nth-child(2) {
-          border: 0.07rem solid #B0B0B0;
+          border: var(--input-border);
           border-bottom-left-radius: 0;
           border-bottom-right-radius: 0;
         }
         &:nth-child(3) {
-          border-left: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
-          border-right: 0.07rem solid #B0B0B0;
+          border-left: var(--input-border);
+          border-bottom: var(--input-border);
+          border-right: var(--input-border);
           border-top-right-radius: 0;
           border-top-left-radius: 0;
           border-bottom-right-radius: 0;
           width: 50%;
         }
         &:nth-child(4) {
-          border-right: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
+          border-right: var(--input-border);
+          border-bottom: var(--input-border);
           border-top-right-radius: 0;
           border-bottom-left-radius: 0;
           margin-bottom: 3rem;
           width: 50%;
         }
         &:nth-child(6) {
-          border: 0.07rem solid #B0B0B0;
+          border: var(--input-border);
           border-bottom-right-radius: 0;
           border-bottom-left-radius: 0;
           margin-top: 1rem;
         }
         &:nth-child(7) {
-          border-right: 0.07rem solid #B0B0B0;
-          border-left: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
+          border-right: var(--input-border);
+          border-left: var(--input-border);
+          border-bottom: var(--input-border);
           border-radius: 0;
         }
         &:nth-child(8) {
-          border-right: 0.07rem solid #B0B0B0;
-          border-left: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
+          border-right: var(--input-border);
+          border-left: var(--input-border);
+          border-bottom: var(--input-border);
           border-radius: 0;
         }
         &:nth-child(9) {
-          border-left: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
-          border-right: 0.07rem solid #B0B0B0;
+          border-left: var(--input-border);
+          border-bottom: var(--input-border);
+          border-right: var(--input-border);
           border-top-right-radius: 0;
           border-top-left-radius: 0;
           border-bottom-right-radius: 0;
           width: 50%;
         }
         &:nth-child(10) {
-          border-right: 0.07rem solid #B0B0B0;
-          border-bottom: 0.07rem solid #B0B0B0;
+          border-right: var(--input-border);
+          border-bottom: var(--input-border);
           border-top-right-radius: 0;
           border-bottom-left-radius: 0;
           margin-bottom: 2.5rem;
@@ -117,13 +107,13 @@
         width: 100%;
         position: relative;
         height: 4rem;
-        border: 0.07rem solid #B0B0B0;
+        border: var(--input-border);
         border-radius: 0.6rem;
         padding: 0.75rem;
         padding-top: 1.5rem;
         font-size: 1rem;
         font-weight: 500;
-        color: #B0B0B0;
+        color: var(--color-input-border);
         background-size: 0.75rem;
         appearance: none;
       }
@@ -183,7 +173,7 @@
     height: 0.07rem;
     width: 80%;
     margin: 0 auto;
-    background-color: black;
+    background-color: var(--color-text-primary);
   }
   &-form {
     height: fit-content;
@@ -205,7 +195,7 @@
 
   &-cancel {
     cursor: pointer;
-    color: #000;
+    color: var(--color-text-primary);
     font-weight: 600;
     font-size: 1rem;
     &:hover {
@@ -215,8 +205,8 @@
 
   &-done {
     cursor: pointer;
-    color: #fff;
-    background: linear-gradient(to right, #16BBB4, #50C9C4, #15B3AC);
+    color: var(--color-surface);
+    background: var( --color-primory-button-gradient);
     width: 9rem;
     height: 3rem;
     font-size: 1rem;
@@ -287,7 +277,7 @@
         }
         &:nth-child(4) {
           margin-bottom: .7rem;
-          border-left: 0.07rem solid #B0B0B0;
+          border-left: var(--input-border);
           border-top-left-radius: 0;
           border-bottom-left-radius: .3rem;
           width: 100%;
@@ -301,7 +291,7 @@
         }
         &:nth-child(10) {
           margin-bottom: 1rem;
-          border-left: 0.07rem solid #B0B0B0;
+          border-left: var(--input-border);
           border-top-left-radius: 0;
           border-bottom-left-radius: .3rem;
           width: 100%;

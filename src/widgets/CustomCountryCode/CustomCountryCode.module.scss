@@ -14,7 +14,7 @@
   width: 100%;
   padding: 28px 32px 12px 12px;
   font-size: 16px;
-  border: 1px solid #b0b0b0;
+  border: 1px solid var(--color-text-secondary);
   border-radius: 8px;
   outline: none;
   font-family: Montserrat;
@@ -22,7 +22,7 @@
 }
 
 .inputField:hover {
-  border: 1px solid #222222;
+  border: 1px solid var(--color-text-primary);
 }
 
 .floatingLabel {
@@ -33,7 +33,7 @@
   color: #717171;
   font-size: 12px;
   font-weight: 400;
-  background: white;
+  background: var(--color-surface);
   transition: all 0.2s ease;
   pointer-events: none;
   font-family: Montserrat;
@@ -43,7 +43,7 @@
 .floating {
   top: 10px;
   font-size: 12px;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .dropdownIcon {
@@ -55,8 +55,8 @@
 .dropdown {
   position: absolute;
   z-index: 10;
-  background: white;
-  border: 1px solid #ccc;
+  background: var(--color-surface);
+  border: 1px solid var(--color-footer-background);
   width: 100%;
   max-height: 200px;
   overflow-y: auto;
@@ -73,6 +73,6 @@
   font-weight: 500;
 
   &:hover {
-    background: #f0f0f0;
+    background: var(--color-background);
   }
 }

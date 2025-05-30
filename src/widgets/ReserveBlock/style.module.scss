@@ -40,7 +40,7 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
-  color: #717171;
+  color: var(--color-text-secondary);
 }
 
 .reserveDiscountPrice {
@@ -49,7 +49,7 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
-  color: #222222;
+  color: var(--color-text-primary);
 }
 
 .reservePriceBlock {
@@ -64,7 +64,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #222222;
+  color: var(--color-text-primary);
 }
 
 .ratingBlock {
@@ -83,7 +83,7 @@
   border-radius: 50%;
   width: 2px;
   height: 2px;
-  background-color: #222222;
+  background-color: var(--color-text-primary);
 }
 
 .reviews {
@@ -100,15 +100,10 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #ffffff;
+  color: var(--color-surface);
   width: 100%;
   padding: 14px 0px;
-  background: linear-gradient(
-    90.45deg,
-    #16bbb4 0.57%,
-    #50c9c4 50.71%,
-    #15b3ac 104.87%
-  );
+  background: var(--color-primory-button-gradient);
   border-radius: 8px;
 }
 
@@ -119,7 +114,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #5e5e5e;
+  color: var(--color-text-secondary);
 }
 
 .reserveInfo {
@@ -132,7 +127,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: #222222;
+  color: var(--color-text-primary);
 
   &Li {
     display: flex;
@@ -143,7 +138,7 @@
     }
 
     p.active {
-      color: #008a05;
+      color: var(--color-success);
     }
   }
 }
@@ -165,7 +160,7 @@
 
 .hr {
   margin-bottom: 24px;
-  background: #dddddd;
+  background: var(--color-footer-background);
   height: 1px;
 }
 
@@ -182,7 +177,7 @@
   align-items: start;
   padding: 12px;
   width: 100%;
-  border: 1px solid #717171;
+  border: var(--input-border);
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
@@ -196,7 +191,7 @@
     font-weight: 600;
     font-size: 10px;
     line-height: 12px;
-    color: #222222;
+    color: var(--color-text-primary);
   }
 
   &.start {
