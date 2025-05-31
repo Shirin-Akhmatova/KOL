@@ -1,194 +1,213 @@
-.reserveBlock {
-  position: fixed;
-  top: 120px;
-  right: 48px;
-  z-index: 1000;
-  transition: all 0.3s ease;
+.reserve-block {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  &.show {
+    opacity: 1;
+  }
+  &.hide {
+    opacity: 0;
+  }
 }
 
-.reserveOverlay {
+.reserveOwerlay {
+  max-width: 373px;
+  padding: 24px;
+  filter: drop-shadow(0px 6px 16px rgba(0, 0, 0, 0.12));
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
-  width: 350px;
+  position: fixed;
+  top: 120px; // под хедером
+  right: 48px;
+  width: 372px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
 }
 
-/* Компактный заголовок */
-.compactHeader {
-  padding: 16px;
+.reserveHeader {
+  margin-bottom: 24px;
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border-bottom: 1px solid #eeeeee;
+  gap: 20px;
 }
 
-.priceContainer {
+.reservePrice {
+  text-decoration: line-through;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 27px;
+  color: #717171;
+}
+
+.reserveDiscountPrice {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 27px;
+  color: #222222;
+}
+
+.reservePriceBlock {
   display: flex;
-  align-items: flex-end;
+  align-items: end;
   gap: 4px;
 }
 
-.originalPrice {
-  text-decoration: line-through;
-  color: #717171;
-  font-size: 18px;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.discountedPrice {
+.reserveTime {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
   color: #222222;
-  font-size: 18px;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
 }
 
-.perNight {
-  color: #222222;
-  font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.ratingContainer {
+.ratingBlock {
+  overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
 }
 
-.ratingValue {
-  color: #222222;
-  font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
+.stars {
+  display: flex;
+  gap: 2px;
 }
 
-.dot {
-  color: #222222;
-  font-size: 14px;
+.reviewsDot {
+  border-radius: 50%;
+  width: 2px;
+  height: 2px;
+  background-color: #222222;
 }
 
 .reviews {
-  color: #222222;
-  font-size: 14px;
-  font-family: 'Montserrat', sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-/* Развернутая часть */
+.reserveBtn {
+  margin-bottom: 20px;
+  cursor: pointer;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  width: 100%;
+  padding: 14px 0px;
+  background: linear-gradient(
+    90.45deg,
+    #16bbb4 0.57%,
+    #50c9c4 50.71%,
+    #15b3ac 104.87%
+  );
+  border-radius: 8px;
+}
+
+.reserveWarning {
+  margin-bottom: 24px;
+  font-family: "SF Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5e5e5e;
+}
+
+.reserveInfo {
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #222222;
+
+  &Li {
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      text-decoration-line: underline;
+    }
+
+    p.active {
+      color: #008a05;
+    }
+  }
+}
+
+.reserveTotal {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #222222;
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.hr {
+  margin-bottom: 24px;
+  background: #dddddd;
+  height: 1px;
+}
+
 .datePicker {
-  display: flex;
-  padding: 16px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.dateInput {
-  flex: 1;
-  padding: 8px;
-  cursor: pointer;
-}
-
-.inputLabel {
-  display: block;
-  font-size: 10px;
-  color: #222222;
-  font-weight: 600;
-  margin-bottom: 4px;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.dateValue {
-  font-size: 14px;
-  color: #5e5e5e;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.dateRangePicker {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  z-index: 1001;
-  margin-top: 8px;
-}
-
-.guestsInput {
-  padding: 16px;
-  border-bottom: 1px solid #eeeeee;
-}
-
-.guestsValue {
-  font-size: 14px;
-  color: #5e5e5e;
-  font-family: 'Montserrat', sans-serif;
-}
-
-.reserveButton {
+  position: relative;
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(90deg, #16bbb4, #15b3ac);
-  color: white;
-  border: none;
-  font-weight: 600;
+  display: flex;
+}
+
+.input {
   cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-}
-
-.disclaimer {
-  padding: 16px;
-  text-align: center;
-  font-size: 14px;
-  color: #5e5e5e;
-  font-family: 'Montserrat', sans-serif;
-  margin: 0;
-}
-
-.priceBreakdown {
-  padding: 16px;
-  border-top: 1px solid #eeeeee;
-}
-
-.priceRow {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  font-size: 16px;
-  font-family: 'Montserrat', sans-serif;
-  
-  .discount {
-    color: #008a05;
-  }
-}
-
-.totalContainer {
-  padding: 16px;
-  border-top: 1px solid #eeeeee;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-}
-
-/* Компактная кнопка бронирования */
-.compactReserveButton {
-  width: 100%;
+  flex-direction: column;
+  align-items: start;
   padding: 12px;
-  background: linear-gradient(90deg, #16bbb4, #15b3ac);
-  color: white;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 16px;
-}
+  width: 100%;
+  border: 1px solid #717171;
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #5e5e5e;
 
-@media (max-width: 768px) {
-  .reserveBlock {
-    right: 20px;
-    top: 80px;
+  &Title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 12px;
+    color: #222222;
   }
-  
-  .reserveOverlay {
-    width: 300px;
+
+  &.start {
+    border-radius: 12px 0px 0px 0px;
   }
+
+  &.end {
+    border-radius: 0px 12px 0px 0px;
+  }
+
+  &.bottom {
+    margin-bottom: 20px;
+    border-top: 0;
+    border-radius: 0px 0px 12px 12px;
+  } 
 }

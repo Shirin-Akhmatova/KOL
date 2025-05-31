@@ -5,12 +5,6 @@
   margin: 0;
   padding: 0;
 }
-
-.container {
-  margin: 0 auto;
-  max-width: 1920px;
-  padding-inline: 25px;
-}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -18,10 +12,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: var(--logo-hover);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: var(--logo-react-hover);
 }
 
 @keyframes logo-spin {

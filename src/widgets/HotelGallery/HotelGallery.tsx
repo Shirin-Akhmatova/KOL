@@ -34,34 +34,43 @@ const HotelGallery = () => {
   const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
   const [reserveVisible, setReserveVisible] = useState(false);
-  const [reserveExpanded, setReserveExpanded] = useState(false);
+  const [reserveFixed, setReserveFixed] = useState(false);
 
+  const reserveRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const midRef = useRef<HTMLDivElement>(null);
 
+  // Для плавного подъема при открытии
   useEffect(() => {
+    // Показываем ReserveBlock с анимацией через CSS (opacity + transform)
     setReserveVisible(true);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!bottomRef.current || !midRef.current) return;
+      if (!reserveRef.current || !bottomRef.current || !midRef.current) return;
 
+      const reserveHeight = reserveRef.current.offsetHeight;
       const bottomRect = bottomRef.current.getBoundingClientRect();
       const midRect = midRef.current.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      const isBottomVisible = bottomRect.top <= windowHeight && bottomRect.bottom >= 0;
-      const isMidVisible = midRect.top <= windowHeight && midRect.bottom >= 0;
-
-      setReserveExpanded(isBottomVisible || isMidVisible);
+      // Логика:
+      // Если мы "прокрутили" до блока mid (его верх виден), фиксируем ReserveBlock
+      // Если ниже mid, то снимаем фиксированное позиционирование (оставляем внутри flow)
+      if (midRect.top <= windowHeight - reserveHeight - 20) {
+        setReserveFixed(true);
+      } else {
+        setReserveFixed(false);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    handleScroll(); // вызовем сразу, чтобы учесть позицию при загрузке
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Управление каруселью
   const setImage = (image: string) => setCurrentImage(image);
   const toggleCarousel = () => setShowCarousel(!showCarousel);
   const closeCarousel = () => {
@@ -114,8 +123,15 @@ const HotelGallery = () => {
         </div>
       )}
 
-      <ReserveBlock expanded={reserveExpanded} />
+      {/* ReserveBlock */}
+      <div
+        ref={reserveRef}
+        className={`reserve-container ${reserveVisible ? 'visible' : ''} ${reserveFixed ? 'fixed' : ''}`}
+      >
+        <ReserveBlock />
+      </div>
 
+      {/* Блоки mid и bottom */}
       <div className="bottom" ref={bottomRef}>
         <h1>Жилье целиком</h1>
         <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
@@ -184,4 +200,4 @@ const HotelGallery = () => {
   );
 };
 
-export default HotelGallery;
+export default HotelGallery; 

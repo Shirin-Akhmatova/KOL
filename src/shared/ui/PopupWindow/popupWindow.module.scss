@@ -1,7 +1,7 @@
 .popupOverlay {
   position: fixed;
   top: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-color-pop-up); // var(--overlay-blur-pop-up);
   left: 0;
   z-index: 2001;
   width: 100%;
@@ -16,7 +16,7 @@
   transform: translate(-50%, -50%);
   max-width: 620px;
   width: 100%;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 
 .popupWindowHeader {
   position: relative;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid var(--color-footer-background);
   text-align: center;
   padding: 25px;
   &Close {
@@ -56,6 +56,6 @@
 }
 
 .popupWindowFooter {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid var(--color-footer-background);
   padding: 16px 30px;
 }

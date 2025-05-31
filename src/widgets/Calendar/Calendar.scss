@@ -2,8 +2,10 @@
   width: 446px;
   height: 415px;
   background-color: white;
+  overflow-y: auto;
+  background-color: var(--color-surface);
   border-radius: 36px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); // var()
   padding: 24px;
   font-family: "Inter", sans-serif;
   position: fixed;
@@ -21,7 +23,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: rgb(0, 0, 0);
+    color: var(--color-text-primary);
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 400;
@@ -34,7 +36,7 @@
       background: none;
       border: none;
       cursor: pointer;
-      color: black;
+      color: var(--color-text-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -60,12 +62,12 @@
 
     .month-display:hover,
     .year-display:hover {
-      color: #16bbb4;
+      color: var(--color-primary);
     }
 
     .month-input,
     .year-input {
-      color: rgb(0, 0, 0);
+      color: var(--color-text-primary);
       font-family: Montserrat;
       font-size: 16px;
       font-weight: 400;
@@ -74,7 +76,7 @@
       text-align: center;
       width: auto;
       max-width: 100px;
-      border: 1px solid #16bbb4;
+      border: 1px solid var(--color-primary);
       border-radius: 4px;
       transition: border 0.3s ease;
     }
@@ -90,7 +92,7 @@
   }
 
   .day-name {
-    color: rgb(133, 133, 133);
+    color: var(--color-text_secondary);
     font-family: Montserrat;
     font-size: 14px;
     font-weight: 500;
@@ -98,6 +100,7 @@
     letter-spacing: 0%;
     text-align: center;
     padding: 8px 0;
+    color: var(--color-text_secondary);
   }
 
   .day {
@@ -107,8 +110,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgb(49, 49, 49);
-    font-family: Montserrat;
+    color: var(--color-text_secondary);
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
@@ -123,11 +125,11 @@
     }
 
     &.in-range {
-      background-color: #f2f2f2;
+      background-color: var(--color-footer-background);
     }
 
     &.start.in-range {
-      background-color: #f2f2f2;
+      background-color: var(--color-footer-background);
       border-top-left-radius: 26px;
       border-bottom-left-radius: 26px;
       border-top-right-radius: 3px;
@@ -136,7 +138,7 @@
     }
 
     &.end.in-range {
-      background-color: #f2f2f2;
+      background-color: var(--color-footer-background);
       border-top-right-radius: 26px;
       border-bottom-right-radius: 26px;
       border-top-left-radius: 3px;
@@ -148,8 +150,8 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background-color: black;
-      color: white;
+      background-color: var(--color-text-secondary);
+      color: var(--color-surface);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -175,16 +177,16 @@
   }
 
   .input-error {
-    border-color: #ff4d4f !important;
-    background-color: #fff1f0;
-    color: #a8071a;
-    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
-    transition: all 0.3s ease;
+    border-color: var(--input-error) !important; // var()
+    background-color: #fff1f0; // var()
+    color:  var(--color-danger);
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2); // var()
+    transition: all 0.3s ease; 
   }
 
   .error-placeholder {
     font-size: 14px;
-    color: #ff4d4f;
+    color: var(--input-error);
     transition: opacity 0.3s ease;
     opacity: 0;
     pointer-events: none;
@@ -192,13 +194,13 @@
     overflow: hidden;
     margin-top: 0;
   }
-  
+
   .error-placeholder.visible {
     opacity: 1;
     height: 18px;
     margin-top: 4px;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
