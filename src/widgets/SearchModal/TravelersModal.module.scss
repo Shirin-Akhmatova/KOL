@@ -1,0 +1,79 @@
+.modal {
+  position: absolute;
+  top: 10px;
+  right: 50%;
+  transform: translateX(-73%);
+  z-index: 1000;
+  height: 248px;
+  width: 400px;
+  background: #fff;
+  border-radius: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  padding: 25px 35px 25px 35px;
+}
+
+.body {
+  font-size: 14px;
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.group:last-child {
+  border-bottom: none;
+}
+
+.labelBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.description {
+  font-size: 13px;
+  color: #888;
+}
+
+.counter {
+  align-items: center;
+  display: flex;
+  gap: 15px;
+}
+
+.counter button {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.counter button img {
+  width: 34px;
+  height: 34px;
+  pointer-events: none;
+}
+
+.counter span {
+  display: inline-block;
+  width: 10px;
+  text-align: center;
+}
