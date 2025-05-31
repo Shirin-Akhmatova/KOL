@@ -19,8 +19,18 @@ const Calendar = () => {
   const month = date.getMonth();
 
   const monthNames = [
-    "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь",
-    "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+    "Январь",
+    "Февраль",
+    "Март",
+    "Апрель",
+    "Май",
+    "Июнь",
+    "Июль",
+    "Август",
+    "Сентябрь",
+    "Октябрь",
+    "Ноябрь",
+    "Декабрь",
   ];
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -67,12 +77,12 @@ const Calendar = () => {
 
   const handlePrevMonth = () => {
     setDate(new Date(year, month - 1, 1));
-    resetSelection();
+    // resetSelection();
   };
 
   const handleNextMonth = () => {
     setDate(new Date(year, month + 1, 1));
-    resetSelection();
+    // resetSelection();
   };
 
   const resetSelection = () => {
@@ -154,7 +164,11 @@ const Calendar = () => {
   return (
     <div className="calendar">
       <div className="calendar-header">
-        <button onClick={handlePrevMonth} className="nav-btn" aria-label="Предыдущий месяц">
+        <button
+          onClick={handlePrevMonth}
+          className="nav-btn"
+          aria-label="Предыдущий месяц"
+        >
           <FiChevronLeft size={24} />
         </button>
 
@@ -163,7 +177,9 @@ const Calendar = () => {
             {editingMonth ? (
               <>
                 <input
-                  className={`month-input ${monthError && monthTouched ? "input-error" : ""}`}
+                  className={`month-input ${
+                    monthError && monthTouched ? "input-error" : ""
+                  }`}
                   value={inputMonth}
                   onChange={handleMonthChange}
                   onBlur={handleMonthSubmit}
@@ -171,12 +187,22 @@ const Calendar = () => {
                   autoFocus
                   aria-label="Редактировать месяц"
                 />
-                <div className={`error-placeholder ${monthError && monthTouched ? "visible" : ""}`}>
+                <div
+                  className={`error-placeholder ${
+                    monthError && monthTouched ? "visible" : ""
+                  }`}
+                >
                   {monthError && monthTouched ? monthError : ""}
                 </div>
               </>
             ) : (
-              <span className="month-display" onClick={handleMonthClick} tabIndex={0} role="button" aria-label="Выбрать месяц">
+              <span
+                className="month-display"
+                onClick={handleMonthClick}
+                tabIndex={0}
+                role="button"
+                aria-label="Выбрать месяц"
+              >
                 {monthNames[month]}
               </span>
             )}
@@ -186,7 +212,9 @@ const Calendar = () => {
             {editingYear ? (
               <>
                 <input
-                  className={`year-input ${yearError && yearTouched ? "input-error" : ""}`}
+                  className={`year-input ${
+                    yearError && yearTouched ? "input-error" : ""
+                  }`}
                   value={inputYear}
                   onChange={handleYearChange}
                   onBlur={handleYearSubmit}
@@ -194,26 +222,42 @@ const Calendar = () => {
                   autoFocus
                   aria-label="Редактировать год"
                 />
-                <div className={`error-placeholder ${yearError && yearTouched ? "visible" : ""}`}>
+                <div
+                  className={`error-placeholder ${
+                    yearError && yearTouched ? "visible" : ""
+                  }`}
+                >
                   {yearError && yearTouched ? yearError : ""}
                 </div>
               </>
             ) : (
-              <span className="year-display" onClick={handleYearClick} tabIndex={0} role="button" aria-label="Выбрать год">
+              <span
+                className="year-display"
+                onClick={handleYearClick}
+                tabIndex={0}
+                role="button"
+                aria-label="Выбрать год"
+              >
                 {year}
               </span>
             )}
           </div>
         </div>
 
-        <button onClick={handleNextMonth} className="nav-btn" aria-label="Следующий месяц">
+        <button
+          onClick={handleNextMonth}
+          className="nav-btn"
+          aria-label="Следующий месяц"
+        >
           <FiChevronRight size={24} />
         </button>
       </div>
 
       <div className="calendar-grid">
         {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
-          <div key={day} className="day-name">{day}</div>
+          <div key={day} className="day-name">
+            {day}
+          </div>
         ))}
 
         {daysArray.map((_, i) => {
@@ -242,7 +286,7 @@ const Calendar = () => {
               }}
               aria-label={`Выбрать дату ${dayNum} ${monthNames[month]} ${year}`}
             >
-              {(start || end) ? (
+              {start || end ? (
                 <div className="circle">{dayNum}</div>
               ) : (
                 <span>{dayNum}</span>

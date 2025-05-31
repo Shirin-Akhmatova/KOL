@@ -13,6 +13,16 @@
   background: #fff;
 }
 
+.headerDefault {
+  background: #fff;
+  box-shadow: none;
+}
+
+.headerScrolled {
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 .container {
   display: flex;
   justify-content: space-between;
@@ -110,7 +120,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
   box-sizing: border-box;
   overflow: hidden;
   transition: all 0.3s ease, transform 0.3s ease, width 0.3s ease, top 0.3s ease;
@@ -145,11 +154,35 @@
   top: 12px;
   left: 50%;
   transform: translateX(-50%) scale(0.9);
-  width: 315px;
-  height: 48px;
+  width: 338px;
+  height: 47px;
   border-radius: 19px;
   z-index: 101;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+  .searchBarEnd {
+    gap: 0;
+    height: 47px;
+    &:hover {
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+  .searchItem {
+    padding: 14px 20px;
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      cursor: default;
+    }
+  }
+  .input {
+    width: 46px;
+  }
+  .searchText {
+    display: none;
+  }
 }
 
 .searchBarScrolled::before {
@@ -157,41 +190,31 @@
 }
 
 .searchItem {
+  cursor: pointer;
+  padding: 14px 24px;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
-  text-align: start;
-  gap: 4px;
-
-  // &:hover {
-  //   background-color: #f8f8f8;
-  //   height: 66px;
-  //   border: 1px solid #f8f8f8;
-  //   border-radius: 46px;
-  //   cursor: pointer;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   text-align: start;
-  // }
+  justify-content: center;
+  border-radius: 25px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s ease;
 
   .label {
-    font-family: Montserrat, sans-serif;
-    font-weight: bold;
-    font-size: 11.81px;
-    color: black;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
   }
-
-  .searchBarScrolled .label {
-    opacity: 0;
-    transform: translateY(-5px);
-    pointer-events: none;
-  }
-
-  .placeholder {
-    color: #666666;
+  .placeholder,
+  input {
     font-size: 14px;
+    color: #333;
+  }
+  &:hover,
+  &:focus {
+    background-color: #dddddd;
+    outline: none;
   }
 }
 
@@ -203,24 +226,6 @@
 
 .searchBarScrolled .divider {
   height: 24px;
-}
-
-.searchButton {
-  width: 48px;
-  height: 48px;
-  border-radius: 22px;
-  background-color: #16bbb4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 8px;
-  cursor: pointer;
-  transition: width 0.3s ease, height 0.3s ease, margin-left 0.3s ease;
-
-  &:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-  }
 }
 
 .searchButtonScrolled {
@@ -238,8 +243,94 @@
   display: flex;
   align-items: center;
   gap: 106px;
+  padding: 0 10px 0 0;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+
+  &.searchBarEndActive {
+    gap: 34px;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #dddddd;
+  }
+
+  .searchButton {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 22px;
+    background-color: #16bbb4;
+    cursor: pointer;
+    transition: width 0.3s ease, padding 0.3s ease;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    padding-left: 0;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+
+    &.searchButtonActive {
+      width: 120px;
+      padding-left: 16px;
+      justify-content: flex-start;
+    }
+  }
 }
 
-.searchBarEndScrolled {
-  gap: 0px;
+.calendarWrapper {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  top: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 446px;
+  height: 415px;
+  z-index: 10;
+}
+
+.calendarWrapperOpen {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.searchText {
+  color: white;
+  user-select: none;
+  padding-left: 10px;
+}
+
+.searchBarEndScrolled .searchItem .label {
+  display: none;
+}
+
+.searchBarEndScrolled .searchButton {
+  width: 32px;
+  height: 32px;
+  transition: none;
+
+  img {
+    width: 12px;
+    height: 12px;
+  }
+
+  &.searchButtonActive {
+    width: 32px;
+    height: 32px;
+    padding: 10px;
+  }
+}
+
+.searchBarScrolled .searchBarEnd {
+  gap: 0;
 }
