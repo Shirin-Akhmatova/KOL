@@ -1,16 +1,36 @@
+.reserve-block {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+
+  &.show {
+    opacity: 1;
+  }
+  &.hide {
+    opacity: 0;
+  }
+}
+
 .reserveOwerlay {
   max-width: 373px;
   padding: 24px;
-  filter: drop-shadow(0px 6px 16px rgba(0, 0, 0, 0.12)); /* Rectangle 1 */
+  filter: drop-shadow(0px 6px 16px rgba(0, 0, 0, 0.12));
   background: #ffffff;
   border: 1px solid #dddddd;
   border-radius: 12px;
+  position: fixed;
+  top: 120px; // под хедером
+  right: 48px;
+  width: 372px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
 }
+
 .reserveHeader {
   margin-bottom: 24px;
   display: flex;
   gap: 20px;
 }
+
 .reservePrice {
   text-decoration: line-through;
   font-family: "Montserrat";
@@ -20,6 +40,7 @@
   line-height: 27px;
   color: #717171;
 }
+
 .reserveDiscountPrice {
   font-family: "Montserrat";
   font-style: normal;
@@ -28,11 +49,13 @@
   line-height: 27px;
   color: #222222;
 }
+
 .reservePriceBlock {
   display: flex;
   align-items: end;
   gap: 4px;
 }
+
 .reserveTime {
   font-family: "Montserrat";
   font-style: normal;
@@ -53,15 +76,17 @@
   display: flex;
   gap: 2px;
 }
+
 .reviewsDot {
   border-radius: 50%;
   width: 2px;
   height: 2px;
   background-color: #222222;
 }
+
 .reviews {
   text-overflow: ellipsis;
-  text-wrap: nowrap;
+  white-space: nowrap;
   overflow: hidden;
 }
 
@@ -84,6 +109,7 @@
   );
   border-radius: 8px;
 }
+
 .reserveWarning {
   margin-bottom: 24px;
   font-family: "SF Pro";
@@ -93,6 +119,7 @@
   line-height: 17px;
   color: #5e5e5e;
 }
+
 .reserveInfo {
   margin-bottom: 24px;
   display: flex;
@@ -106,16 +133,19 @@
   color: #222222;
 
   &Li {
+    display: flex;
+    justify-content: space-between;
+
     span {
       text-decoration-line: underline;
     }
-    display: flex;
-    justify-content: space-between;
+
     p.active {
       color: #008a05;
     }
   }
 }
+
 .reserveTotal {
   display: flex;
   justify-content: space-between;
@@ -125,10 +155,12 @@
   font-size: 16px;
   line-height: 20px;
   color: #222222;
+
   span {
     font-weight: bold;
   }
 }
+
 .hr {
   margin-bottom: 24px;
   background: #dddddd;
@@ -155,6 +187,7 @@
   font-size: 14px;
   line-height: 17px;
   color: #5e5e5e;
+
   &Title {
     font-family: "Montserrat";
     font-style: normal;
@@ -163,15 +196,18 @@
     line-height: 12px;
     color: #222222;
   }
+
   &.start {
     border-radius: 12px 0px 0px 0px;
   }
+
   &.end {
     border-radius: 0px 12px 0px 0px;
   }
+
   &.bottom {
     margin-bottom: 20px;
     border-top: 0;
     border-radius: 0px 0px 12px 12px;
-  }
+  } 
 }

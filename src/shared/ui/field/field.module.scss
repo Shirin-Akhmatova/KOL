@@ -1,0 +1,20 @@
+.field {
+  & > .label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.15px;
+    color: #000000;
+    margin-bottom: 13px;
+  }
+
+  & > .error {
+    color: red;
+    margin-top: 4px;
+  }
+  & > .description {
+    margin-top: 8px;
+    color: #666;
+  }
+}

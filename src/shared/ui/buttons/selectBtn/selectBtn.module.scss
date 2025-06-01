@@ -5,10 +5,10 @@
   align-items: center;
   padding: 10px;
   gap: 6px;
-  border: 1px solid #dddddd;
+  border: 1px solid var(--color-footer-background);
   border-radius: 34px;
   &Active {
-    border: 1px solid #000000;
+    border: 1px solid var(--color-text-primary);
   }
   &Icon {
     width: 28px;
@@ -19,6 +19,6 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
-    color: #1a1a1a;
+    color: var(--color-text-primary);
   }
 }
