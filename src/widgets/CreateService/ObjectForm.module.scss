@@ -1,0 +1,66 @@
+.ObjectForm {
+  margin-block: 2rem 4rem;
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 520px;
+    h1 {
+      font-weight: 500;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .categories {
+      display: flex;
+      gap: 1.5rem;
+      .category {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 1rem;
+        text-align: center;
+        cursor: pointer;
+        padding: 0.8rem;
+        transition: 0.4s;
+        border: 1px solid transparent;
+        &.active {
+          border: 1px solid #797979;
+          background: rgba(240, 240, 240, 0.633);
+        }
+        img {
+          width: 32px;
+          height: 32px;
+        }
+        p {
+          width: 100px;
+          font-size: 0.9rem;
+        }
+      }
+    }
+    input {
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #b0b0b0;
+      font-size: 1rem;
+      color: #5b5b5b;
+      width: 100%;
+    }
+    select {
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #b0b0b0;
+      font-size: 1rem;
+      color: #5b5b5b;
+      width: 100%;
+    }
+    textarea {
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+      border: 2px solid #b0b0b0;
+      background: white;
+      font-size: 0.9rem;
+      color: #5b5b5b;
+      width: 100%;
+    }
+  }
+}

@@ -98,5 +98,6 @@ input:active {
 
 body {
   overflow-x: hidden;
+  background: #f9f9f9;
   /* overflow-y: auto; */
 }
