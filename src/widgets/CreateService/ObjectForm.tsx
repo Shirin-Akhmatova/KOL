@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { translateText } from "@/shared/ui/translateText";
 import { debounce } from "lodash";
 import scss from "./ObjectForm.module.scss";
-import house from "@/../public/imgs/svgs/family_room.svg";
-import budget from "@/../public/imgs/svgs/budget_room.svg";
-import hotel from "@/../public/imgs/svgs/hotel_room.svg";
-import lakeHouse from "@/../public/imgs/svgs/lake_house.svg";
-import Eco from "@/../public/imgs/svgs/eco_tourism.svg";
+import house from "@/../public/imgs/room_type/family_room.svg";
+import budget from "@/../public/imgs/room_type/budget_room.svg";
+import hotel from "@/../public/imgs/room_type/hotel_room.svg";
+import lakeHouse from "@/../public/imgs/room_type/lake_house.svg";
+import Eco from "@/../public/imgs/room_type/eco_tourism.svg";
 
 interface Category {
   icon: string;
@@ -59,7 +59,6 @@ const ObjectForm = () => {
     },
   });
   const [category, setCategory] = useState<string>(getValues("category"));
-
   function cleanText(text: string) {
     return text
       .trim()
@@ -76,7 +75,7 @@ const ObjectForm = () => {
         toLang: "ru" | "en"
       ) => {
         const res = await translateText(cleanText(text), fromLang, toLang);
-        console.log(res);
+
         const currentField = getValues(field) || {};
         const newField = {
           ...currentField,
