@@ -1,5 +1,3 @@
-
-// ReserveBlock styles
 .reserve-block {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
@@ -40,7 +38,7 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
-  color: var(--color-text-secondary);
+  color: #717171;
 }
 
 .reserveDiscountPrice {
@@ -49,7 +47,7 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
-  color: var(--color-text-primary);
+  color: #222222;
 }
 
 .reservePriceBlock {
@@ -64,7 +62,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: var(--color-text-primary);
+  color: #222222;
 }
 
 .ratingBlock {
@@ -83,7 +81,7 @@
   border-radius: 50%;
   width: 2px;
   height: 2px;
-  background-color: var(--color-text-primary);
+  background-color: #222222;
 }
 
 .reviews {
@@ -100,10 +98,15 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: var(--color-surface);
+  color: #ffffff;
   width: 100%;
   padding: 14px 0px;
-  background: var(--color-primory-button-gradient);
+  background: linear-gradient(
+    90.45deg,
+    #16bbb4 0.57%,
+    #50c9c4 50.71%,
+    #15b3ac 104.87%
+  );
   border-radius: 8px;
 }
 
@@ -114,7 +117,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: var(--color-text-secondary);
+  color: #5e5e5e;
 }
 
 .reserveInfo {
@@ -127,7 +130,7 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  color: var(--color-text-primary);
+  color: #222222;
 
   &Li {
     display: flex;
@@ -138,7 +141,7 @@
     }
 
     p.active {
-      color: var(--color-success);
+      color: #008a05;
     }
   }
 }
@@ -160,7 +163,7 @@
 
 .hr {
   margin-bottom: 24px;
-  background: var(--color-footer-background);
+  background: #dddddd;
   height: 1px;
 }
 
@@ -177,7 +180,7 @@
   align-items: start;
   padding: 12px;
   width: 100%;
-  border: var(--input-border);
+  border: 1px solid #717171;
   font-family: "Montserrat";
   font-style: normal;
   font-weight: 400;
@@ -191,7 +194,7 @@
     font-weight: 600;
     font-size: 10px;
     line-height: 12px;
-    color: var(--color-text-primary);
+    color: #222222;
   }
 
   &.start {

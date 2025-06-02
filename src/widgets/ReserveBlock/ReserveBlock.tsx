@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
 import styles from "./style.module.scss";
 import { DateRange, type Range } from "react-date-range";
 import { format } from "date-fns";

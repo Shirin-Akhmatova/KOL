@@ -96,10 +96,10 @@ input:active {
   box-shadow: none;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+body {
+  overflow-x: hidden;
+  background: #f9f9f9;
+  /* overflow-y: auto; */
 }
 
 input[type="number"] {

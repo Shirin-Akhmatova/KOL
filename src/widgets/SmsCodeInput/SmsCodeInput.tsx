@@ -6,13 +6,15 @@ interface SmsCodeInputProps {
   onChange: (value: string) => void;
   onBackspace: () => void;
   inputRef: (el: HTMLInputElement | null) => void;
+  disabled?: boolean;
 }
 
 const SmsCodeInput: React.FC<SmsCodeInputProps> = ({
   value,
   onChange,
   onBackspace,
-  inputRef
+  inputRef,
+  disabled = false,
 }) => {
   const localRef = useRef<HTMLInputElement | null>(null);
 
@@ -44,6 +46,7 @@ const SmsCodeInput: React.FC<SmsCodeInputProps> = ({
         onKeyDown={handleKeyDown}
         inputMode="numeric"
         placeholder="_"
+        disabled={disabled}
       />
     </div>
   );

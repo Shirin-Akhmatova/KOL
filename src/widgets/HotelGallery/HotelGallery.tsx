@@ -200,4 +200,4 @@ const HotelGallery = () => {
   );
 };
 
-export default HotelGallery;
+export default HotelGallery; 
