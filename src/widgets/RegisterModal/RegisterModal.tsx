@@ -55,7 +55,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
       dispatch(resetRegisterState());
     }
     if (error) {
-      console.log("Ошибка регистрации из state:", error);
       toast.error(error);
       dispatch(resetRegisterState());
     }
