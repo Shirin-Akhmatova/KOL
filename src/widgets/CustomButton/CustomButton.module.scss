@@ -9,7 +9,7 @@
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  color: #000;
+  color: var(--color-text-primary);
   width: 100%;
   height: 48px;
   font-family: Montserrat;
@@ -17,7 +17,7 @@
   gap: 8px;
 
   &:hover {
-    background-color: #2222220d;
+    background-color: var(--overlay-color-pop-up);
   }
 }
 
