@@ -2,10 +2,9 @@
   position: fixed;
   display: flex;
   justify-content: center;
-  bottom: 20%;
+  bottom: 1rem; // 🔧 Кнопка теперь внизу экрана с отступом 1rem
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1rem;
