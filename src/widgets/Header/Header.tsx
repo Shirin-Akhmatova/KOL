@@ -115,7 +115,7 @@ function Header() {
           isHeaderDefault ? styles.headerDefault : styles.headerScrolled
         }`}
       >
-        <div className={styles.container}>
+        <div className={`${styles.container} container`}>
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
@@ -295,7 +295,7 @@ function Header() {
             height: "415px",
           }}
         >
-          <Calendar/>
+          <Calendar />
         </div>
       )}
     </>
