@@ -1,4 +1,3 @@
-import { blocks } from "../mockData";
 import scss from "./Carts.module.scss";
 
 const MapGeo = () => {
