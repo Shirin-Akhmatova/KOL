@@ -18,8 +18,9 @@ export const registerUser = createAsyncThunk(
   async (phoneNumber: string, { rejectWithValue }) => {
     try {
       // Убираем + и пробелы
-      const cleanedPhoneNumber = phoneNumber.replace(/\+/g, '').replace(/\s/g, '');
+      const cleanedPhoneNumber = phoneNumber.replace(/\+/g, "").replace(/\s/g, "");
 
+      // Важно: путь с конечным слэшем, как в Swagger
       const response = await apiClient.post("/account/register/", {
         phone_number: cleanedPhoneNumber,
       });
@@ -37,10 +38,9 @@ export const registerUser = createAsyncThunk(
           if (serverError.message) return rejectWithValue(serverError.message);
 
           const firstKey = Object.keys(serverError)[0];
-          const message =
-            Array.isArray(serverError[firstKey])
-              ? serverError[firstKey][0]
-              : serverError[firstKey];
+          const message = Array.isArray(serverError[firstKey])
+            ? serverError[firstKey][0]
+            : serverError[firstKey];
           return rejectWithValue(`${firstKey}: ${message}`);
         }
       }
