@@ -9,6 +9,7 @@ $color-border: #c6c6c6;
 $color-danger: #eb4a48;
 $color-danger-hover: #e92320;
 $color-success: #43a047;
+$color-toggle: #717171;
 $color-map-button-gradient: linear-gradient(
   to right,
   #ff6b35,
@@ -85,6 +86,7 @@ $color-mask-gradient: linear-gradient(var(--color-surface) 0 0) content-box,
   --color-mask-gradient: #{$color-mask-gradient};
   --color-shadow: #{$color-shadow};
   --color-border: #{$color-border};
+  --color-toggle: #{$color-toggle};
 }
 
 // color styles darkt theme

@@ -2,23 +2,23 @@ import type { IModalFilters, IRoomTypeFilter } from "./cardFilters.interface";
 
 const roomTypeFilters: IRoomTypeFilter[] = [
   {
-    icon: "/imgs/room_type/family_room.svg",
+    icon: "/src/assets/icons/family_room.svg",
     filterName: "Семейные коттеджи",
   },
   {
-    icon: "/imgs/room_type/budget_room.svg",
+    icon: "/src/assets/icons/budget_room.svg",
     filterName: "Бюджетное жильё",
   },
   {
-    icon: "/imgs/room_type/hotel_room.svg",
+    icon: "/src/assets/icons/hotel_room.svg",
     filterName: "Гостиничные номераи",
   },
   {
-    icon: "/imgs/room_type/lake_house.svg",
+    icon: "/src/assets/icons/lake_house.svg",
     filterName: "Домики у озера",
   },
   {
-    icon: "/imgs/room_type/eco_tourism.svg",
+    icon: "/src/assets/icons/eco_tourism.svg",
     filterName: "Экотуризм",
   },
 ];

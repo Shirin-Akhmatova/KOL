@@ -1,8 +1,9 @@
 import { useForm, FormProvider } from "react-hook-form";
 import AddPhoto from "@/widgets/CreateService/AddPhoto";
 import ObjectForm from "@/widgets/CreateService/ObjectForm";
-import { useEffect } from "react";
 import Amenities from "@/widgets/CreateService/Amenities";
+import Date from "@/widgets/CreateService/Date";
+import { useEffect } from "react";
 
 // Типизация формы (добавь сюда все поля, которые ты используешь)
 export interface FormData {
@@ -60,6 +61,7 @@ const CreateService = () => {
         <AddPhoto />
         <ObjectForm />
         <Amenities />
+        <Date/>
         <div style={{ marginTop: "20px" }}>
           <button type="submit">Сохранить</button>
         </div>
