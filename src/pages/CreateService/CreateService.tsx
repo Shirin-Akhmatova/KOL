@@ -4,6 +4,7 @@ import ObjectForm from "@/widgets/CreateService/ObjectForm";
 import Amenities from "@/widgets/CreateService/Amenities";
 import Date from "@/widgets/CreateService/Date";
 import { useEffect } from "react";
+import Amenities from "@/widgets/CreateService/Amenities";
 
 // Типизация формы (добавь сюда все поля, которые ты используешь)
 export interface FormData {
