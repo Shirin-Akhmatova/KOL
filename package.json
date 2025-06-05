@@ -19,6 +19,7 @@
     "chart.js": "^4.4.9",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "firebase": "^11.8.1",
     "i18next": "^25.1.2",
     "libphonenumber-js": "^1.12.8",
     "lodash": "^4.17.21",

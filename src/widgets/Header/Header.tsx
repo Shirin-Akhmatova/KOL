@@ -234,6 +234,7 @@ function Header() {
           </div>
         </div>
       </header>
+
       {isModalOpen && (
         <div ref={searchModalRef}>
           <SearchModal
