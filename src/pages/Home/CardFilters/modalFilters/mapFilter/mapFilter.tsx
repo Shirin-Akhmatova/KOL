@@ -1,4 +1,4 @@
-import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
+// import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import globalStyles from "../../cardFilters.module.scss";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./mapFilter.module.scss";
@@ -61,29 +61,30 @@ function MapWithCoords() {
   }, []);
 
   return (
-    <YMaps query={{ apikey: import.meta.env.VITE_YANDEX_MAP_API }}>
-      <Map
-        className={styles.map}
-        defaultState={{ center: [41.97, 77.29], zoom: 7 }}
-        width="100%"
-        height="100%"
-        instanceRef={(ref) => {
-          if (ref) mapRef.current = ref;
-          setIsMapReady(true);
-        }}
-      >
-        <ZoomControl options={{ position: { right: 10, top: 10 } }} />
-        {getCoords && (
-          <Placemark
-            geometry={[getCoords.lat, getCoords.lng]}
-            options={{
-              preset: "islands#violetStretchyIcon",
-              iconColor: "#ff5a5f",
-            }}
-          />
-        )}
-      </Map>
-    </YMaps>
+    <div></div>
+    // <YMaps query={{ apikey: import.meta.env.VITE_YANDEX_MAP_API }}>
+    //   <Map
+    //     className={styles.map}
+    //     defaultState={{ center: [41.97, 77.29], zoom: 7 }}
+    //     width="100%"
+    //     height="100%"
+    //     instanceRef={(ref) => {
+    //       if (ref) mapRef.current = ref;
+    //       setIsMapReady(true);
+    //     }}
+    //   >
+    //     <ZoomControl options={{ position: { right: 10, top: 10 } }} />
+    //     {getCoords && (
+    //       <Placemark
+    //         geometry={[getCoords.lat, getCoords.lng]}
+    //         options={{
+    //           preset: "islands#violetStretchyIcon",
+    //           iconColor: "#ff5a5f",
+    //         }}
+    //       />
+    //     )}
+    //   </Map>
+    // </YMaps>
   );
 }
 
