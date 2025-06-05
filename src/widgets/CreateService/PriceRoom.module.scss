@@ -1,0 +1,120 @@
+.PriceRoom {
+  .content {
+    display: flex;
+    justify-content: space-between;
+    h2 {
+      font-size: 2rem;
+    }
+    p {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+    }
+    h3 {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+    }
+    h4 {
+      font-size: 18px;
+      font-weight: 500;
+      span {
+        color: var(--color-text-secondary);
+      }
+    }
+    button {
+      border-radius: 50%;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    .price_block {
+      .inputPrice {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        span {
+          font-weight: 500;
+        }
+        input {
+          width: 100%;
+          cursor: pointer;
+          font-size: 1rem;
+        }
+      }
+      .specialPrice {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+      .cart {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        border: 2px solid var(--color-input-border);
+        .inputGroup {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 1rem;
+          .inputWrapper {
+            input {
+              font-size: 1.5rem;
+              font-weight: 700;
+              &::placeholder {
+                color: black;
+              }
+            }
+            span {
+              font-size: 1.5rem;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+      label {
+        cursor: pointer;
+      }
+    }
+    .room_block {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .rooms {
+        margin-top: 2rem;
+        .room {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1rem;
+          .plus_minus {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            button {
+              width: 30px;
+              height: 30px;
+              font-size: 0.8rem;
+            }
+          }
+        }
+      }
+      .counter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem;
+        width: 360px;
+        margin-top: 3rem;
+        border-radius: 1rem;
+        border: 2px solid var(--color-input-border);
+        button {
+          width: 55px;
+          height: 55px;
+          font-size: 2rem;
+        }
+        span {
+          font-size: 5rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

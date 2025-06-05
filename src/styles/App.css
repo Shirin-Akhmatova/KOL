@@ -6,11 +6,10 @@
   padding: 0;
 }
 .container {
-  max-width: 1920px;
+  max-width: 1440px;
   margin: 0 auto;
   padding-inline: 2rem;
 }
-
 .logo {
   height: 6em;
   padding: 1.5em;

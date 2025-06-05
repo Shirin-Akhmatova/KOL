@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { registerUser, resetRegisterState } from "../../app/services/redux/Register/registerSlice";
+import {
+  registerUser,
+  resetRegisterState,
+} from "../../app/services/redux/Register/registerSlice";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
+import { signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { auth, provider } from "../../shared/ui/firebase";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
@@ -31,7 +36,9 @@ const formatPhoneNumber = (num: string) => {
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error, success } = useSelector((state: RootState) => state.register);
+  const { loading, error, success } = useSelector(
+    (state: RootState) => state.register
+  );
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
@@ -76,13 +83,35 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      console.log("User info:", user);
+      toast.success(`Добро пожаловать, ${user.displayName || "пользователь"}!`);
+
+      onClose?.();
+    } catch (err: any) {
+      toast.error("Ошибка при входе через Google");
+      console.error(err);
+    }
+  };
+
+  // const handleGoogleRedirectSignIn = async () => {
+  //   await signInWithRedirect(auth, provider);
+  //   console.log("ERRRORRR");
+  // };
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.overlay}>
         <div className={styles.register}>
           <header className={styles.register__header}>
-            <h4 className={styles.register__subtitle}>Log in or Registration</h4>
+            <h4 className={styles.register__subtitle}>
+              Log in or Registration
+            </h4>
             <button className={styles.register__close} onClick={onClose}>
               <img src={exitIcon} alt="exit" />
             </button>
@@ -109,7 +138,10 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
                   ? "linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
                   : "#ccc"
               }
-              style={{ border: "none", cursor: isValid && !loading ? "pointer" : "not-allowed" }}
+              style={{
+                border: "none",
+                cursor: isValid && !loading ? "pointer" : "not-allowed",
+              }}
               disabled={!isValid || loading}
             />
           </form>
@@ -117,9 +149,19 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <div className={styles.register__divider}>Or connect using</div>
 
           <div className={styles.buttonsWrapper}>
-            <CustomButton text="Continue with Google" icon={<img src={googleIcon} alt="google" />} />
-            <CustomButton text="Continue with Apple" icon={<img src={appleIcon} alt="apple" />} />
-            <CustomButton text="Continue with eMail" icon={<img src={emailIcon} alt="email" />} />
+            <CustomButton
+              text="Continue with Google"
+              icon={<img src={googleIcon} alt="google" />}
+              onClick={handleGoogleSignIn}
+            />
+            <CustomButton
+              text="Continue with Apple"
+              icon={<img src={appleIcon} alt="apple" />}
+            />
+            <CustomButton
+              text="Continue with eMail"
+              icon={<img src={emailIcon} alt="email" />}
+            />
           </div>
         </div>
 
