@@ -127,7 +127,6 @@ function Header() {
           >
             Живи у озера - дыши горами
           </h3>
-
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
             <div className={styles.menu}>
@@ -235,7 +234,6 @@ function Header() {
           </div>
         </div>
       </header>
-
       {isModalOpen && (
         <div ref={searchModalRef}>
           <SearchModal
@@ -255,7 +253,7 @@ function Header() {
           isCalendarOpen ? styles.calendarWrapperOpen : ""
         }`}
       >
-        <Calendar />
+        <Calendar onClose={() => setIsCalendarOpen(false)} />
       </div>
 
       {isTravelersModalOpen && (
@@ -283,21 +281,6 @@ function Header() {
       )}
 
       {isRegisterOpen && <Register onClose={() => setIsRegisterOpen(false)} />}
-      {isCalendarOpen && (
-        <div
-          style={{
-            position: "absolute",
-            top: "130px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 10,
-            width: "446px",
-            height: "415px",
-          }}
-        >
-          <Calendar />
-        </div>
-      )}
     </>
   );
 }
