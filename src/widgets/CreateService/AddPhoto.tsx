@@ -15,7 +15,6 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { v4 as uuidv4 } from "uuid";
 import Cropper from "react-easy-crop";
 import type { Area, Point } from "react-easy-crop";
 import { getCroppedImg } from "../../shared/ui/cropImage";
@@ -25,6 +24,10 @@ type ImageItem = {
   file: File;
   preview: string;
   croppedPreview?: string;
+};
+
+const generateId = () => {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 };
 
 const AddPhoto = () => {
@@ -45,7 +48,11 @@ const AddPhoto = () => {
           new Promise<ImageItem>((resolve) => {
             const reader = new FileReader();
             reader.onload = () =>
-              resolve({ id: uuidv4(), file, preview: reader.result as string });
+              resolve({
+                id: generateId(),
+                file,
+                preview: reader.result as string,
+              });
             reader.readAsDataURL(file);
           })
       )
@@ -128,7 +135,7 @@ const AddPhoto = () => {
         if (Array.isArray(images))
           setImages(
             images.map((img: any) => ({
-              id: uuidv4(),
+              id: generateId(),
               file: new File([], img.file),
               preview: img.preview,
               croppedPreview: img.preview,

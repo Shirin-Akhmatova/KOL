@@ -24,7 +24,7 @@
         transition: 0.4s;
         border: 1px solid transparent;
         &.active {
-          border: 1px solid #797979;
+          border: 1px solid var(--color-input-border);
           background: rgba(240, 240, 240, 0.633);
         }
         img {
@@ -40,7 +40,7 @@
     input {
       padding: 0.8rem 1rem;
       border-radius: 0.5rem;
-      border: 2px solid #b0b0b0;
+      border: 2px solid var(--color-input-border);
       font-size: 1rem;
       color: #5b5b5b;
       width: 100%;
@@ -48,7 +48,7 @@
     select {
       padding: 0.8rem 1rem;
       border-radius: 0.5rem;
-      border: 2px solid #b0b0b0;
+      border: 2px solid var(--color-input-border);
       font-size: 1rem;
       color: #5b5b5b;
       width: 100%;
@@ -56,11 +56,12 @@
     textarea {
       padding: 0.8rem 1rem;
       border-radius: 0.5rem;
-      border: 2px solid #b0b0b0;
+      border: 2px solid var(--color-input-border);
       background: white;
       font-size: 0.9rem;
       color: #5b5b5b;
       width: 100%;
+      resize: none;
     }
   }
 }

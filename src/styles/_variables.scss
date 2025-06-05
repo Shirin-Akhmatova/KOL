@@ -1,22 +1,36 @@
 // main colors from figma
-$color-primary: #00B2A9;
-$color-accent: #35FF5A;
-$color-text-primary: #1A1A1A;
+$color-primary: #16bbb4;
+$color-accent: #35ff5a;
+$color-text-primary: #1a1a1a;
 $color-text-secondary: #666666;
-$color-background: #F9F9F9;
-$color-surface: #FFFFFF;
-$color-danger: #E53935;
-$color-success: #43A047;
-$color-map-button-gradient: linear-gradient(to right, #FF6B35, #FF875C, #FF6B35);
-$color-footer-background: #E1E1E1;
+$color-background: #f9f9f9;
+$color-surface: #ffffff;
+$color-border: #c6c6c6;
+$color-danger: #eb4a48;
+$color-danger-hover: #e92320;
+$color-success: #43a047;
+$color-toggle: #717171;
+$color-map-button-gradient: linear-gradient(
+  to right,
+  #ff6b35,
+  #ff875c,
+  #ff6b35
+);
+$color-footer-background: #e1e1e1;
 
 $color-shadow: rgba(0, 0, 0, 0.2);
 
 // gradient animation around heder's elems
-$color-border-gradient-animation: linear-gradient( 270deg, #00b2a940, #ff6b3540, #00cbc140, #ff7a4a40);
+$color-border-gradient-animation: linear-gradient(
+  270deg,
+  #00b2a940,
+  #ff6b3540,
+  #00cbc140,
+  #ff7a4a40
+);
 
 // pop-up
-$overlay-color-pop-up: rgba(0, 0, 0, .5);
+$overlay-color-pop-up: rgba(0, 0, 0, 0.5);
 $overlay-blur-pop-up: blur(2px);
 $box-shadow: 0 0 1.25rem $color-shadow;
 
@@ -25,46 +39,54 @@ $logo-hover: drop-shadow(0 0 2em #646cffaa);
 $logo-react-hover: drop-shadow(0 0 2em #61dafbaa);
 
 // input
-$color-input-border: #B0B0B0;
-$input-border: 0.07rem solid $color-input-border;
+$color-input-border: #b0b0b0;
+$input-border: 0.1rem solid $color-input-border;
 $input-error: #ff4d4f;
 
 // btn
-$color-primory-button-gradient: linear-gradient(to right, #16BBB4, #50C9C4, #15B3AC);
+$color-primory-button-gradient: linear-gradient(
+  to right,
+  #16bbb4,
+  #50c9c4,
+  #15b3ac
+);
 
 // mask gradient
-$color-mask-gradient: linear-gradient(var(--color-surface) 0 0) content-box, linear-gradient(var(--color-surface) 0 0);
+$color-mask-gradient: linear-gradient(var(--color-surface) 0 0) content-box,
+  linear-gradient(var(--color-surface) 0 0);
 
-// breakpoints 
+// breakpoints
 
 // pading
 
 // margin
 
-
 :root {
-    --color-primary: #{$color-primary};
-    --color-accent: #{$color-accent};
-    --color-text-primary: #{$color-text-primary};
-    --color-text-secondary: #{$color-text-secondary};
-    --color-background: #{$color-background};
-    --color-surface: #{$color-surface};
-    --color-danger: #{$color-danger};
-    --color-success: #{$color-success};
-    --color-map-button-gradient: #{$color-map-button-gradient};
-    --color-footer-background: #{$color-footer-background};
-    --color-border-gradient-animation: #{$color-border-gradient-animation};
-    --overlay-color-pop-up: #{$overlay-color-pop-up};
-    --overlay-blur-pop-up: #{$overlay-blur-pop-up};
-    --color-input-border: #{$color-input-border};
-    --input-border: #{$input-border};
-    --color-primory-button-gradient: #{$color-primory-button-gradient};
-    --box-shadow: #{$box-shadow};
-    --logo-hover: #{$logo-hover};
-    --logo-react-hover: #{$logo-react-hover};
-    --input-error: #{$input-error};
-    --color-mask-gradient: #{$color-mask-gradient};
-    --color-shadow: #{$color-shadow};
+  --color-primary: #{$color-primary};
+  --color-accent: #{$color-accent};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-background: #{$color-background};
+  --color-surface: #{$color-surface};
+  --color-danger: #{$color-danger};
+  --color-danger-hover: #{$color-danger-hover};
+  --color-success: #{$color-success};
+  --color-map-button-gradient: #{$color-map-button-gradient};
+  --color-footer-background: #{$color-footer-background};
+  --color-border-gradient-animation: #{$color-border-gradient-animation};
+  --overlay-color-pop-up: #{$overlay-color-pop-up};
+  --overlay-blur-pop-up: #{$overlay-blur-pop-up};
+  --color-input-border: #{$color-input-border};
+  --input-border: #{$input-border};
+  --color-primory-button-gradient: #{$color-primory-button-gradient};
+  --box-shadow: #{$box-shadow};
+  --logo-hover: #{$logo-hover};
+  --logo-react-hover: #{$logo-react-hover};
+  --input-error: #{$input-error};
+  --color-mask-gradient: #{$color-mask-gradient};
+  --color-shadow: #{$color-shadow};
+  --color-border: #{$color-border};
+  --color-toggle: #{$color-toggle};
 }
 
 // color styles darkt theme

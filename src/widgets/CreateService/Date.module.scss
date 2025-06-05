@@ -1,0 +1,158 @@
+.Date {
+  margin-block: 4rem;
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    gap: 4rem;
+
+    .column {
+      position: relative;
+
+      &:first-child {
+        width: 30%;
+      }
+
+      &:last-child {
+        width: 45%;
+      }
+    }
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-block: 2rem 1rem;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--color-input-border);
+    padding: 1rem 1.7rem;
+    span {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+
+    input {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+
+    &:first-of-type {
+      border-radius: 20px 20px 0 0;
+      border-bottom-width: 1px;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 20px 20px;
+      border-top-width: 1px;
+    }
+  }
+  .time {
+    display: flex;
+    gap: 2rem;
+    margin-block: 2rem;
+    .timeInput {
+      width: 84px;
+      height: 56px;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      text-align: center;
+      border: 2px solid var(--color-input-border);
+    }
+
+    .timeGroup {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      span {
+        font-size: 1.5rem;
+      }
+      div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1rem;
+      }
+    }
+  }
+
+  .switchWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    border: 2px solid var(--color-input-border);
+    border-radius: 0.5rem;
+    padding: 1rem;
+  }
+
+  .switchLabel {
+    position: relative;
+    display: inline-block;
+    width: 4rem;
+    height: 2.3rem;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--color-toggle);
+      transition: 0.4s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      left: 4px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--color-primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+  }
+
+  .switchText {
+    strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1rem;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}

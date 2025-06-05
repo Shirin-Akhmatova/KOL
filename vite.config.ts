@@ -19,6 +19,8 @@ export default defineConfig({
         target: "http://localhost:5005",
         changeOrigin: true,
         secure: false,
+        // Если backend руты без префикса /api, добавьте pathRewrite:
+        // pathRewrite: { "^/api": "" },
       },
     },
   },
