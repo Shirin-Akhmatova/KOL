@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:5005",
+        target: "https://kol.kipoha.fun",
         changeOrigin: true,
         secure: false,
         // Если backend руты без префикса /api, добавьте pathRewrite:
