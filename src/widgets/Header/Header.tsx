@@ -38,6 +38,7 @@ function Header() {
 
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -47,7 +48,6 @@ function Header() {
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
     setIsModalOpen(false);
-    setIsCalendarOpen(true);
   };
 
   const openTravelersModal = () => {
@@ -98,13 +98,21 @@ function Header() {
       ) {
         closeTravelersModal();
       }
+
+      if (
+        isCalendarOpen &&
+        calendarRef.current &&
+        !calendarRef.current.contains(target)
+      ) {
+        setIsCalendarOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isModalOpen, isTravelersModalOpen]);
+  }, [isModalOpen, isTravelersModalOpen, isCalendarOpen]);
 
   const isHeaderDefault = isModalOpen || !scrolled;
 
@@ -115,7 +123,7 @@ function Header() {
           isHeaderDefault ? styles.headerDefault : styles.headerScrolled
         }`}
       >
-        <div className={`${styles.container} container`}>
+        <div className={styles.container}>
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
@@ -250,13 +258,16 @@ function Header() {
         </div>
       )}
 
-      <div
-        className={`${styles.calendarWrapper} ${
-          isCalendarOpen ? styles.calendarWrapperOpen : ""
-        }`}
-      >
-        <Calendar />
-      </div>
+      {isCalendarOpen && (
+        <div
+          ref={calendarRef}
+          className={`${styles.calendarWrapper} ${
+            isCalendarOpen ? styles.calendarWrapperOpen : ""
+          }`}
+        >
+          <Calendar onClose={() => setIsCalendarOpen(false)} />
+        </div>
+      )}
 
       {isTravelersModalOpen && (
         <div
@@ -283,21 +294,6 @@ function Header() {
       )}
 
       {isRegisterOpen && <Register onClose={() => setIsRegisterOpen(false)} />}
-      {isCalendarOpen && (
-        <div
-          style={{
-            position: "absolute",
-            top: "130px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 10,
-            width: "446px",
-            height: "415px",
-          }}
-        >
-          <Calendar />
-        </div>
-      )}
     </>
   );
 }
