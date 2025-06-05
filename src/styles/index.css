@@ -86,16 +86,6 @@ input:focus {
   box-shadow: none;
 }
 
-a:active,
-button:active,
-textarea:active,
-select:active,
-input:active {
-  outline: none;
-  /* background: transparent; */
-  box-shadow: none;
-}
-
 body {
   overflow-x: hidden;
   background: #f9f9f9;
