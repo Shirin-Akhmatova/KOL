@@ -38,6 +38,7 @@ function Header() {
 
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
+  const calendarRef = useRef<HTMLDivElement>(null);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -47,7 +48,6 @@ function Header() {
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
     setIsModalOpen(false);
-    setIsCalendarOpen(true);
   };
 
   const openTravelersModal = () => {
@@ -98,13 +98,21 @@ function Header() {
       ) {
         closeTravelersModal();
       }
+
+      if (
+        isCalendarOpen &&
+        calendarRef.current &&
+        !calendarRef.current.contains(target)
+      ) {
+        setIsCalendarOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isModalOpen, isTravelersModalOpen]);
+  }, [isModalOpen, isTravelersModalOpen, isCalendarOpen]);
 
   const isHeaderDefault = isModalOpen || !scrolled;
 
@@ -115,7 +123,7 @@ function Header() {
           isHeaderDefault ? styles.headerDefault : styles.headerScrolled
         }`}
       >
-        <div className={`${styles.container} container`}>
+        <div className={styles.container}>
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
@@ -127,6 +135,7 @@ function Header() {
           >
             Живи у озера - дыши горами
           </h3>
+
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
             <div className={styles.menu}>
@@ -249,13 +258,16 @@ function Header() {
         </div>
       )}
 
-      <div
-        className={`${styles.calendarWrapper} ${
-          isCalendarOpen ? styles.calendarWrapperOpen : ""
-        }`}
-      >
-        <Calendar onClose={() => setIsCalendarOpen(false)} />
-      </div>
+      {isCalendarOpen && (
+        <div
+          ref={calendarRef}
+          className={`${styles.calendarWrapper} ${
+            isCalendarOpen ? styles.calendarWrapperOpen : ""
+          }`}
+        >
+          <Calendar onClose={() => setIsCalendarOpen(false)} />
+        </div>
+      )}
 
       {isTravelersModalOpen && (
         <div
