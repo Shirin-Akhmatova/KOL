@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import AddPhoto from "@/widgets/CreateService/AddPhoto";
 import ObjectForm from "@/widgets/CreateService/ObjectForm";
 import Amenities from "@/widgets/CreateService/Amenities";
 import Date from "@/widgets/CreateService/Date";
-import { useEffect, useCallback } from "react";
 import PriceRoom from "@/widgets/CreateService/PriceRoom";
 import { debounce } from "lodash";
 
