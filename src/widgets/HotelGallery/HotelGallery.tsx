@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import hotel1 from '../../assets/images/hotel1.png';
 import hotel2 from '../../assets/images/hotel2.png';
 import hotel3 from '../../assets/images/hotel3.png';
@@ -26,49 +26,15 @@ import './hotelGallerry.scss';
 import './carousel.scss';
 
 import AnimationBlock from '../animationBlock/AnimationBlock';
-import ReserveBlock from '../ReserveBlock/ReserveBlock';
 
 const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
 
 const HotelGallery = () => {
   const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
-  const [reserveVisible, setReserveVisible] = useState(false);
-  const [reserveFixed, setReserveFixed] = useState(false);
 
-  const reserveRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const midRef = useRef<HTMLDivElement>(null);
-
-  // Для плавного подъема при открытии
-  useEffect(() => {
-    // Показываем ReserveBlock с анимацией через CSS (opacity + transform)
-    setReserveVisible(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!reserveRef.current || !bottomRef.current || !midRef.current) return;
-
-      const reserveHeight = reserveRef.current.offsetHeight;
-      const bottomRect = bottomRef.current.getBoundingClientRect();
-      const midRect = midRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Логика:
-      // Если мы "прокрутили" до блока mid (его верх виден), фиксируем ReserveBlock
-      // Если ниже mid, то снимаем фиксированное позиционирование (оставляем внутри flow)
-      if (midRect.top <= windowHeight - reserveHeight - 20) {
-        setReserveFixed(true);
-      } else {
-        setReserveFixed(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // вызовем сразу, чтобы учесть позицию при загрузке
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Управление каруселью
   const setImage = (image: string) => setCurrentImage(image);
@@ -122,14 +88,6 @@ const HotelGallery = () => {
           ))}
         </div>
       )}
-
-      {/* ReserveBlock */}
-      <div
-        ref={reserveRef}
-        className={`reserve-container ${reserveVisible ? 'visible' : ''} ${reserveFixed ? 'fixed' : ''}`}
-      >
-        <ReserveBlock />
-      </div>
 
       {/* Блоки mid и bottom */}
       <div className="bottom" ref={bottomRef}>
@@ -200,4 +158,4 @@ const HotelGallery = () => {
   );
 };
 
-export default HotelGallery; 
+export default HotelGallery;
