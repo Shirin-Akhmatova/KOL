@@ -1,6 +1,6 @@
 FROM node:20.11.0-alpine
 
-WORKDIR /opt/services/core_frontend/
+WORKDIR /opt/kol_frontend/
 
 COPY . .
 
