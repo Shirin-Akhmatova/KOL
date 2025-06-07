@@ -14,6 +14,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@pbe/react-yandex-maps": "^1.2.5",
+    "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.8.1",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
