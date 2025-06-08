@@ -1,4 +1,3 @@
-import React from 'react'
 import './map.scss'
 import mapImage from '../../assets/images/map.png'
 function Map() {

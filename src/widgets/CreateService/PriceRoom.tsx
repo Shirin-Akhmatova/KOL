@@ -6,11 +6,7 @@ import type { FormData } from "@/pages/CreateService/CreateService";
 
 const rooms = ["Спальни", "Кровати", "Ванные"];
 const PriceRoom = () => {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useFormContext<FormData>();
+  const { register, watch } = useFormContext<FormData>();
 
   useEffect(() => {}, [watch]);
 

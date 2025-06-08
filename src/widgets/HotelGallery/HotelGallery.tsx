@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import hotel1 from '../../assets/images/hotel1.png';
 import hotel2 from '../../assets/images/hotel2.png';
 import hotel3 from '../../assets/images/hotel3.png';

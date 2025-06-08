@@ -2,6 +2,12 @@ import axios from "axios";
 
 const translationCache = new Map<string, string>();
 
+interface TranslationResponse {
+  responseData: {
+    translatedText: string;
+  };
+}
+
 export const translateText = async (
   text: string,
   current: string,
@@ -15,7 +21,7 @@ export const translateText = async (
   }
 
   try {
-    const response = await axios.get(
+    const response = await axios.get<TranslationResponse>(
       "https://api.mymemory.translated.net/get",
       {
         params: {
@@ -28,7 +34,6 @@ export const translateText = async (
     );
 
     const translatedText = response.data.responseData.translatedText;
-
     translationCache.set(cacheKey, translatedText);
 
     return translatedText;

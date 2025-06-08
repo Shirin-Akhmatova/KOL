@@ -10,8 +10,8 @@ import {
   resetGoogleLoginState,
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../../shared/ui/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
