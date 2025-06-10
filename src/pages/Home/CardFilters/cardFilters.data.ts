@@ -78,7 +78,7 @@ const generateRandomNumber = (min: number, max: number) => {
 
 const modalFilters = (): IModalFilters => {
   function priceArray(maxPrice: number, maxCottage: number, count: number) {
-    const arr = new Array();
+    const arr = [];
     for (let i = 0; i < count; i++) {
       const price = generateRandomNumber(0, maxPrice);
       const cottage = generateRandomNumber(20, maxCottage);

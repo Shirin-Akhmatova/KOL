@@ -74,30 +74,6 @@
     }
   }
 
-  .reserve-container {
-    width: 372px;
-    position: fixed;
-    right: 48px;
-    bottom: 20px;
-    transition: all 0.3s ease;
-    z-index: 2000;
-
-    &.absolute {
-      position: absolute;
-      right: 48px;
-      bottom: auto;
-      transform: translateY(0);
-    }
-
-    &.bottom {
-      position: relative;
-      right: auto;
-      margin: 20px auto;
-      width: 100%;
-      max-width: 714px;
-    }
-  }
-
   .bottom {
     max-width: 714px;
     display: flex;
@@ -321,3 +297,96 @@
   }
 }
 
+// carousel.scss
+.carousel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .carousel-container {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+
+    .carousel-image {
+      max-height: 80vh;
+      max-width: 80vw;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: white;
+      font-size: 2rem;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+
+      &.left {
+        left: 10px;
+      }
+
+      &.right {
+        right: 10px;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .carousel-thumbnails {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+
+      .thumbnail {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+
+        &.active {
+          opacity: 1;
+          border: 2px solid white;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    .close-carousel {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

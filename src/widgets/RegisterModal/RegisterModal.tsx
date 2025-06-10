@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { registerUser, resetRegisterState } from "../../app/services/redux/Register/registerSlice";
+import {
+  registerUser,
+  resetRegisterState,
+} from "../../app/services/redux/Register/registerSlice";
+import {
+  loginWithGoogle,
+  resetGoogleLoginState,
+} from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
+import { auth, provider } from "../../shared/ui/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
@@ -31,7 +40,16 @@ const formatPhoneNumber = (num: string) => {
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { loading, error, success } = useSelector((state: RootState) => state.register);
+
+  const { loading, error, success } = useSelector(
+    (state: RootState) => state.register
+  );
+
+  const {
+    loading: googleLoading,
+    error: googleError,
+    success: googleSuccess,
+  } = useSelector((state: RootState) => state.googleLogin);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
@@ -43,22 +61,9 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid || loading) return;
-
     const fullPhone = `${countryCode}${phoneNumber}`;
     dispatch(registerUser(fullPhone));
   };
-
-  useEffect(() => {
-    if (success) {
-      toast.success("Номер успешно отправлен!");
-      setShowModal(true);
-      dispatch(resetRegisterState());
-    }
-    if (error) {
-      toast.error(error);
-      dispatch(resetRegisterState());
-    }
-  }, [success, error, dispatch]);
 
   const handleCountrySelect = (code: string) => {
     setCountryCode(code);
@@ -76,13 +81,60 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+
+      const idToken = await result.user.getIdToken();
+
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+
+      dispatch(
+        loginWithGoogle({
+          id_token: idToken,
+          access_token: accessToken,
+        })
+      );
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      toast.error("Ошибка при входе через Google");
+    }
+  };
+
+  useEffect(() => {
+    if (success) {
+      toast.success("Номер успешно отправлен!");
+      setShowModal(true);
+      dispatch(resetRegisterState());
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(resetRegisterState());
+    }
+  }, [success, error, dispatch]);
+
+  useEffect(() => {
+    if (googleSuccess) {
+      toast.success("Успешный вход через Google!");
+      dispatch(resetGoogleLoginState());
+      onClose?.();
+    }
+    if (googleError) {
+      toast.error(googleError);
+      dispatch(resetGoogleLoginState());
+    }
+  }, [googleSuccess, googleError, dispatch, onClose]);
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.overlay}>
         <div className={styles.register}>
           <header className={styles.register__header}>
-            <h4 className={styles.register__subtitle}>Log in or Registration</h4>
+            <h4 className={styles.register__subtitle}>
+              Log in or Registration
+            </h4>
             <button className={styles.register__close} onClick={onClose}>
               <img src={exitIcon} alt="exit" />
             </button>
@@ -109,7 +161,10 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
                   ? "linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
                   : "#ccc"
               }
-              style={{ border: "none", cursor: isValid && !loading ? "pointer" : "not-allowed" }}
+              style={{
+                border: "none",
+                cursor: isValid && !loading ? "pointer" : "not-allowed",
+              }}
               disabled={!isValid || loading}
             />
           </form>
@@ -117,9 +172,20 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <div className={styles.register__divider}>Or connect using</div>
 
           <div className={styles.buttonsWrapper}>
-            <CustomButton text="Continue with Google" icon={<img src={googleIcon} alt="google" />} />
-            <CustomButton text="Continue with Apple" icon={<img src={appleIcon} alt="apple" />} />
-            <CustomButton text="Continue with eMail" icon={<img src={emailIcon} alt="email" />} />
+            <CustomButton
+              text={googleLoading ? "Loading..." : "Continue with Google"}
+              icon={<img src={googleIcon} alt="google" />}
+              onClick={handleGoogleSignIn}
+              disabled={googleLoading}
+            />
+            <CustomButton
+              text="Continue with Apple"
+              icon={<img src={appleIcon} alt="apple" />}
+            />
+            <CustomButton
+              text="Continue with eMail"
+              icon={<img src={emailIcon} alt="email" />}
+            />
           </div>
         </div>
 

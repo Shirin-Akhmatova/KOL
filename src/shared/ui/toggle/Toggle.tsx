@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import toggleIcon from '../../../assets/icons/toggle.svg';
 import './toggle.scss';
 

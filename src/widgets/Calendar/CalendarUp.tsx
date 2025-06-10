@@ -309,7 +309,8 @@ const Calendar: React.FC<CalendarProps> = ({
         {daysArray.map((_, i) => {
           const dayNum = i - startDay + 1;
           if (dayNum < 1 || dayNum > daysInMonth) {
-            return <div key={i} className="day empty" />;
+            return;
+            // <div key={i} className="day empty" />
           }
 
           const start = isStart(dayNum);

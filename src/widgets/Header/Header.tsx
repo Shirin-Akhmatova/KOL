@@ -138,7 +138,6 @@ function Header() {
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
-
           <h3
             className={`${styles.title} ${
               scrolled ? styles.titleScrolled : ""
@@ -146,7 +145,6 @@ function Header() {
           >
             Живи у озера - дыши горами
           </h3>
-
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
             <div className={styles.menu}>
@@ -276,7 +274,9 @@ function Header() {
             <Calendar
               values={datePicker}
               onChangeValue={setDatePicker}
-              onClose={() => {}}
+              onClose={() => {
+                setIsCalendarOpen(false);
+              }}
             />
           </div>
         )}

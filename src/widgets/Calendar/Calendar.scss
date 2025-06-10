@@ -84,7 +84,6 @@
     grid-template-columns: repeat(7, 1fr);
     gap: 0;
     width: 100%;
-    height: 303px;
     margin: 0 auto;
   }
 
@@ -115,6 +114,9 @@
     text-align: center;
     cursor: pointer;
     z-index: 1;
+    margin: 0;       // добавлено
+    padding: 0;      // добавлено
+    border: none;    // добавлено
 
     &.empty {
       cursor: default;
@@ -123,6 +125,8 @@
 
     &.in-range {
       background-color: var(--color-footer-background);
+      box-shadow: inset 1px 0 var(--color-footer-background), inset -1px 0 var(--color-footer-background); // добавлено для плавного перехода
+      margin: 0;   // убираем отрицательные margin
     }
 
     &.start.in-range {
@@ -138,16 +142,16 @@
       background-color: var(--color-footer-background);
       border-top-right-radius: 26px;
       border-bottom-right-radius: 26px;
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
-      margin-left: -1px;
+      border-top-left-radius: 1px;
+      border-bottom-left-radius: 1px;
+      margin-left: 0;   // изменено с -1px на 0
     }
 
     .circle {
       width: 34px;
       height: 34px;
       border-radius: 50%;
-      background-color: var(--color-text-secondary);
+      background-color: black;
       color: var(--color-surface);
       display: flex;
       align-items: center;
@@ -219,3 +223,4 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
 }
+

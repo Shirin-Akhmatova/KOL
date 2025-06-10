@@ -1,11 +1,6 @@
-import React from 'react'
-
 function useAuth() {
-  return (
-    <div>
-      
-    </div>
-  )
+  // тут может быть логика авторизации в будущем
+  return {};
 }
 
-export default useAuth
+export default useAuth;
