@@ -1,31 +1,32 @@
-import { useState, useRef } from 'react';
-import hotel1 from '../../assets/images/hotel1.png';
-import hotel2 from '../../assets/images/hotel2.png';
-import hotel3 from '../../assets/images/hotel3.png';
-import hotel4 from '../../assets/images/hotel4.png';
-import hotel5 from '../../assets/images/hotel5.png';
+import { useState, useRef } from "react";
+import hotel1 from "../../assets/images/hotel1.png";
+import hotel2 from "../../assets/images/hotel2.png";
+import hotel3 from "../../assets/images/hotel3.png";
+import hotel4 from "../../assets/images/hotel4.png";
+import hotel5 from "../../assets/images/hotel5.png";
 
-import goldIcon from '../../assets/icons/gold.svg';
-import gold2Icon from '../../assets/icons/gold2.svg';
-import starIcon from '../../assets/icons/star.svg';
-import profile from '../../assets/images/profile.png';
+import goldIcon from "../../assets/icons/gold.svg";
+import gold2Icon from "../../assets/icons/gold2.svg";
+import starIcon from "../../assets/icons/star.svg";
+import profile from "../../assets/images/profile.png";
 
-import firstIcon from '../../assets/icons/firstIcon.svg';
-import secondIcon from '../../assets/icons/secondIcon.svg';
-import thirdIcon from '../../assets/icons/thirdIcon.svg';
-import fourthIcon from '../../assets/icons/fourthIcon.svg';
-import fifthIcon from '../../assets/icons/fifthIcon.svg';
-import sixthIcon from '../../assets/icons/sixthIcon.svg';
-import seventhIcon from '../../assets/icons/seventhIcon.svg';
-import eighthIcon from '../../assets/icons/eighthIcon.svg';
-import ninthIcon from '../../assets/icons/ninthIcon.svg';
-import tenthIcon from '../../assets/icons/tenthIcon.svg';
+import firstIcon from "../../assets/icons/firstIcon.svg";
+import secondIcon from "../../assets/icons/secondIcon.svg";
+import thirdIcon from "../../assets/icons/thirdIcon.svg";
+import fourthIcon from "../../assets/icons/fourthIcon.svg";
+import fifthIcon from "../../assets/icons/fifthIcon.svg";
+import sixthIcon from "../../assets/icons/sixthIcon.svg";
+import seventhIcon from "../../assets/icons/seventhIcon.svg";
+import eighthIcon from "../../assets/icons/eighthIcon.svg";
+import ninthIcon from "../../assets/icons/ninthIcon.svg";
+import tenthIcon from "../../assets/icons/tenthIcon.svg";
 
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import './hotelGallerry.scss';
-import './carousel.scss';
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import "./hotelGallerry.scss";
+import "./carousel.scss";
 
-import AnimationBlock from '../animationBlock/AnimationBlock';
+import AnimationBlock from "../animationBlock/AnimationBlock";
+import ReserveBlock from "../ReserveBlock/ReserveBlock";
 
 const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
 
@@ -59,30 +60,40 @@ const HotelGallery = () => {
       {showCarousel ? (
         <div className="carousel-overlay">
           <div className="carousel-container">
-            <button className="arrow left" onClick={goToPrevious}><AiOutlineLeft /></button>
+            <button className="arrow left" onClick={goToPrevious}>
+              <AiOutlineLeft />
+            </button>
             <img src={currentImage} alt="Big view" className="carousel-image" />
-            <button className="arrow right" onClick={goToNext}><AiOutlineRight /></button>
+            <button className="arrow right" onClick={goToNext}>
+              <AiOutlineRight />
+            </button>
             <div className="carousel-thumbnails">
               {images.map((src, idx) => (
                 <img
                   key={idx}
                   src={src}
                   alt={`Thumbnail ${idx + 1}`}
-                  className={`thumbnail ${currentImage === src ? 'active' : ''}`}
+                  className={`thumbnail ${
+                    currentImage === src ? "active" : ""
+                  }`}
                   onClick={() => setImage(src)}
                 />
               ))}
             </div>
-            <button className="close-carousel" onClick={closeCarousel}>Закрыть</button>
+            <button className="close-carousel" onClick={closeCarousel}>
+              Закрыть
+            </button>
           </div>
         </div>
       ) : (
         <div className="grid">
           {images.map((src, idx) => (
-            <div key={idx} className={`grid-item ${idx === 0 ? 'large' : ''}`}>
+            <div key={idx} className={`grid-item ${idx === 0 ? "large" : ""}`}>
               <img src={src} alt={`Hotel ${idx + 1}`} />
               {idx === 4 && (
-                <button className="show-more" onClick={toggleCarousel}>Показать все фото</button>
+                <button className="show-more" onClick={toggleCarousel}>
+                  Показать все фото
+                </button>
               )}
             </div>
           ))}
@@ -94,7 +105,8 @@ const HotelGallery = () => {
         <h1>Жилье целиком</h1>
         <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
         <h5>
-          Карван в Ыссык-Куле — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...
+          Карван в Ыссык-Куле — это уютное место на берегу озера, предлагающее
+          комфортные номера и традиционную киргизскую кухню...
         </h5>
       </div>
 
@@ -132,20 +144,22 @@ const HotelGallery = () => {
 
       <AnimationBlock />
 
+      <ReserveBlock />
+
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>
         <div className="low-grid">
           {[
-            [firstIcon, 'Набережная'],
-            [sixthIcon, 'Кухня'],
-            [secondIcon, 'Wi-Fi'],
-            [seventhIcon, 'Бесплатная парковка'],
-            [thirdIcon, 'Бассейн'],
-            [eighthIcon, 'Общая сауна'],
-            [fourthIcon, 'Телевизор'],
-            [ninthIcon, 'Лифт'],
-            [fifthIcon, 'Зарядка для авто'],
-            [tenthIcon, 'Кондиционер'],
+            [firstIcon, "Набережная"],
+            [sixthIcon, "Кухня"],
+            [secondIcon, "Wi-Fi"],
+            [seventhIcon, "Бесплатная парковка"],
+            [thirdIcon, "Бассейн"],
+            [eighthIcon, "Общая сауна"],
+            [fourthIcon, "Телевизор"],
+            [ninthIcon, "Лифт"],
+            [fifthIcon, "Зарядка для авто"],
+            [tenthIcon, "Кондиционер"],
           ].map(([icon, text], idx) => (
             <div className="low-item" key={idx}>
               <img src={icon} alt={text} />
