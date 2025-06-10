@@ -1,6 +1,5 @@
 // import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import globalStyles from "../../cardFilters.module.scss";
-import styles from "./mapFilter.module.scss";
 
 interface IMapFilterProps {
   title: string;
