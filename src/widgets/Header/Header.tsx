@@ -12,8 +12,10 @@ import SearchIcon from "../../assets/icons/magnifyingglass 2.svg";
 import SearchModal from "../SearchModal/SearchModal";
 import UserProfileModal from "../UserProfileModal/UserProfileModal";
 import Register from "../RegisterModal/RegisterModal";
-import Calendar from "../Calendar/Calendar";
 import TravelersModal from "../SearchModal/TravelersModal";
+import { format } from "date-fns";
+import { ru } from "date-fns/locale";
+import Calendar from "../Calendar/CalendarUp";
 
 type Destination = {
   name: string;
@@ -21,8 +23,17 @@ type Destination = {
   icon?: string;
 };
 
+type DatePicker = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
+
 function Header() {
   const navigate = useNavigate();
+  const [datePicker, setDatePicker] = useState<DatePicker>({
+    startDate: null,
+    endDate: null,
+  });
 
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -127,7 +138,6 @@ function Header() {
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
-
           <h3
             className={`${styles.title} ${
               scrolled ? styles.titleScrolled : ""
@@ -135,7 +145,6 @@ function Header() {
           >
             Живи у озера - дыши горами
           </h3>
-
           <div className={styles.mainContent}>
             <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
             <div className={styles.menu}>
@@ -185,9 +194,16 @@ function Header() {
             }
           >
             {!scrolled && <span className={styles.label}>Прибытие</span>}
-            <span className={styles.placeholder}>
-              {scrolled ? "Дата" : "Когда?"}
-            </span>
+
+            {scrolled ? (
+              <span className={styles.placeholder}>Дата</span>
+            ) : datePicker.startDate ? (
+              <span>
+                {format(datePicker.startDate, "d LLL.", { locale: ru })}
+              </span>
+            ) : (
+              <span className={styles.placeholder}>Когда?</span>
+            )}
           </div>
 
           {!scrolled && (
@@ -203,7 +219,13 @@ function Header() {
                 }
               >
                 <span className={styles.label}>Выезд</span>
-                <span className={styles.placeholder}>Когда?</span>
+                {datePicker.endDate ? (
+                  <span>
+                    {format(datePicker.endDate, "d LLL.", { locale: ru })}
+                  </span>
+                ) : (
+                  <span className={styles.placeholder}>Когда?</span>
+                )}
               </div>
             </>
           )}
@@ -242,6 +264,22 @@ function Header() {
             </div>
           </div>
         </div>
+        {isCalendarOpen && (
+          <div
+            ref={calendarRef}
+            className={`${styles.calendarWrapper} ${
+              isCalendarOpen ? styles.calendarWrapperOpen : ""
+            }`}
+          >
+            <Calendar
+              values={datePicker}
+              onChangeValue={setDatePicker}
+              onClose={() => {
+                setIsCalendarOpen(false);
+              }}
+            />
+          </div>
+        )}
       </header>
 
       {isModalOpen && (
@@ -255,17 +293,6 @@ function Header() {
             onSelect={handleSelect}
             onClose={closeSearchModal}
           />
-        </div>
-      )}
-
-      {isCalendarOpen && (
-        <div
-          ref={calendarRef}
-          className={`${styles.calendarWrapper} ${
-            isCalendarOpen ? styles.calendarWrapperOpen : ""
-          }`}
-        >
-          <Calendar onClose={() => setIsCalendarOpen(false)} />
         </div>
       )}
 
