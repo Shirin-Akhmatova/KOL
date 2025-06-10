@@ -129,6 +129,11 @@ const Calendar: React.FC<CalendarProps> = ({
     // resetSelection();
   };
 
+  // const resetSelection = () => {
+  //   setSelectedStart(null);
+  //   setSelectedEnd(null);
+  // };
+
   const handleMonthClick = () => {
     setInputMonth(monthNames[month]);
     setMonthError("");
