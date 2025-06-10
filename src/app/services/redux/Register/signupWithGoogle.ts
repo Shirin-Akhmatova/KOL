@@ -8,6 +8,23 @@ interface GoogleLoginState {
   token: string | null;
 }
 
+interface GoogleTokens {
+  id_token?: string;
+  access_token?: string;
+  code?: string;
+}
+
+interface GoogleAuthResponse {
+  token?: string;
+  [key: string]: unknown;
+}
+
+interface ServerError {
+  detail?: string;
+  message?: string;
+  [key: string]: unknown;
+}
+
 const initialState: GoogleLoginState = {
   loading: false,
   error: null,
@@ -15,46 +32,40 @@ const initialState: GoogleLoginState = {
   token: null,
 };
 
-interface GoogleTokens {
-  id_token?: string;
-  access_token?: string;
-  code?: string;
-}
-
 export const loginWithGoogle = createAsyncThunk<
-  any,
+  GoogleAuthResponse,
   GoogleTokens,
-  {
-    rejectValue: string;
-  }
+  { rejectValue: string }
 >("auth/loginWithGoogle", async (tokens, { rejectWithValue }) => {
   try {
-    const response = await apiClient.post(
+    const response = await apiClient.post<GoogleAuthResponse>(
       "/account/auth/social/google/",
       tokens
     );
-
     return response.data;
-  } catch (error: any) {
-    const serverError = error.response?.data;
+  } catch (error: unknown) {
+    if (typeof error === 'object' && error !== null && 'response' in error) {
+      const serverError = (error as { response?: { data?: ServerError | string } }).response?.data;
 
-    if (serverError) {
       if (typeof serverError === "string") {
         return rejectWithValue("Ошибка сервера. Попробуйте позже.");
       }
 
-      if (typeof serverError === "object") {
-        if (serverError.detail) return rejectWithValue(serverError.detail);
-        if (serverError.message) return rejectWithValue(serverError.message);
+      if (serverError && typeof serverError === "object") {
+        if (serverError.detail) {
+          return rejectWithValue(serverError.detail);
+        }
+        if (serverError.message) {
+          return rejectWithValue(serverError.message);
+        }
 
         const firstKey = Object.keys(serverError)[0];
         const message = Array.isArray(serverError[firstKey])
-          ? serverError[firstKey][0]
+          ? (serverError[firstKey] as unknown[])[0]
           : serverError[firstKey];
         return rejectWithValue(`${firstKey}: ${message}`);
       }
     }
-
     return rejectWithValue("Неизвестная ошибка при входе через Google");
   }
 });
@@ -80,7 +91,7 @@ const googleLoginSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.token = action.payload?.token ?? null;
+        state.token = action.payload.token ?? null;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;

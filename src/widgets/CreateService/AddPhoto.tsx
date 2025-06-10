@@ -7,6 +7,7 @@ import {
   useSensors,
   PointerSensor,
 } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import { RiDragMove2Fill, RiEdit2Fill, RiCloseFill } from "react-icons/ri";
 import {
   SortableContext,
@@ -24,6 +25,13 @@ type ImageItem = {
   file: File;
   preview: string;
   croppedPreview?: string;
+};
+
+type SortableImageProps = {
+  id: string;
+  url: string;
+  onRemove: () => void;
+  onEdit: () => void;
 };
 
 const generateId = () => {
@@ -115,16 +123,20 @@ const AddPhoto = () => {
     setShowDeleteModal(false);
   };
 
-  const handleDragEnd = ({ active, over }: any) => {
-    if (active.id !== over?.id) {
-      const oldIndex = images.findIndex((img) => img.id === active.id);
-      const newIndex = images.findIndex((img) => img.id === over.id);
-      const reordered = arrayMove(images, oldIndex, newIndex);
-
-      setImages(reordered);
-      saveImages(reordered);
-      if (editingIndex === oldIndex) setEditingIndex(newIndex);
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (!over || active.id === over.id) {
+      return;
     }
+
+    const oldIndex = images.findIndex((img) => img.id === active.id.toString());
+    const newIndex = images.findIndex((img) => img.id === over.id.toString());
+    const reordered = arrayMove(images, oldIndex, newIndex);
+
+    setImages(reordered);
+    saveImages(reordered);
+    if (editingIndex === oldIndex) setEditingIndex(newIndex);
   };
 
   useEffect(() => {
@@ -145,6 +157,30 @@ const AddPhoto = () => {
         console.warn("Failed to load images from localStorage", e);
       }
   }, []);
+
+  const SortableImage = ({ id, url, onRemove, onEdit }: SortableImageProps) => {
+    const { attributes, listeners, setNodeRef, transform, transition } =
+      useSortable({ id });
+    return (
+      <div
+        ref={setNodeRef}
+        style={{ transform: CSS.Transform.toString(transform), transition }}
+        className={scss.imageCard}
+      >
+        <div className={scss.image} style={{ backgroundImage: `url(${url})` }}>
+          <RiDragMove2Fill
+            className={scss.dragHandle}
+            {...attributes}
+            {...listeners}
+          />
+          <div className={scss.actions}>
+            <RiEdit2Fill className={scss.editBtn} onClick={onEdit} />
+            <RiCloseFill className={scss.removeBtn} onClick={onRemove} />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="container">
@@ -267,30 +303,6 @@ const AddPhoto = () => {
             </div>
           </SortableContext>
         </DndContext>
-      </div>
-    </div>
-  );
-};
-
-const SortableImage = ({ id, url, onRemove, onEdit }: any) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
-  return (
-    <div
-      ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={scss.imageCard}
-    >
-      <div className={scss.image} style={{ backgroundImage: `url(${url})` }}>
-        <RiDragMove2Fill
-          className={scss.dragHandle}
-          {...attributes}
-          {...listeners}
-        />
-        <div className={scss.actions}>
-          <RiEdit2Fill className={scss.editBtn} onClick={onEdit} />
-          <RiCloseFill className={scss.removeBtn} onClick={onRemove} />
-        </div>
       </div>
     </div>
   );

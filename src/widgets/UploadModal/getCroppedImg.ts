@@ -1,10 +1,18 @@
+interface CropArea {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export default function getCroppedImg(
   imageSrc: string,
-  crop: any
+  crop: CropArea
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const image = new Image();
     image.src = imageSrc;
+    
     image.onload = () => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -31,6 +39,9 @@ export default function getCroppedImg(
 
       resolve(canvas.toDataURL("image/jpeg"));
     };
-    image.onerror = () => reject(new Error("Failed to load image"));
+    
+    image.onerror = () => {
+      reject(new Error("Failed to load image"));
+    };
   });
 }
