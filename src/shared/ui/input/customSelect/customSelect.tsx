@@ -42,7 +42,7 @@ export const CustomSelect = <T,>({
         className={styles.selectInput}
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        {selectedLabel}
+        <span>{selectedLabel}</span>
         <span className={`${styles.arrow} ${isOpen ? styles.active : ""}`}>
           <img src="/imgs/svgs/arrow_down.svg" alt="arrow" />
         </span>
