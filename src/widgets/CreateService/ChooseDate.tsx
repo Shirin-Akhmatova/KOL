@@ -1,16 +1,25 @@
-import { useState } from "react";
+import type { FormData } from "@/pages/CreateService/CreateService";
 import "react-clock/dist/Clock.css";
-import scss from "./Date.module.scss";
+import scss from "./ChooseDate.module.scss";
 import Clock from "react-clock";
+import { useFormContext } from "react-hook-form";
 
 const ChooseDate = () => {
-  const [hours, setHours] = useState<string>("00");
-  const [minutes, setMinutes] = useState<string>("00");
+  const {
+    register,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+  } = useFormContext<FormData>();
+
+  const hour = watch("hourHandle");
+  const minute = watch("minuteHandle");
 
   const timeOnly = new Date();
 
-  timeOnly.setHours(Number(hours));
-  timeOnly.setMinutes(Number(minutes));
+  timeOnly.setHours(+hour);
+  timeOnly.setMinutes(+minute - 1);
 
   return (
     <div className={scss.Date}>
@@ -26,11 +35,17 @@ const ChooseDate = () => {
             <h3>Длина поездки</h3>
             <div className={scss.inputGroup}>
               <span>Минимум ночей</span>
-              <input type="number" defaultValue={1} />
+              <input
+                type="number"
+                {...register("minNight", { required: true })}
+              />
             </div>
             <div className={scss.inputGroup}>
               <span>Максимальное число ночей</span>
-              <input type="number" defaultValue={365} />
+              <input
+                type="number"
+                {...register("maxNight", { required: true })}
+              />
             </div>
           </div>
 
@@ -44,7 +59,7 @@ const ChooseDate = () => {
               <Clock
                 value={timeOnly}
                 renderNumbers={true}
-                size={200}
+                size={150}
                 secondHandWidth={0}
                 secondHandLength={0}
                 secondHandOppositeLength={0}
@@ -52,22 +67,37 @@ const ChooseDate = () => {
               <div className={scss.timeGroup}>
                 <input
                   className={scss.timeInput}
-                  type="number"
-                  value={+hours > 23 ? "00" : hours.slice(hours.length - 2)}
-                  onChange={(e) => setHours(e.target.value)}
+                  {...register("hourHandle")}
+                  type="text"
+                  inputMode="numeric"
+                  onChange={(e) => {
+                    const input = e.target as HTMLInputElement;
+                    let digits = input.value.replace(/\D/g, "");
+                    setValue("hourHandle", digits);
+                    let value = parseInt(digits);
+                    if (value > 23) input.value = "23";
+                    if (value < 0 || input.value == "") input.value = "00";
+                    if (input.value.toString().length > 2)
+                      input.value = input.value.toString().slice(1);
+                  }}
                 />
                 <span>:</span>
                 <input
                   className={scss.timeInput}
-                  type="number"
-                  value={
-                    +minutes > 59 ? "00" : minutes.slice(minutes.length - 2)
-                  }
-                  onChange={(e) => setMinutes(e.target.value)}
+                  type="text"
+                  inputMode="numeric"
+                  onChange={(e) => {
+                    const input = e.target as HTMLInputElement;
+                    let digits = input.value.replace(/\D/g, "");
+                    setValue("minuteHandle", digits);
+                    let value = parseInt(digits);
+                    if (value > 59) input.value = "59";
+                    if (value < 0 || input.value == "") input.value = "00";
+                    if (input.value.toString().length > 2)
+                      input.value = input.value.toString().slice(1);
+                  }}
                 />
-                <div className={scss.timeInput}>
-                  {+hours > 12 ? "PM" : "AM"}
-                </div>
+                <div className={scss.timeInput}>{+hour > 12 ? "PM" : "AM"}</div>
               </div>
             </div>
 
@@ -80,7 +110,13 @@ const ChooseDate = () => {
                 </p>
               </div>
               <label className={scss.switchLabel}>
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  {...register("subject")}
+                  onClick={() => {
+                    setValue("subject", !getValues("subject"));
+                  }}
+                />
                 <span className={scss.slider}></span>
               </label>
             </div>
