@@ -1,4 +1,4 @@
-import { useState, type ButtonHTMLAttributes } from "react";
+import { type ButtonHTMLAttributes } from "react";
 import type { IRecommendationFilter } from "../../cardFilters.interface";
 import styles from "./recommendationFilters.module.scss";
 import globalStyles from "../../cardFilters.module.scss";

@@ -1,16 +1,14 @@
 .calendar {
-  width: 446px;
-  height: 415px;
+  background-color: white;
   overflow-y: auto;
   background-color: var(--color-surface);
   border-radius: 36px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); // var()
   padding: 24px;
   font-family: "Inter", sans-serif;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 0;
+  left: 0;
   z-index: 1000;
   overflow: hidden;
 
@@ -85,8 +83,7 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 0;
-    width: 336px;
-    height: 303px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -105,7 +102,6 @@
   .day {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,10 +109,14 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 20px;
+    height: 40px;
     letter-spacing: 0%;
     text-align: center;
     cursor: pointer;
     z-index: 1;
+    margin: 0;       // добавлено
+    padding: 0;      // добавлено
+    border: none;    // добавлено
 
     &.empty {
       cursor: default;
@@ -125,14 +125,16 @@
 
     &.in-range {
       background-color: var(--color-footer-background);
+      box-shadow: inset 1px 0 var(--color-footer-background), inset -1px 0 var(--color-footer-background); // добавлено для плавного перехода
+      margin: 0;   // убираем отрицательные margin
     }
 
     &.start.in-range {
       background-color: var(--color-footer-background);
       border-top-left-radius: 26px;
       border-bottom-left-radius: 26px;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
+      border-top-right-radius: 2px;
+      border-bottom-right-radius: 2px;
       margin-right: -1px;
     }
 
@@ -140,16 +142,16 @@
       background-color: var(--color-footer-background);
       border-top-right-radius: 26px;
       border-bottom-right-radius: 26px;
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
-      margin-left: -1px;
+      border-top-left-radius: 1px;
+      border-bottom-left-radius: 1px;
+      margin-left: 0;   // изменено с -1px на 0
     }
 
     .circle {
-      width: 40px;
-      height: 40px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background-color: var(--color-text-secondary);
+      background-color: black;
       color: var(--color-surface);
       display: flex;
       align-items: center;
@@ -178,9 +180,9 @@
   .input-error {
     border-color: var(--input-error) !important; // var()
     background-color: #fff1f0; // var()
-    color:  var(--color-danger);
+    color: var(--color-danger);
     box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2); // var()
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
   }
 
   .error-placeholder {
@@ -220,4 +222,5 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-} 
+}
+

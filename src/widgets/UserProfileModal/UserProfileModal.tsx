@@ -1,8 +1,14 @@
 import styles from "./UserProfileModal.module.scss";
 
-function UserProfileModal({ onClose, onRegisterClick }) {
-  const handleClickOutside = (e) => {
-    if (e.target.className.includes(styles.userProfileModal_overlay)) {
+type UserProfileModalProps = {
+  onClose: () => void;
+  onRegisterClick: () => void;
+};
+
+function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
+  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Проверяем, что клик был по оверлею
+    if ((e.target as HTMLElement).className.includes(styles.userProfileModal_overlay)) {
       onClose();
     }
   };

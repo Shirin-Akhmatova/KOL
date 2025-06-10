@@ -1,19 +1,19 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import styles from "./style.module.scss";
-import { DateRange, type Range } from "react-date-range";
 import { format } from "date-fns";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import Calendar from "../Calendar/CalendarUp";
+
+type DatePicker = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
 
 function ReserveBlock() {
   const [showPicker, setShowPicker] = useState<boolean>(false);
-  const [range, setRange] = useState<Range[]>([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: "selection",
-    },
-  ]);
+  const [datePicker, setDatePicker] = useState<DatePicker>({
+    startDate: null,
+    endDate: null,
+  });
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,9 @@ function ReserveBlock() {
 
   return (
     <div
-      className={`${styles["reserve-block"]} ${isVisible ? styles.show : styles.hide}`}
+      className={`${styles["reserve-block"]} ${
+        isVisible ? styles.show : styles.hide
+      }`}
     >
       <div className={styles.reserveOwerlay}>
         <div className={styles.reserveHeader}>
@@ -48,24 +50,35 @@ function ReserveBlock() {
               onClick={() => setShowPicker(!showPicker)}
             >
               <span className={styles.inputTitle}>CHECK-IN</span>
-              {format(range[0].startDate!, "dd/MM/yyyy")}
+              {datePicker.startDate
+                ? format(datePicker.startDate, "dd/MM/yyyy")
+                : "Выберите день"}
             </div>
             <div
               className={`${styles.datePickerInput} ${styles.input} ${styles.end}`}
               onClick={() => setShowPicker(!showPicker)}
             >
               <span className={styles.inputTitle}>CHECKOUT</span>
-              {format(range[0].endDate!, "dd/MM/yyyy")}
+              {datePicker.endDate
+                ? format(datePicker.endDate, "dd/MM/yyyy")
+                : "Выберите день"}
             </div>
             {showPicker && (
-              <div style={{ position: "absolute", top: "100%", zIndex: 10 }}>
-                <DateRange
-                  onChange={(item) => setRange([item.selection])}
-                  moveRangeOnFirstSelection={false}
-                  ranges={range}
-                  months={2}
-                  direction="horizontal"
-                  minDate={new Date()}
+              <div
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  top: "100%",
+                  zIndex: 10,
+                }}
+              >
+                <Calendar
+                  values={datePicker}
+                  onChangeValue={setDatePicker}
+                  className={styles.reserveCalendar}
+                  onClose={() => {
+                    setShowPicker(false);
+                  }}
                 />
               </div>
             )}

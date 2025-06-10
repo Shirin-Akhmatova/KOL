@@ -1,4 +1,3 @@
-import React from 'react';
 import './feedbacks.scss';
 
 import profileImage from '../../assets/images/profile.png';

@@ -1,15 +1,33 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, type HTMLAttributes } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import "./Calendar.scss";
+import clsx from "clsx";
 
-interface CalendarProps {
+type DatePicker = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
+
+interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
+  onChangeValue: (data: DatePicker) => void;
+  values: DatePicker;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
-  const [selectedStart, setSelectedStart] = useState<Date | null>(null);
-  const [selectedEnd, setSelectedEnd] = useState<Date | null>(null);
-  const [date, setDate] = useState(new Date());
+const Calendar: React.FC<CalendarProps> = ({
+  onClose,
+  onChangeValue,
+  values,
+  className,
+  ...props
+}) => {
+  const [selectedStart, setSelectedStart] = useState<Date | null>(
+    values.startDate
+  );
+  const [selectedEnd, setSelectedEnd] = useState<Date | null>(values.endDate);
+  const [date, setDate] = useState(
+    values.endDate ?? values.startDate ?? new Date()
+  );
   const [editingMonth, setEditingMonth] = useState(false);
   const [editingYear, setEditingYear] = useState(false);
   const [inputMonth, setInputMonth] = useState("");
@@ -18,13 +36,19 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
   const [yearError, setYearError] = useState("");
   const [monthTouched, setMonthTouched] = useState(false);
   const [yearTouched, setYearTouched] = useState(false);
-  
+
   const calendarRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    onChangeValue({ endDate: selectedEnd, startDate: selectedStart });
+  }, [selectedEnd, selectedStart]);
   // Обработчик клика вне календаря
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -168,6 +192,8 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
       setEditingYear(true);
     }
   };
+  console.log(selectedStart);
+  console.log(selectedEnd);
 
   const handleMonthKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleMonthSubmit();
@@ -182,7 +208,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
   const daysArray = Array.from({ length: 42 }, (_, i) => i);
 
   return (
-    <div className="calendar" ref={calendarRef}>
+    <div className={clsx("calendar", className)} ref={calendarRef} {...props}>
       <div className="calendar-header">
         <button
           onClick={handlePrevMonth}
@@ -283,7 +309,8 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
         {daysArray.map((_, i) => {
           const dayNum = i - startDay + 1;
           if (dayNum < 1 || dayNum > daysInMonth) {
-            return <div key={i} className="day empty" />;
+            return;
+            // <div key={i} className="day empty" />
           }
 
           const start = isStart(dayNum);
@@ -293,6 +320,13 @@ const Calendar: React.FC<CalendarProps> = ({ onClose }) => {
           return (
             <div
               key={i}
+              style={
+                !selectedStart ||
+                !selectedEnd ||
+                JSON.stringify(selectedStart) === JSON.stringify(selectedEnd)
+                  ? { borderRadius: "50%" }
+                  : {}
+              }
               className={`day ${start ? "start" : ""} ${end ? "end" : ""} ${
                 inRange || start || end ? "in-range" : ""
               }`}

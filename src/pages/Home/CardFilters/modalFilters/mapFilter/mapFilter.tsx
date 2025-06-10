@@ -1,8 +1,5 @@
 // import { Map, Placemark, YMaps, ZoomControl } from "@pbe/react-yandex-maps";
 import globalStyles from "../../cardFilters.module.scss";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styles from "./mapFilter.module.scss";
-import useFilters from "@/shared/hooks/useFilters";
 
 interface IMapFilterProps {
   title: string;
@@ -16,51 +13,10 @@ function MapFilter({ title }: IMapFilterProps) {
     </div>
   );
 }
+
 function MapWithCoords() {
-  const { getFilter, setFilters } = useFilters();
-  const [isMapReady, setIsMapReady] = useState(false);
-
-  const getCoords = useMemo(() => {
-    const lat = getFilter("coordLat");
-    const lng = getFilter("coordLng");
-    return { lat, lng };
-  }, [getFilter]);
-
-  const mapRef = useRef<any>(null);
-
-  const handleMapClick = useCallback(
-    (e: any) => {
-      const coords = e.get("coords");
-      console.log("Одиночный клик. Координаты:", coords);
-      setFilters({ coordLat: coords[0], coordLng: coords[1] });
-    },
-    [setFilters]
-  );
-
-  // ⛑️ Удаляем обработчик при размонтировании
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isMapReady) return;
-
-    map.events.add("click", handleMapClick);
-    map.behaviors.disable("dblClickZoom");
-    map.behaviors.disable("scrollZoom");
-
-    return () => {
-      map.events.remove("click", handleMapClick);
-    };
-  }, [handleMapClick, isMapReady]);
-
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isMapReady) return;
-
-    return () => {
-      map.destroy();
-    };
-  }, []);
-
   return (
+    <div></div>
     // <YMaps query={{ apikey: import.meta.env.VITE_YANDEX_MAP_API }}>
     //   <Map
     //     className={styles.map}
@@ -84,13 +40,6 @@ function MapWithCoords() {
     //     )}
     //   </Map>
     // </YMaps>
-    <div className={styles.map}>
-      <iframe
-        width="100%"
-        height="400"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=37.61,55.74,37.65,55.77&layer=mapnik&marker=55.76,37.63"
-      ></iframe>
-    </div>
   );
 }
 

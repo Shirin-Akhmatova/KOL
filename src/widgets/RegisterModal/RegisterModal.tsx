@@ -5,9 +5,13 @@ import {
   registerUser,
   resetRegisterState,
 } from "../../app/services/redux/Register/registerSlice";
+import {
+  loginWithGoogle,
+  resetGoogleLoginState,
+} from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
-import { signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { auth, provider } from "../../shared/ui/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
@@ -36,9 +40,16 @@ const formatPhoneNumber = (num: string) => {
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
+
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
   );
+
+  const {
+    loading: googleLoading,
+    error: googleError,
+    success: googleSuccess,
+  } = useSelector((state: RootState) => state.googleLogin);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
@@ -50,22 +61,9 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid || loading) return;
-
     const fullPhone = `${countryCode}${phoneNumber}`;
     dispatch(registerUser(fullPhone));
   };
-
-  useEffect(() => {
-    if (success) {
-      toast.success("Номер успешно отправлен!");
-      setShowModal(true);
-      dispatch(resetRegisterState());
-    }
-    if (error) {
-      toast.error(error);
-      dispatch(resetRegisterState());
-    }
-  }, [success, error, dispatch]);
 
   const handleCountrySelect = (code: string) => {
     setCountryCode(code);
@@ -86,22 +84,47 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-      const user = result.user;
 
-      console.log("User info:", user);
-      toast.success(`Добро пожаловать, ${user.displayName || "пользователь"}!`);
+      const idToken = await result.user.getIdToken();
 
-      onClose?.();
-    } catch (err: any) {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+
+      dispatch(
+        loginWithGoogle({
+          id_token: idToken,
+          access_token: accessToken,
+        })
+      );
+    } catch (error) {
+      console.error("Google sign-in error:", error);
       toast.error("Ошибка при входе через Google");
-      console.error(err);
     }
   };
 
-  // const handleGoogleRedirectSignIn = async () => {
-  //   await signInWithRedirect(auth, provider);
-  //   console.log("ERRRORRR");
-  // };
+  useEffect(() => {
+    if (success) {
+      toast.success("Номер успешно отправлен!");
+      setShowModal(true);
+      dispatch(resetRegisterState());
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(resetRegisterState());
+    }
+  }, [success, error, dispatch]);
+
+  useEffect(() => {
+    if (googleSuccess) {
+      toast.success("Успешный вход через Google!");
+      dispatch(resetGoogleLoginState());
+      onClose?.();
+    }
+    if (googleError) {
+      toast.error(googleError);
+      dispatch(resetGoogleLoginState());
+    }
+  }, [googleSuccess, googleError, dispatch, onClose]);
 
   return (
     <>
@@ -150,9 +173,10 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
 
           <div className={styles.buttonsWrapper}>
             <CustomButton
-              text="Continue with Google"
+              text={googleLoading ? "Loading..." : "Continue with Google"}
               icon={<img src={googleIcon} alt="google" />}
               onClick={handleGoogleSignIn}
+              disabled={googleLoading}
             />
             <CustomButton
               text="Continue with Apple"
