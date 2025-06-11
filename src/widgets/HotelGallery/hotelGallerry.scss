@@ -389,3 +389,22 @@
     }
   }
 }
+
+.bottom-reserve-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.reserve-box {
+  transition: all 0.3s ease;
+}
+
+.reserve-box.is-sticky {
+  position: fixed;
+  top: 90px;
+  right: 24px;
+  z-index: 1000;
+}

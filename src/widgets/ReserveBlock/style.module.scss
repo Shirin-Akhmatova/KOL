@@ -22,7 +22,7 @@
   right: 48px;
   width: 372px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  z-index: 2000;
+  z-index: 1000;
 }
 
 .reserveHeader {
@@ -219,12 +219,12 @@
   background: #fff;
   border: 1px solid #dddddd;
   border-radius: 12px;
-  position: fixed;
-  top: 120px;
+  position: absolute;
+  top: 10px;
   right: 48px;
   width: 372px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  z-index: 2000;
+  z-index: 1000;
 
   &.compact {
     width: 150px;
@@ -232,6 +232,10 @@
     padding: 11px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
+
+    &.compactLongText {
+      height: 170px;
+    }
 
     .inputTitle {
       font-size: 10px;
@@ -289,6 +293,6 @@
   }
 }
 
-.reserveCalendar{
+.reserveCalendar {
   width: 100%;
 }

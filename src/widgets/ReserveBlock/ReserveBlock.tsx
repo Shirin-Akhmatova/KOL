@@ -52,7 +52,13 @@ function ReserveBlock() {
     >
       <div
         className={`${styles.reserveOverlay} ${
-          isCompact ? styles.compact : ""
+          isCompact
+            ? `${styles.compact} ${
+                !datePicker.startDate || !datePicker.endDate
+                  ? styles.compactLongText
+                  : ""
+              }`
+            : ""
         }`}
       >
         {isCompact ? (

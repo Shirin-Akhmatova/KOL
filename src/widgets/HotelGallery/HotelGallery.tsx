@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import hotel1 from "../../assets/images/hotel1.png";
 import goldIcon from "../../assets/icons/gold.svg";
 import gold2Icon from "../../assets/icons/gold2.svg";
@@ -27,6 +27,8 @@ import type { Block } from "../mockData";
 const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const midRef = useRef<HTMLDivElement>(null);
@@ -46,6 +48,18 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
     const index = images.indexOf(currentImage);
     setCurrentImage(images[(index - 1 + images.length) % images.length]);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!wrapperRef.current) return;
+
+      const top = wrapperRef.current.getBoundingClientRect().top;
+      setIsSticky(top <= 90);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div className="gallery-wrapper">
@@ -101,10 +115,15 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
       )}
 
       {/* Блоки mid и bottom */}
-      <div className="bottom" ref={bottomRef}>
-        <h1>{currentCotadge.place}</h1>
-        <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
-        <h5>{currentCotadge.description}</h5>
+      <div className="bottom-reserve-wrapper" ref={wrapperRef}>
+        <div className="bottom" ref={bottomRef}>
+          <h1>{currentCotadge.place}</h1>
+          <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
+          <h5>{currentCotadge.description}</h5>
+        </div>
+        <div className={`reserve-box ${isSticky ? "is-sticky" : ""}`}>
+          <ReserveBlock />
+        </div>
       </div>
 
       <div className="mid" ref={midRef}>
@@ -140,8 +159,6 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
       </div>
 
       <AnimationBlock />
-
-      <ReserveBlock />
 
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>
