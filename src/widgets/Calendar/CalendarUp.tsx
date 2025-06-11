@@ -192,8 +192,6 @@ const Calendar: React.FC<CalendarProps> = ({
       setEditingYear(true);
     }
   };
-  console.log(selectedStart);
-  console.log(selectedEnd);
 
   const handleMonthKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") handleMonthSubmit();
