@@ -10,6 +10,7 @@ import "swiper/swiper-bundle.css";
 import scss from "./Carts.module.scss";
 import { blocks } from "../mockData";
 
+
 const Carts = () => {
   const [likes, setLikes] = useState<number[]>([]); // ✅ Храним лайки в состоянии
 
@@ -39,7 +40,7 @@ const Carts = () => {
                   >
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
-                        <Link to="/cardPage">
+                        <Link to={`/cardPage/${index}`}>
                           <img src={image} alt="image" />
                         </Link>
                       </SwiperSlide>

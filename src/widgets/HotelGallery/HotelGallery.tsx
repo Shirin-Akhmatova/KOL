@@ -1,10 +1,5 @@
 import { useState, useRef } from "react";
 import hotel1 from "../../assets/images/hotel1.png";
-import hotel2 from "../../assets/images/hotel2.png";
-import hotel3 from "../../assets/images/hotel3.png";
-import hotel4 from "../../assets/images/hotel4.png";
-import hotel5 from "../../assets/images/hotel5.png";
-
 import goldIcon from "../../assets/icons/gold.svg";
 import gold2Icon from "../../assets/icons/gold2.svg";
 import starIcon from "../../assets/icons/star.svg";
@@ -27,10 +22,9 @@ import "./carousel.scss";
 
 import AnimationBlock from "../animationBlock/AnimationBlock";
 import ReserveBlock from "../ReserveBlock/ReserveBlock";
+import type { Block } from "../mockData";
 
-const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
-
-const HotelGallery = () => {
+const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
 
@@ -44,31 +38,37 @@ const HotelGallery = () => {
     setShowCarousel(false);
     setCurrentImage(hotel1);
   };
-  const goToNext = () => {
+  const goToNext = (images: string[]) => {
     const index = images.indexOf(currentImage);
     setCurrentImage(images[(index + 1) % images.length]);
   };
-  const goToPrevious = () => {
+  const goToPrevious = (images: string[]) => {
     const index = images.indexOf(currentImage);
     setCurrentImage(images[(index - 1 + images.length) % images.length]);
   };
 
   return (
     <div className="gallery-wrapper">
-      <h1 className="title">Роскошный и захватывающий дух KARVEN</h1>
+      <h1 className="title">{currentCotadge.title}</h1>
 
       {showCarousel ? (
         <div className="carousel-overlay">
           <div className="carousel-container">
-            <button className="arrow left" onClick={goToPrevious}>
+            <button
+              className="arrow left"
+              onClick={() => goToPrevious(currentCotadge.images)}
+            >
               <AiOutlineLeft />
             </button>
             <img src={currentImage} alt="Big view" className="carousel-image" />
-            <button className="arrow right" onClick={goToNext}>
+            <button
+              className="arrow right"
+              onClick={() => goToNext(currentCotadge.images)}
+            >
               <AiOutlineRight />
             </button>
             <div className="carousel-thumbnails">
-              {images.map((src, idx) => (
+              {currentCotadge.images.map((src, idx) => (
                 <img
                   key={idx}
                   src={src}
@@ -87,7 +87,7 @@ const HotelGallery = () => {
         </div>
       ) : (
         <div className="grid">
-          {images.map((src, idx) => (
+          {currentCotadge.images.map((src, idx) => (
             <div key={idx} className={`grid-item ${idx === 0 ? "large" : ""}`}>
               <img src={src} alt={`Hotel ${idx + 1}`} />
               {idx === 4 && (
@@ -102,12 +102,9 @@ const HotelGallery = () => {
 
       {/* Блоки mid и bottom */}
       <div className="bottom" ref={bottomRef}>
-        <h1>Жилье целиком</h1>
+        <h1>{currentCotadge.place}</h1>
         <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
-        <h5>
-          Карван в Ыссык-Куле — это уютное место на берегу озера, предлагающее
-          комфортные номера и традиционную киргизскую кухню...
-        </h5>
+        <h5>{currentCotadge.description}</h5>
       </div>
 
       <div className="mid" ref={midRef}>
@@ -120,7 +117,7 @@ const HotelGallery = () => {
           <h2>Это жилье — одно из самых любимых у гостей на KÖL</h2>
           <div className="team">
             <div className="left">
-              <p>4.98</p>
+              <p>{currentCotadge.rating}</p>
               <div className="stars">
                 {[...Array(5)].map((_, i) => (
                   <img key={i} src={starIcon} alt="star" />
