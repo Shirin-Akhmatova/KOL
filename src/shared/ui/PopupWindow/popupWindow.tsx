@@ -21,8 +21,15 @@ function PopupWindow({
     };
   }, []);
   return (
-    <div className={styles.popupOverlay}>
-      <div className={styles.popupWindow} {...props}>
+    <div className={styles.popupOverlay} onClick={() => closeCallback(false)}>
+      <div
+        className={styles.popupWindow}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        {...props}
+      >
         <div className={styles.popupWindowHeader}>
           <h3>{headerTitle}</h3>
           <button
