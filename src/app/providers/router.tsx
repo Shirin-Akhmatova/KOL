@@ -25,7 +25,7 @@ export const myRouter = createBrowserRouter([
         element: <MapWithListings />,
       },
       {
-        path: "/cardPage",
+        path: "/cardPage/:id",
         element: <CardPage />,
       },
       {
