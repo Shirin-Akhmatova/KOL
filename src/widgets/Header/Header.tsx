@@ -46,6 +46,7 @@ function Header() {
   const [isTravelersModalOpen, setIsTravelersModalOpen] =
     useState<boolean>(false);
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
@@ -78,6 +79,10 @@ function Header() {
   const closeTravelersModal = () => {
     setIsTravelersModalOpen(false);
     setIsSearchActive(false);
+  };
+
+  const toggleLangDropdown = () => {
+    setIsLangDropdownOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -127,6 +132,20 @@ function Header() {
 
   const isHeaderDefault = isModalOpen || !scrolled;
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (
+        isLangDropdownOpen &&
+        !document.querySelector(`.${styles.langWrapper}`)?.contains(target)
+      ) {
+        setIsLangDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isLangDropdownOpen]);
+
   return (
     <>
       <header
@@ -146,7 +165,35 @@ function Header() {
             Живи у озера - дыши горами
           </h3>
           <div className={styles.mainContent}>
-            <img src={LangIcon} alt="LangIcon" className={styles.langIcon} />
+            <div className={styles.langWrapper}>
+              <img
+                src={LangIcon}
+                className={styles.langIcon}
+                onClick={toggleLangDropdown}
+              />
+              {isLangDropdownOpen && (
+                <div className={`${styles.langDropdown} ${styles.show}`}>
+                  <div
+                    className={styles.langDropdownItems}
+                    onClick={() => console.log("Выбран: Kg")}
+                  >
+                    Kg
+                  </div>
+                  <div
+                    className={styles.langDropdownItems}
+                    onClick={() => console.log("Выбран: Ru")}
+                  >
+                    Ru
+                  </div>
+                  <div
+                    className={styles.langDropdownItems}
+                    onClick={() => console.log("Выбран: En")}
+                  >
+                    En
+                  </div>
+                </div>
+              )}
+            </div>
             <div className={styles.menu}>
               <img
                 src={BurgerMenu}

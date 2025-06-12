@@ -1,4 +1,4 @@
-interface Block {
+export interface Block {
   images: string[];
   title: string;
   place: string;
@@ -7,6 +7,7 @@ interface Block {
   day: number;
   rating: number;
   coordinates: number[];
+  description: string;
 }
 
 export const blocks: Block[] = [
@@ -24,6 +25,8 @@ export const blocks: Block[] = [
     day: 5,
     rating: 4.8,
     coordinates: [42.728644, 77.255288],
+    description:
+      "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
     images: [
@@ -39,6 +42,8 @@ export const blocks: Block[] = [
     day: 6,
     rating: 4.7,
     coordinates: [42.635034, 76.757008],
+    description:
+      "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
     images: [
@@ -53,7 +58,9 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],
+    coordinates: [42.553519, 76.458039],description:
+      "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  
   },
   {
     images: [
@@ -68,7 +75,9 @@ export const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
-    coordinates: [42.275572, 77.903053],
+    coordinates: [42.275572, 77.903053],description:
+      "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  
   },
   {
     images: [
@@ -85,7 +94,9 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],
+    coordinates: [42.119712, 76.984002],description:
+      "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  
   },
   {
     images: [
@@ -101,6 +112,8 @@ export const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
-    coordinates: [42.28786, 76.341774],
+    coordinates: [42.28786, 76.341774],description:
+      "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  
   },
 ];
