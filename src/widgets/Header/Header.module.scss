@@ -335,3 +335,88 @@
 .searchBarScrolled .searchBarEnd {
   gap: 0;
 }
+
+.langWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+
+  .langIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 1px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+
+    &:hover {
+      filter: brightness(0.7);
+      border-color: #ccc;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+
+    &:active {
+      filter: brightness(0.5);
+      border-color: #888;
+    }
+  }
+}
+
+.langDropdown {
+  position: absolute;
+  top: 50px;
+  right: -16px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 19px;
+  z-index: 100;
+  min-width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: slideInDown 0.3s ease forwards;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top right;
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .langDropdownItems {
+    border-radius: 19px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #000;
+      font-weight: bold;
+    }
+
+    &:active {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      font-weight: normal;
+    }
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
