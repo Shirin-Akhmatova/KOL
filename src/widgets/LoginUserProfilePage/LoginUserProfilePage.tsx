@@ -37,9 +37,9 @@ function LoginUserProfilePage() {
           onClick={handleAvatarClick}
         >
           {image ? (
-            <img src={image} alt="avatar" className={styles.avatarImage} />
+            <img src={image} alt="аватар" className={styles.avatarImage} />
           ) : (
-            <span>A</span>
+            <span>А</span>
           )}
 
           <div className={styles.avatarOverlay}>
@@ -50,29 +50,29 @@ function LoginUserProfilePage() {
                 setIsUploadModalOpen(true);
               }}
             >
-              <img src={cameraIcon} alt="Change avatar" />
+              <img src={cameraIcon} alt="Изменить аватар" />
             </div>
           </div>
         </div>
 
         <div className={styles.loginUserProfilePage_info}>
-          <h1>Alex</h1>
-          <p>Guest</p>
-          <p>Years on KÖL</p>
-          <h3>3</h3>
+          <h1>Алекс</h1>
+          <p>Гость</p>
+        <p>В KÖL уже</p>
+<h3>3 года</h3>
         </div>
       </div>
 
       <div className={styles.loginUserProfilePage_personalInfo}>
         <div className={styles.loginUserProfilePage_fixedInfo}>
-          <h6>Alex’s confirmed information</h6>
+          <h6>Подтвержденная информация Алекса</h6>
           <div className={styles.loginUserProfilePage_emailAndNumber}>
-            <img src={markIcon} alt="markIcon" />
-            <p>Email address</p>
+            <img src={markIcon} alt="иконка отметки" />
+            <p>Адрес электронной почты</p>
           </div>
           <div className={styles.loginUserProfilePage_emailAndNumber}>
-            <img src={markIcon} alt="markIcon" />
-            <p>Phone number</p>
+            <img src={markIcon} alt="иконка отметки" />
+            <p>Номер телефона</p>
           </div>
         </div>
 
@@ -83,37 +83,37 @@ function LoginUserProfilePage() {
             onClick={() => setIsPersonalInfoModalOpen(true)}
             style={{ cursor: "pointer" }}
           >
-            Personal information
+            Личная информация
           </h6>
 
           <h6
             onClick={() => setIsLoginSecurityModalOpen(true)}
             style={{ cursor: "pointer" }}
           >
-            Login & Security
+            Вход и безопасность
           </h6>
           <h6
             onClick={() => setIsNotificationsModalOpen(true)}
             style={{ cursor: "pointer" }}
           >
-            Notifications
+            Уведомления
           </h6>
           <h6
             onClick={() => setIsPaymentModalOpen(true)}
             style={{ cursor: "pointer" }}
           >
-            Payment methods
+            Методы оплаты
           </h6>
           <h6
             onClick={() => setIsObjectsModalOpen(true)}
             style={{ cursor: "pointer" }}
           >
-            Object’s list
+            Список объектов
           </h6>
         </div>
       </div>
 
-      {/* Upload Modal */}
+      {/* Модальное окно загрузки */}
       {isUploadModalOpen && (
         <UploadModal
           isOpen={isUploadModalOpen}
@@ -125,43 +125,43 @@ function LoginUserProfilePage() {
         />
       )}
 
-      {/* Preview Modal */}
+      {/* Модальное окно предпросмотра */}
       {isPreviewOpen && image && (
         <div
           className={styles.previewOverlay}
           onClick={() => setIsPreviewOpen(false)}
         >
           <div className={styles.previewModal}>
-            <img src={image} alt="avatar preview" />
+            <img src={image} alt="предпросмотр аватара" />
           </div>
         </div>
       )}
 
-      {/* Personal Info Modal */}
+      {/* Модальное окно личной информации */}
       <PersonalInfoModal
         isOpen={isPersonalInfoModalOpen}
         onClose={() => setIsPersonalInfoModalOpen(false)}
       />
 
-      {/* Login & Security Modal */}
+      {/* Модальное окно входа и безопасности */}
       <LoginSecurityModal
         isOpen={isLoginSecurityModalOpen}
         onClose={() => setIsLoginSecurityModalOpen(false)}
       />
 
-      {/* Notifications Modal */}
+      {/* Модальное окно уведомлений */}
       <NotificationsModal
         isOpen={isNotificationsModalOpen}
         onClose={() => setIsNotificationsModalOpen(false)}
       />
 
-      {/* Payment Modal */}
+      {/* Модальное окно оплаты */}
       <Payment
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
       />
 
-      {/* Objects Modal */}
+      {/* Модальное окно объектов */}
       <ObjectsModal
         isOpen={isObjectsModalOpen}
         onClose={() => setIsObjectsModalOpen(false)}
@@ -170,4 +170,4 @@ function LoginUserProfilePage() {
   );
 }
 
-export default LoginUserProfilePage;
+export default LoginUserProfilePage;  
