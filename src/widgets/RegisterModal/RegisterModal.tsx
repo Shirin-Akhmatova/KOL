@@ -15,8 +15,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
-import appleIcon from "../../assets/icons/apple.svg";
-import emailIcon from "../../assets/icons/email.svg";
 import exitIcon from "../../assets/icons/exitIcon.svg";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
@@ -84,18 +82,14 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, provider);
-
-      const idToken = await result.user.getIdToken();
-
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const accessToken = credential?.accessToken;
+      const idToken = credential?.idToken;
 
-      dispatch(
-        loginWithGoogle({
-          id_token: idToken,
-          access_token: accessToken,
-        })
-      );
+      if (!idToken) {
+        throw new Error("Не удалось получить id token от Google");
+      }
+
+      dispatch(loginWithGoogle({ access_token: idToken }));
     } catch (error) {
       console.error("Google sign-in error:", error);
       toast.error("Ошибка при входе через Google");
@@ -177,14 +171,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
               icon={<img src={googleIcon} alt="google" />}
               onClick={handleGoogleSignIn}
               disabled={googleLoading}
-            />
-            <CustomButton
-              text="Continue with Apple"
-              icon={<img src={appleIcon} alt="apple" />}
-            />
-            <CustomButton
-              text="Continue with eMail"
-              icon={<img src={emailIcon} alt="email" />}
             />
           </div>
         </div>
