@@ -83,13 +83,13 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(result);
-      const idToken = credential?.idToken;
+      const access_token = credential?.accessToken;
 
-      if (!idToken) {
+      if (!access_token) {
         throw new Error("Не удалось получить id token от Google");
       }
 
-      dispatch(loginWithGoogle({ access_token: idToken }));
+      dispatch(loginWithGoogle({ access_token: access_token }));
     } catch (error) {
       console.error("Google sign-in error:", error);
       toast.error("Ошибка при входе через Google");
