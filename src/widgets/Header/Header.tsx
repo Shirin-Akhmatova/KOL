@@ -311,6 +311,7 @@ function Header() {
             </div>
           </div>
         </div>
+
         {isCalendarOpen && (
           <div
             ref={calendarRef}
@@ -330,7 +331,12 @@ function Header() {
       </header>
 
       {isModalOpen && (
-        <div ref={searchModalRef}>
+        <div
+          ref={searchModalRef}
+          className={`${styles.modalWrapper} ${styles.modalWrapperOpen} ${
+            scrolled ? styles.modalWrapperScrolled : ""
+          }`}
+        >
           <SearchModal
             title="Рекомендуемые направления"
             placeholder="Введите город или страну"
@@ -339,6 +345,7 @@ function Header() {
             results={filteredDestinations}
             onSelect={handleSelect}
             onClose={closeSearchModal}
+            showInput={false}
           />
         </div>
       )}
@@ -346,12 +353,9 @@ function Header() {
       {isTravelersModalOpen && (
         <div
           ref={travelersModalRef}
-          style={{
-            position: "absolute",
-            top: "130px",
-            right: "30px",
-            zIndex: 10,
-          }}
+          className={`${styles.travelersModalWrapper} ${
+            styles.travelersModalWrapperOpen
+          } ${scrolled ? styles.travelersModalWrapperScrolled : ""}`}
         >
           <TravelersModal onClose={closeTravelersModal} />
         </div>
