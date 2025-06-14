@@ -28,6 +28,14 @@ type DatePicker = {
   endDate: Date | null;
 };
 
+function pluralize(count: number, one: string, few: string, many: string) {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return few;
+  return many;
+}
+
 function Header() {
   const navigate = useNavigate();
   const [datePicker, setDatePicker] = useState<DatePicker>({
@@ -48,6 +56,11 @@ function Header() {
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
 
+  // Состояния для взрослых, детей и младенцев
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [infants, setInfants] = useState(0);
+
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
@@ -56,7 +69,7 @@ function Header() {
     item.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const handleSelect = (destination: Destination) => {
+  const handleSelect = (destination: Destination) => {    
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
     setIsModalOpen(false);
@@ -145,6 +158,8 @@ function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isLangDropdownOpen]);
+
+  const totalTravelers = adults + children + infants;
 
   return (
     <>
@@ -292,7 +307,16 @@ function Header() {
               onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
             >
               <div className={styles.label}>Кто</div>
-              <div className={styles.placeholder}>Кто едет?</div>
+              <div className={styles.placeholder}>
+                {totalTravelers > 0
+                  ? `${totalTravelers} ${pluralize(
+                      totalTravelers,
+                      "гость",
+                      "гостя",
+                      "гостей"
+                    )}`
+                  : "Кто едет?"}
+              </div>
             </div>
 
             <div
@@ -311,6 +335,7 @@ function Header() {
             </div>
           </div>
         </div>
+
         {isCalendarOpen && (
           <div
             ref={calendarRef}
@@ -330,7 +355,12 @@ function Header() {
       </header>
 
       {isModalOpen && (
-        <div ref={searchModalRef}>
+        <div
+          ref={searchModalRef}
+          className={`${styles.modalWrapper} ${styles.modalWrapperOpen} ${
+            scrolled ? styles.modalWrapperScrolled : ""
+          }`}
+        >
           <SearchModal
             title="Рекомендуемые направления"
             placeholder="Введите город или страну"
@@ -339,6 +369,7 @@ function Header() {
             results={filteredDestinations}
             onSelect={handleSelect}
             onClose={closeSearchModal}
+            showInput={false}
           />
         </div>
       )}
@@ -346,14 +377,19 @@ function Header() {
       {isTravelersModalOpen && (
         <div
           ref={travelersModalRef}
-          style={{
-            position: "absolute",
-            top: "130px",
-            right: "30px",
-            zIndex: 10,
-          }}
+          className={`${styles.travelersModalWrapper} ${
+            styles.travelersModalWrapperOpen
+          } ${scrolled ? styles.travelersModalWrapperScrolled : ""}`}
         >
-          <TravelersModal onClose={closeTravelersModal} />
+          <TravelersModal
+            adults={adults}
+            children={children}
+            infants={infants}
+            setAdults={setAdults}
+            setChildren={setChildren}
+            setInfants={setInfants}
+            onClose={closeTravelersModal}
+          />
         </div>
       )}
 

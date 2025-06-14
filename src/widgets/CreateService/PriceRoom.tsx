@@ -15,7 +15,6 @@ const PriceRoom = () => {
     watch,
     setValue,
     getValues,
-    formState: { errors },
   } = useFormContext<FormData>();
 
   const guests = watch("guests") ?? 1;
