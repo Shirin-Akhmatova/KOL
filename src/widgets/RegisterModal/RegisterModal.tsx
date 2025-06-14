@@ -131,6 +131,7 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     }
   }, [googleSuccess, googleError, dispatch, onClose]);
 
+
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />

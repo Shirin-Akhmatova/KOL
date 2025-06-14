@@ -36,11 +36,7 @@ interface IColumnItem {
     columnTitle: "KÖL",
     columnItems: [
       {
-        title: "Зарегистрироваться",
-        link: "/register",
-      },
-      {
-        title: "Войти",
+        title: "Регистрация/Вход",
         link: "/login",
       },
       {
