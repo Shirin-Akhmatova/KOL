@@ -69,7 +69,7 @@ function Header() {
     item.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const handleSelect = (destination: Destination) => {
+  const handleSelect = (destination: Destination) => {    
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
     setIsModalOpen(false);
