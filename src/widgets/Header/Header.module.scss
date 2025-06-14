@@ -305,6 +305,50 @@
   pointer-events: auto;
 }
 
+.modalWrapper {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  z-index: 9999;
+  top: 0;
+  left: 35%;
+}
+
+.modalWrapperOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.modalWrapperScrolled {
+  position: fixed;
+  top: -66px;
+}
+
+.travelersModalWrapper {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  z-index: 9999;
+  top: 130px;
+  right: 30px;
+}
+
+.travelersModalWrapperOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.travelersModalWrapperScrolled {
+  position: fixed;
+  top: 64px;
+}
+
 .searchText {
   color: white;
   user-select: none;

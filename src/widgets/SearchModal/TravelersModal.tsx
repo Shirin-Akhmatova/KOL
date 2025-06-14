@@ -6,7 +6,7 @@ interface TravelersModalProps {
 }
 
 function TravelersModal({ onClose }: TravelersModalProps) {
-  const [adults, setAdults] = useState<number>(1);
+  const [adults, setAdults] = useState<number>(0);
   const [children, setChildren] = useState<number>(0);
   const [infants, setInfants] = useState<number>(0);
 
@@ -15,22 +15,46 @@ function TravelersModal({ onClose }: TravelersModalProps) {
     action: "inc" | "dec"
   ) => {
     if (type === "adults") {
-      setAdults((prev) => Math.max(1, prev + (action === "inc" ? 1 : -1)));
+      setAdults((prev) => {
+        const updated = action === "inc" ? prev + 1 : prev - 1;
+        return Math.min(Math.max(updated, 0), 16);
+      });
     } else if (type === "children") {
-      setChildren((prev) => Math.max(0, prev + (action === "inc" ? 1 : -1)));
+      if (action === "inc") {
+        setChildren((prev) => {
+          const newValue = Math.min(prev + 1, 15);
+          if (adults === 0) setAdults(1);
+          return newValue;
+        });
+      } else {
+        setChildren((prev) => Math.max(prev - 1, 0));
+      }
     } else if (type === "infants") {
-      setInfants((prev) => Math.max(0, prev + (action === "inc" ? 1 : -1)));
+      if (action === "inc") {
+        setInfants((prev) => {
+          const newValue = Math.min(prev + 1, 5);
+          if (adults === 0) setAdults(1);
+          return newValue;
+        });
+      } else {
+        setInfants((prev) => Math.max(prev - 1, 0));
+      }
     }
   };
 
   const renderCounter = (
     count: number,
-    type: "adults" | "children" | "infants"
+    type: "adults" | "children" | "infants",
+    max: number
   ) => (
     <div className={styles.counter}>
-      <button onClick={() => handleChange(type, "dec")}>−</button>
+      <button onClick={() => handleChange(type, "dec")} disabled={count <= 0}>
+        −
+      </button>
       <span>{count}</span>
-      <button onClick={() => handleChange(type, "inc")}>+</button>
+      <button onClick={() => handleChange(type, "inc")} disabled={count >= max}>
+        +
+      </button>
     </div>
   );
 
@@ -43,7 +67,7 @@ function TravelersModal({ onClose }: TravelersModalProps) {
               <p className={styles.label}>Взрослые</p>
               <p className={styles.description}>Возраст от 13 лет</p>
             </div>
-            {renderCounter(adults, "adults")}
+            {renderCounter(adults, "adults", 16)}
           </div>
 
           <div className={styles.group}>
@@ -51,7 +75,7 @@ function TravelersModal({ onClose }: TravelersModalProps) {
               <p className={styles.label}>Дети</p>
               <p className={styles.description}>Возраст от 2 до 12</p>
             </div>
-            {renderCounter(children, "children")}
+            {renderCounter(children, "children", 15)}
           </div>
 
           <div className={styles.group}>
@@ -59,7 +83,7 @@ function TravelersModal({ onClose }: TravelersModalProps) {
               <p className={styles.label}>Младенцы</p>
               <p className={styles.description}>Младше 2</p>
             </div>
-            {renderCounter(infants, "infants")}
+            {renderCounter(infants, "infants", 5)}
           </div>
         </div>
       </div>
