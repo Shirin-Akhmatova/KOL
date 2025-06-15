@@ -3,16 +3,18 @@ import './SmsModal.scss';
 import SmsCodeInput from '../SmsCodeInput/SmsCodeInput';
 import { useAppDispatch, useAppSelector } from '../../app/services/redux/hooks';
 import { verifyCode, resetVerifyState } from '../../app/services/redux/OTP/verifySlice';
+import { useNavigate } from 'react-router-dom';
 
 interface SmsModalProps {
   onClose: () => void;
-  phoneNumber: string; // номер без +
+  phoneNumber: string;
 }
 
 const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
   const [values, setValues] = useState(Array(4).fill(''));
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { loading, error, success } = useAppSelector((state) => state.verify);
 
   useEffect(() => {
@@ -23,10 +25,13 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => onClose(), 1000);
+      const timer = setTimeout(() => {
+        onClose();
+        navigate('/create-service');
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [success, onClose]);
+  }, [success, onClose, navigate]);
 
   const handleChange = (index: number, val: string) => {
     if (!/^\d?$/.test(val)) return;

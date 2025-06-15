@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import {
   registerUser,
   resetRegisterState,
@@ -17,15 +18,12 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
 import CustomCountryCode from "../CustomCountryCode/CustomCountryCode";
 import SmsModal from "../SmsModal/SmsModal";
-
-import "react-toastify/dist/ReactToastify.css";
 import { initializeGoogleLogin } from "@/shared/ui/googleSdk";
 
 interface RegisterProps {
   onClose?: () => void;
 }
 
-// Форматируем номер как XXX XXX XXXX
 const formatPhoneNumber = (num: string) => {
   const cleaned = num.replace(/\D/g, "");
   const part1 = cleaned.slice(0, 3);
@@ -34,12 +32,11 @@ const formatPhoneNumber = (num: string) => {
   return [part1, part2, part3].filter(Boolean).join(" ");
 };
 
-// ID клиента
-const GOOGLE_CLIENT_ID =
-  "984540388050-3gueuugbkftv0mrp5jop0e9dt17v48mr.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "984540388050-3gueuugbkftv0mrp5jop0e9dt17v48mr.apps.googleusercontent.com";
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
@@ -78,7 +75,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
-  // Google SDK инициализация
   useEffect(() => {
     initializeGoogleLogin(GOOGLE_CLIENT_ID, (response) => {
       const credential = response.credential;
@@ -90,7 +86,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     });
   }, [dispatch]);
 
-  // стили кнопки от гугл
   useEffect(() => {
     if (window.google?.accounts?.id) {
       window.google.accounts.id.renderButton(
@@ -124,13 +119,13 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
       toast.success("Успешный вход через Google!");
       dispatch(resetGoogleLoginState());
       onClose?.();
+      navigate('/create-service');
     }
     if (googleError) {
       toast.error(googleError);
       dispatch(resetGoogleLoginState());
     }
-  }, [googleSuccess, googleError, dispatch, onClose]);
-
+  }, [googleSuccess, googleError, dispatch, onClose, navigate]);
 
   return (
     <>
@@ -178,7 +173,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <div className={styles.register__divider}>Or connect using</div>
 
           <div id="google-button"></div>
-          {/* чуть позже добавлю норм кнопку, а то стили идут с гугловской кнопки, регистрация сделана :) */}
         </div>
 
         {showModal && (

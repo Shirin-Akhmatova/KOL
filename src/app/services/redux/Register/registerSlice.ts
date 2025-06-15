@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import apiClient from "../../apiClient";
 
 interface RegisterState {
@@ -87,7 +88,7 @@ const registerSlice = createSlice({
         state.loading = false;
         state.success = true;
       })
-      .addCase(registerUser.rejected, (state, action) => {
+      .addCase(registerUser.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload ?? "Неизвестная ошибка";
       });

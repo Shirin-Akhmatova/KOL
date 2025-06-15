@@ -1,4 +1,7 @@
 import styles from "./UserProfileModal.module.scss";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../app/services/redux/store";
+import { useNavigate } from "react-router-dom";
 
 type UserProfileModalProps = {
   onClose: () => void;
@@ -6,9 +9,21 @@ type UserProfileModalProps = {
 };
 
 function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).className.includes(styles.userProfileModal_overlay)) {
       onClose();
+    }
+  };
+
+  const handleCreateServiceClick = () => {
+    if (isAuthenticated) {
+      navigate('/create-service');
+      onClose();
+    } else {
+      onRegisterClick();
     }
   };
 
@@ -21,7 +36,7 @@ function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
         <ul>
           <li onClick={onRegisterClick}>Регистрация/Вход</li>
           <div className={styles.divider}></div>
-          <li>Сдать жилье на KÖL</li>
+          <li onClick={handleCreateServiceClick}>Сдать жилье на KÖL</li>
           <li>Центр помощи</li>
         </ul>
       </div>
