@@ -78,7 +78,7 @@ const footerSocials: IFooterSocial[] = [
   },
   {
     icon: "/imgs/socials/instagram.svg",
-    link: "https://www.instagram.com/",
+    link: "https://www.instagram.com/kyrgyzanimation/",
   },
   {
     icon: "/imgs/socials/telegram.svg",

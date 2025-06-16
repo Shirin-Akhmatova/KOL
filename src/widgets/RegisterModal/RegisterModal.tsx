@@ -22,6 +22,7 @@ import SmsModal from "../SmsModal/SmsModal";
 import googleIcon from "../../assets/icons/google.svg";
 
 import "react-toastify/dist/ReactToastify.css";
+import { fetchUserData } from "@/app/services/redux/Register/googleLoginSlice";
 
 interface RegisterProps {
   onClose?: () => void;
@@ -104,6 +105,7 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   useEffect(() => {
     if (googleSuccess) {
       toast.success("Успешный вход через Google!");
+      dispatch(fetchUserData());
       setTimeout(() => {
         dispatch(resetGoogleLoginState());
         onClose?.();

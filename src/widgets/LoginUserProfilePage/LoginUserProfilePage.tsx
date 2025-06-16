@@ -8,6 +8,8 @@ import LoginSecurityModal from "../LoginSecurityModal/LoginSecurityModal";
 import NotificationsModal from "../NotificationsModal/NotificationsModal";
 import Payment from "../PaymentModal/PaymentModal";
 import ObjectsModal from "../ObjectsModal/ObjectsModal";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/services/redux/store";
 
 function LoginUserProfilePage() {
   const [image, setImage] = useState<string | null>(null);
@@ -20,6 +22,7 @@ function LoginUserProfilePage() {
     useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isObjectsModalOpen, setIsObjectsModalOpen] = useState(false);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const handleAvatarClick = () => {
     if (image) {
@@ -56,10 +59,10 @@ function LoginUserProfilePage() {
         </div>
 
         <div className={styles.loginUserProfilePage_info}>
-          <h1>Алекс</h1>
-          <p>Гость</p>
-        <p>В KÖL уже</p>
-<h3>3 года</h3>
+          <h1>{user?.first_name || "Гость"}</h1>
+          <p>{user?.email || "Нет email"}</p>
+          <p>В KÖL уже</p>
+          <h3>3 года</h3>
         </div>
       </div>
 
@@ -132,7 +135,7 @@ function LoginUserProfilePage() {
           onClick={() => setIsPreviewOpen(false)}
         >
           <div className={styles.previewModal}>
-            <img src={image} alt="предпросмотр аватара" />
+            <img src={image} />
           </div>
         </div>
       )}
@@ -170,4 +173,4 @@ function LoginUserProfilePage() {
   );
 }
 
-export default LoginUserProfilePage;  
+export default LoginUserProfilePage;
