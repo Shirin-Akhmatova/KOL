@@ -14,7 +14,7 @@ interface IColumnItem {
   icon?: string;
 }
 
- const footerColumns: IFooterColumn[] = [
+const footerColumns: IFooterColumn[] = [
   {
     columnTitle: "Поддержка",
     columnItems: [
@@ -62,7 +62,7 @@ interface IColumnItem {
   },
 ];
 
- const footerSocials: IFooterSocial[] = [
+const footerSocials: IFooterSocial[] = [
   {
     icon: "/imgs/svgs/globe.svg",
     title: "English(US)",
@@ -77,7 +77,7 @@ interface IColumnItem {
   },
   {
     icon: "/imgs/socials/instagram.svg",
-    link: "https://www.instagram.com/",
+    link: "https://www.instagram.com/kyrgyzanimation/",
   },
   {
     icon: "/imgs/socials/telegram.svg",

@@ -86,7 +86,6 @@ const Amenities = () => {
       );
     }
   };
-
   return (
     <div className={scss.Amenities}>
       <div className="container">
