@@ -15,11 +15,17 @@ function FooterTop({ onAuthClick }: FooterTopProps) {
   return (
     <div className={`container ${styles.footerTop}`}>
       <div className={styles.footerTopLeft}>
-        <img
-          className={styles.footerTopLeftImg}
-          src="/imgs/logoAnimation.svg"
-          alt="logo KA"
-        />
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.instagram.com/kyrgyzanimation/"
+        >
+          <img
+            className={styles.footerTopLeftImg}
+            src="/imgs/logoAnimation.svg"
+            alt="logo KA"
+          />
+        </a>
         <p className={styles.footerTopLeftText}>
           Кыргызанимация — студия, создающая мультфильмы на кыргызском языке и
           развивающая национальную культуру.
@@ -56,8 +62,9 @@ function FooterColumn({
       <ul className={styles.footerColumnItems}>
         {columnItems.map((item) => (
           <li key={item.title} className={styles.footerColumnItem}>
-            <a 
-              href={item.link || "#"} 
+            <a
+              // href={item.link || "#"}
+              href="#"
               className={styles.footerColumnItemLink}
               onClick={(e) => {
                 if (item.title === "Регистрация/Вход" && onItemClick) {
