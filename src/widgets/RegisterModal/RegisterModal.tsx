@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
 import {
   registerUser,
   resetRegisterState,
@@ -18,21 +19,13 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
 import CustomCountryCode from "../CustomCountryCode/CustomCountryCode";
 import SmsModal from "../SmsModal/SmsModal";
-import { initializeGoogleLogin } from "@/shared/ui/googleSdk";
+import googleIcon from "../../assets/icons/google.svg";
+
+import "react-toastify/dist/ReactToastify.css";
 
 interface RegisterProps {
   onClose?: () => void;
 }
-
-const formatPhoneNumber = (num: string) => {
-  const cleaned = num.replace(/\D/g, "");
-  const part1 = cleaned.slice(0, 3);
-  const part2 = cleaned.slice(3, 6);
-  const part3 = cleaned.slice(6, 10);
-  return [part1, part2, part3].filter(Boolean).join(" ");
-};
-
-const GOOGLE_CLIENT_ID = "984540388050-3gueuugbkftv0mrp5jop0e9dt17v48mr.apps.googleusercontent.com";
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,7 +34,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
   );
-
   const { error: googleError, success: googleSuccess } = useSelector(
     (state: RootState) => state.googleLogin
   );
@@ -49,6 +41,14 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
   const [showModal, setShowModal] = useState(false);
+
+  const formatPhoneNumber = (num: string) => {
+    const cleaned = num.replace(/\D/g, "");
+    const part1 = cleaned.slice(0, 3);
+    const part2 = cleaned.slice(3, 6);
+    const part3 = cleaned.slice(6, 10);
+    return [part1, part2, part3].filter(Boolean).join(" ");
+  };
 
   const isValid = phoneNumber.length === 9;
 
@@ -75,32 +75,19 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
-  useEffect(() => {
-    initializeGoogleLogin(GOOGLE_CLIENT_ID, (response) => {
-      const credential = response.credential;
-      if (!credential) {
-        toast.error("Не удалось получить токен от Google");
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const accessToken = tokenResponse.access_token;
+      if (!accessToken) {
+        toast.error("Не удалось получить access_token от Google");
         return;
       }
-      dispatch(loginWithGoogle({ access_token: credential }));
-    });
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (window.google?.accounts?.id) {
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-button"),
-        {
-          type: "standard",
-          theme: "outline",
-          text: "continue_with",
-          shape: "rectangular",
-          size: "large",
-          logo_alignment: "left",
-        }
-      );
-    }
-  }, []);
+      dispatch(loginWithGoogle({ access_token: accessToken }));
+    },
+    onError: () => {
+      toast.error("Ошибка входа через Google");
+    },
+  });
 
   useEffect(() => {
     if (success) {
@@ -117,15 +104,16 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   useEffect(() => {
     if (googleSuccess) {
       toast.success("Успешный вход через Google!");
-      dispatch(resetGoogleLoginState());
-      onClose?.();
-      navigate('/create-service');
+      setTimeout(() => {
+        dispatch(resetGoogleLoginState());
+        onClose?.();
+      }, 1800);
     }
     if (googleError) {
       toast.error(googleError);
       dispatch(resetGoogleLoginState());
     }
-  }, [googleSuccess, googleError, dispatch, onClose, navigate]);
+  }, [googleSuccess, googleError, dispatch, onClose]);
 
   return (
     <>
@@ -134,13 +122,13 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
         <div className={styles.register}>
           <header className={styles.register__header}>
             <h4 className={styles.register__subtitle}>
-              Log in or Registration
+              Вход или регистрация
             </h4>
             <button className={styles.register__close} onClick={onClose}>
-              <img src={exitIcon} alt="exit" />
+              <img src={exitIcon} alt="Закрыть" />
             </button>
             <div className={styles.divider}></div>
-            <h2 className={styles.register__title}>Welcome to KöL</h2>
+            <h2 className={styles.register__title}>Добро пожаловать в KöL</h2>
           </header>
 
           <form className={styles.register__form} onSubmit={handleSubmit}>
@@ -149,30 +137,36 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
             <CustomInput
               value={displayValue}
               onChange={handleInputChange}
-              placeholder={phoneNumber.length === 0 ? "Phone number" : ""}
+              placeholder={phoneNumber.length === 0 ? "Номер телефона" : ""}
               borderColor="#B0B0B0"
               type="tel"
             />
 
             <CustomButton
-              text={loading ? "Loading..." : "Continue"}
+              text={loading ? "Отправка..." : "Продолжить"}
               textColor="#fff"
               buttonColor={
                 isValid && !loading
                   ? "linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
                   : "#ccc"
               }
+              disabled={!isValid || loading}
               style={{
                 border: "none",
                 cursor: isValid && !loading ? "pointer" : "not-allowed",
               }}
-              disabled={!isValid || loading}
             />
           </form>
 
-          <div className={styles.register__divider}>Or connect using</div>
+          <div className={styles.register__divider}>Или войдите с помощью</div>
 
-          <div id="google-button"></div>
+          <CustomButton
+            text="Продолжить с Google"
+            onClick={googleLogin}
+            textColor="#000"
+            buttonColor="#fff"
+            icon={<img src={googleIcon} alt="Google" />}
+          />
         </div>
 
         {showModal && (
