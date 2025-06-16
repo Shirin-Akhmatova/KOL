@@ -10,6 +10,8 @@ import {
   resetGoogleLoginState,
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
+import { useGoogleLogin } from "@react-oauth/google";
+import googleIcon from "../../assets/icons/google.svg";
 
 import styles from "./RegisterModal.module.scss";
 import exitIcon from "../../assets/icons/exitIcon.svg";
@@ -19,7 +21,6 @@ import CustomCountryCode from "../CustomCountryCode/CustomCountryCode";
 import SmsModal from "../SmsModal/SmsModal";
 
 import "react-toastify/dist/ReactToastify.css";
-import { initializeGoogleLogin } from "@/shared/ui/googleSdk";
 
 interface RegisterProps {
   onClose?: () => void;
@@ -33,10 +34,6 @@ const formatPhoneNumber = (num: string) => {
   const part3 = cleaned.slice(6, 10);
   return [part1, part2, part3].filter(Boolean).join(" ");
 };
-
-// ID клиента
-const GOOGLE_CLIENT_ID =
-  "984540388050-3gueuugbkftv0mrp5jop0e9dt17v48mr.apps.googleusercontent.com";
 
 const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -79,33 +76,19 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   };
 
   // Google SDK инициализация
-  useEffect(() => {
-    initializeGoogleLogin(GOOGLE_CLIENT_ID, (response) => {
-      const credential = response.credential;
-      if (!credential) {
-        toast.error("Не удалось получить токен от Google");
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const accessToken = tokenResponse.access_token;
+      if (!accessToken) {
+        toast.error("Не удалось получить access_token от Google");
         return;
       }
-      dispatch(loginWithGoogle({ access_token: credential }));
-    });
-  }, [dispatch]);
-
-  // стили кнопки от гугл
-  useEffect(() => {
-    if (window.google?.accounts?.id) {
-      window.google.accounts.id.renderButton(
-        document.getElementById("google-button"),
-        {
-          type: "standard",
-          theme: "outline",
-          text: "continue_with",
-          shape: "rectangular",
-          size: "large",
-          logo_alignment: "left",
-        }
-      );
-    }
-  }, []);
+      dispatch(loginWithGoogle({ access_token: accessToken }));
+    },
+    onError: () => {
+      toast.error("Ошибка входа через Google");
+    },
+  });
 
   useEffect(() => {
     if (success) {
@@ -122,15 +105,16 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   useEffect(() => {
     if (googleSuccess) {
       toast.success("Успешный вход через Google!");
-      dispatch(resetGoogleLoginState());
-      onClose?.();
+      setTimeout(() => {
+        dispatch(resetGoogleLoginState());
+        onClose?.();
+      }, 1800);
     }
     if (googleError) {
       toast.error(googleError);
       dispatch(resetGoogleLoginState());
     }
   }, [googleSuccess, googleError, dispatch, onClose]);
-
 
   return (
     <>
@@ -177,8 +161,13 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
 
           <div className={styles.register__divider}>Or connect using</div>
 
-          <div id="google-button"></div>
-          {/* чуть позже добавлю норм кнопку, а то стили идут с гугловской кнопки, регистрация сделана :) */}
+          <CustomButton
+            text="Continue with Google"
+            onClick={() => googleLogin()}
+            textColor="#000"
+            buttonColor="#fff"
+            icon={<img src={googleIcon} />}
+          />
         </div>
 
         {showModal && (
