@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { destinations } from "../../widgets/SearchModal/destinationsData";
 
@@ -37,7 +37,12 @@ function pluralize(count: number, one: string, few: string, many: string) {
 }
 
 function Header() {
+  // убирает поиск при переходе на другие страницы (пока что переход лишь на /loginUserProfilePage)
   const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const hideSearchBar = currentPath === "/loginUserProfilePage";
+
   const [datePicker, setDatePicker] = useState<DatePicker>({
     startDate: null,
     endDate: null,
@@ -69,7 +74,7 @@ function Header() {
     item.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
-  const handleSelect = (destination: Destination) => {    
+  const handleSelect = (destination: Destination) => {
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
     setIsModalOpen(false);
@@ -172,13 +177,17 @@ function Header() {
           <a href="/">
             <img src={Logo} alt="Logo" />
           </a>
-          <h3
-            className={`${styles.title} ${
-              scrolled ? styles.titleScrolled : ""
-            } ${!isTitleVisible ? styles.titleHidden : ""}`}
-          >
-            Живи у озера - дыши горами
-          </h3>
+
+          {!hideSearchBar && (
+            <h3
+              className={`${styles.title} ${
+                scrolled ? styles.titleScrolled : ""
+              } ${!isTitleVisible ? styles.titleHidden : ""}`}
+            >
+              Живи у озера - дыши горами
+            </h3>
+          )}
+
           <div className={styles.mainContent}>
             <div className={styles.langWrapper}>
               <img
@@ -226,115 +235,117 @@ function Header() {
           </div>
         </div>
 
-        <div
-          className={`${styles.searchBar} ${
-            scrolled ? styles.searchBarScrolled : ""
-          }`}
-        >
-          <div className={styles.searchItem} onClick={openSearchModal}>
-            {!scrolled && <span className={styles.label}>Где</span>}
-            <input
-              type="search"
-              placeholder={scrolled ? "Куда" : "Поиск направлений"}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              className={styles.input}
-              aria-label="Поиск направлений"
-              autoComplete="off"
-            />
-          </div>
-
-          <div className={styles.divider} />
-
+        {!hideSearchBar && (
           <div
-            className={styles.searchItem}
-            onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) =>
-              e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
-            }
+            className={`${styles.searchBar} ${
+              scrolled ? styles.searchBarScrolled : ""
+            }`}
           >
-            {!scrolled && <span className={styles.label}>Прибытие</span>}
+            <div className={styles.searchItem} onClick={openSearchModal}>
+              {!scrolled && <span className={styles.label}>Где</span>}
+              <input
+                type="search"
+                placeholder={scrolled ? "Куда" : "Поиск направлений"}
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                className={styles.input}
+                aria-label="Поиск направлений"
+                autoComplete="off"
+              />
+            </div>
 
-            {scrolled ? (
-              <span className={styles.placeholder}>Дата</span>
-            ) : datePicker.startDate ? (
-              <span>
-                {format(datePicker.startDate, "d LLL.", { locale: ru })}
-              </span>
-            ) : (
-              <span className={styles.placeholder}>Когда?</span>
-            )}
-          </div>
+            <div className={styles.divider} />
 
-          {!scrolled && (
-            <>
-              <div className={styles.divider} />
-              <div
-                className={styles.searchItem}
-                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
-                }
-              >
-                <span className={styles.label}>Выезд</span>
-                {datePicker.endDate ? (
-                  <span>
-                    {format(datePicker.endDate, "d LLL.", { locale: ru })}
-                  </span>
-                ) : (
-                  <span className={styles.placeholder}>Когда?</span>
-                )}
-              </div>
-            </>
-          )}
-
-          <div className={styles.divider} />
-
-          <div
-            className={`${styles.searchBarEnd} ${
-              scrolled ? styles.searchBarEndScrolled : ""
-            } ${isSearchActive ? styles.searchBarEndActive : ""}`}
-            onClick={openTravelersModal}
-          >
             <div
               className={styles.searchItem}
+              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
               role="button"
               tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+              onKeyDown={(e) =>
+                e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
+              }
             >
-              <div className={styles.label}>Кто</div>
-              <div className={styles.placeholder}>
-                {totalTravelers > 0
-                  ? `${totalTravelers} ${pluralize(
-                      totalTravelers,
-                      "гость",
-                      "гостя",
-                      "гостей"
-                    )}`
-                  : "Кто едет?"}
-              </div>
-            </div>
+              {!scrolled && <span className={styles.label}>Прибытие</span>}
 
-            <div
-              className={`${styles.searchButton} ${
-                scrolled ? styles.searchButtonScrolled : ""
-              } ${isSearchActive ? styles.searchButtonActive : ""}`}
-              onClick={openTravelersModal}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
-            >
-              <img src={SearchIcon} alt="SearchIcon" />
-              {isSearchActive && (
-                <span className={styles.searchText}>Искать</span>
+              {scrolled ? (
+                <span className={styles.placeholder}>Дата</span>
+              ) : datePicker.startDate ? (
+                <span>
+                  {format(datePicker.startDate, "d LLL.", { locale: ru })}
+                </span>
+              ) : (
+                <span className={styles.placeholder}>Когда?</span>
               )}
             </div>
+
+            {!scrolled && (
+              <>
+                <div className={styles.divider} />
+                <div
+                  className={styles.searchItem}
+                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
+                  }
+                >
+                  <span className={styles.label}>Выезд</span>
+                  {datePicker.endDate ? (
+                    <span>
+                      {format(datePicker.endDate, "d LLL.", { locale: ru })}
+                    </span>
+                  ) : (
+                    <span className={styles.placeholder}>Когда?</span>
+                  )}
+                </div>
+              </>
+            )}
+
+            <div className={styles.divider} />
+
+            <div
+              className={`${styles.searchBarEnd} ${
+                scrolled ? styles.searchBarEndScrolled : ""
+              } ${isSearchActive ? styles.searchBarEndActive : ""}`}
+              onClick={openTravelersModal}
+            >
+              <div
+                className={styles.searchItem}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+              >
+                <div className={styles.label}>Кто</div>
+                <div className={styles.placeholder}>
+                  {totalTravelers > 0
+                    ? `${totalTravelers} ${pluralize(
+                        totalTravelers,
+                        "гость",
+                        "гостя",
+                        "гостей"
+                      )}`
+                    : "Кто едет?"}
+                </div>
+              </div>
+
+              <div
+                className={`${styles.searchButton} ${
+                  scrolled ? styles.searchButtonScrolled : ""
+                } ${isSearchActive ? styles.searchButtonActive : ""}`}
+                onClick={openTravelersModal}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+              >
+                <img src={SearchIcon} alt="SearchIcon" />
+                {isSearchActive && (
+                  <span className={styles.searchText}>Искать</span>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
         {isCalendarOpen && (
           <div
