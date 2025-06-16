@@ -13,6 +13,7 @@ interface IColumnItem {
   title: string;
   link?: string;
   icon?: string;
+  id?: string; // Добавляем необязательное поле id
 }
 
 const footerColumns: IFooterColumn[] = [
@@ -39,10 +40,12 @@ const footerColumns: IFooterColumn[] = [
       {
         title: "Регистрация/Вход",
         link: "#auth",
+        id: "auth" // Добавляем идентификатор
       },
       {
         title: "Сдать жилье на KÖL",
         link: "#create-service",
+        id: "create-service" // Добавляем идентификатор
       },
     ],
   },

@@ -26,9 +26,10 @@ import { fetchUserData } from "@/app/services/redux/Register/googleLoginSlice";
 
 interface RegisterProps {
   onClose?: () => void;
+  onSuccess?: () => void;
 }
 
-const Register: React.FC<RegisterProps> = ({ onClose }) => {
+const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -109,13 +110,14 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
       setTimeout(() => {
         dispatch(resetGoogleLoginState());
         onClose?.();
+        onSuccess?.();
       }, 1800);
     }
     if (googleError) {
       toast.error(googleError);
       dispatch(resetGoogleLoginState());
     }
-  }, [googleSuccess, googleError, dispatch, onClose]);
+  }, [googleSuccess, googleError, dispatch, onClose, onSuccess]);
 
   return (
     <>
@@ -175,6 +177,7 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <SmsModal
             onClose={() => setShowModal(false)}
             phoneNumber={`${countryCode} ${formatPhoneNumber(phoneNumber)}`}
+            onSuccess={onSuccess}
           />
         )}
       </div>
