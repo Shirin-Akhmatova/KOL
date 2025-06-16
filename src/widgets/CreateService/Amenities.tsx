@@ -11,7 +11,6 @@ import heating from "@/assets/icons/heating.svg";
 import yoga from "@/assets/icons/Yogo-room.svg";
 import cleaner from "@/assets/icons/cleaner.svg";
 import scss from "./Amenities.module.scss";
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import type { FormData } from "@/pages/CreateService/CreateService";
 
@@ -72,7 +71,7 @@ const options: Options[] = [
 ];
 
 const Amenities = () => {
-  const { setValue, getValues, watch } = useFormContext<FormData>();
+  const { setValue, watch } = useFormContext<FormData>();
 
   const amenities = watch("amenities");
 
@@ -87,7 +86,6 @@ const Amenities = () => {
       );
     }
   };
-
   return (
     <div className={scss.Amenities}>
       <div className="container">
