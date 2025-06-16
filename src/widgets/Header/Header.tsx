@@ -17,6 +17,10 @@ import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import Calendar from "../Calendar/CalendarUp";
 
+import type { IWeatherWidget } from "@/pages/Home/CardFilters/weatherWidget/weatherWidget.interface";
+import WeatherWidget from "@/pages/Home/CardFilters/weatherWidget/weatherWidget";
+import { getWeather } from "@/pages/Home/CardFilters/weatherWidget/weatherWidget.data";
+
 type Destination = {
   name: string;
   description?: string;
@@ -55,6 +59,7 @@ function Header() {
     useState<boolean>(false);
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const [weatherData, setWeatherData] = useState<IWeatherWidget[] | null>(null);
 
   // Состояния для взрослых, детей и младенцев
   const [adults, setAdults] = useState(0);
@@ -68,6 +73,10 @@ function Header() {
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
   );
+
+  useEffect(() => {
+    getWeather().then(setWeatherData);
+  }, []);
 
   const handleSelect = (destination: Destination) => {    
     console.log("Выбрали:", destination);
@@ -181,11 +190,19 @@ function Header() {
           </h3>
           <div className={styles.mainContent}>
             <div className={styles.langWrapper}>
+
+            {scrolled && weatherData && (
+                <div className={styles.headerWeather}>
+                  <WeatherWidget weathers={weatherData} inHeader />
+                </div>
+              )}
+
               <img
                 src={LangIcon}
                 className={styles.langIcon}
                 onClick={toggleLangDropdown}
               />
+
               {isLangDropdownOpen && (
                 <div className={`${styles.langDropdown} ${styles.show}`}>
                   <div
