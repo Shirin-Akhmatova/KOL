@@ -10,6 +10,7 @@ function FooterBottom() {
           <li key={"privacy_policy"}>Политика конфиденциальности</li>
           <li key={"user_agreement"}>Пользовательское соглашение</li>
         </ul>
+        
         <img src="/imgs/logo.svg" className={styles.companyLogo} alt="logo" />
         <div className={styles.companySocials}>
           {footerSocials.map((item) => (

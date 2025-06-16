@@ -1,7 +1,17 @@
 import { footerColumns, type IColumnItem } from "./footer.data";
 import styles from "./footer.module.scss";
 
-function FooterTop() {
+interface FooterTopProps {
+  onAuthClick: () => void;
+}
+
+function FooterTop({ onAuthClick }: FooterTopProps) {
+  const handleItemClick = (item: IColumnItem) => {
+    if (item.title === "Регистрация/Вход") {
+      onAuthClick();
+    }
+  };
+
   return (
     <div className={`container ${styles.footerTop}`}>
       <div className={styles.footerTopLeft}>
@@ -21,6 +31,7 @@ function FooterTop() {
             key={column.columnTitle}
             columnTitle={column.columnTitle}
             columnItems={column.columnItems}
+            onItemClick={handleItemClick}
           />
         ))}
       </div>
@@ -31,9 +42,11 @@ function FooterTop() {
 function FooterColumn({
   columnTitle,
   columnItems,
+  onItemClick,
 }: {
   columnTitle: string;
   columnItems: IColumnItem[];
+  onItemClick?: (item: IColumnItem) => void;
 }) {
   return (
     <div className={styles.footerColumn}>
@@ -43,7 +56,16 @@ function FooterColumn({
       <ul className={styles.footerColumnItems}>
         {columnItems.map((item) => (
           <li key={item.title} className={styles.footerColumnItem}>
-            <a href={item.link} className={styles.footerColumnItemLink}>
+            <a 
+              href={item.link || "#"} 
+              className={styles.footerColumnItemLink}
+              onClick={(e) => {
+                if (item.title === "Регистрация/Вход" && onItemClick) {
+                  e.preventDefault();
+                  onItemClick(item);
+                }
+              }}
+            >
               {item.icon && <img src={item.icon} alt={item.title} />}
               {item.title}
             </a>

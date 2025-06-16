@@ -7,6 +7,16 @@ interface VerifyState {
   success: boolean;
 }
 
+interface VerifyResponse {
+  [key: string]: unknown;
+}
+
+interface ServerError {
+  detail?: string;
+  message?: string;
+  [key: string]: unknown;
+}
+
 const initialState: VerifyState = {
   loading: false,
   error: null,
@@ -14,38 +24,41 @@ const initialState: VerifyState = {
 };
 
 export const verifyCode = createAsyncThunk<
-  any,
+  VerifyResponse,
   { phone_number: string; code: string },
   { rejectValue: string }
 >(
   "auth/verifyCode",
   async ({ phone_number, code }, { rejectWithValue }) => {
     try {
-      // Убираем + и пробелы из номера перед отправкой
       const cleanedPhoneNumber = phone_number.replace(/\+/g, '').replace(/\s/g, '');
-
-      const response = await apiClient.post("/account/verify_code/", {
+      
+      const response = await apiClient.post<VerifyResponse>("/account/verify_code/", {
         phone_number: cleanedPhoneNumber,
         code: String(code),
       });
 
       return response.data;
-    } catch (error: any) {
-      const serverError = error.response?.data;
-      if (serverError) {
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error !== null && 'response' in error) {
+        const serverError = (error as { response?: { data?: ServerError | string } }).response?.data;
+        
         if (typeof serverError === "string") {
           return rejectWithValue("Ошибка сервера. Попробуйте позже.");
         }
 
-        if (typeof serverError === "object") {
-          if (serverError.detail) return rejectWithValue(serverError.detail);
-          if (serverError.message) return rejectWithValue(serverError.message);
+        if (serverError && typeof serverError === "object") {
+          if (serverError.detail) {
+            return rejectWithValue(serverError.detail);
+          }
+          if (serverError.message) {
+            return rejectWithValue(serverError.message);
+          }
 
           const firstKey = Object.keys(serverError)[0];
-          const message =
-            Array.isArray(serverError[firstKey])
-              ? serverError[firstKey][0]
-              : serverError[firstKey];
+          const message = Array.isArray(serverError[firstKey]) 
+            ? (serverError[firstKey] as unknown[])[0]
+            : serverError[firstKey];
           return rejectWithValue(`${firstKey}: ${message}`);
         }
       }
@@ -77,7 +90,7 @@ const verifySlice = createSlice({
       })
       .addCase(verifyCode.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.payload ?? "Неизвестная ошибка";
       });
   },
 });

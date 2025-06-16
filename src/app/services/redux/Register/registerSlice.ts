@@ -7,39 +7,55 @@ interface RegisterState {
   success: boolean;
 }
 
+interface RegisterResponse {
+  [key: string]: unknown;
+}
+
+interface ServerError {
+  detail?: string;
+  message?: string;
+  [key: string]: unknown;
+}
+
 const initialState: RegisterState = {
   loading: false,
   error: null,
   success: false,
 };
 
-export const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk<
+  RegisterResponse,
+  string,
+  { rejectValue: string }
+>(
   "auth/registerUser",
   async (phoneNumber: string, { rejectWithValue }) => {
     try {
-      // Убираем + и пробелы
       const cleanedPhoneNumber = phoneNumber.replace(/\+/g, "").replace(/\s/g, "");
 
-      // Важно: путь с конечным слэшем, как в Swagger
-      const response = await apiClient.post("/account/register/", {
+      const response = await apiClient.post<RegisterResponse>("/account/register/", {
         phone_number: cleanedPhoneNumber,
       });
       return response.data;
-    } catch (error: any) {
-      const serverError = error.response?.data;
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error !== null && 'response' in error) {
+        const serverError = (error as { response?: { data?: ServerError | string } }).response?.data;
 
-      if (serverError) {
         if (typeof serverError === "string") {
           return rejectWithValue("Ошибка сервера. Попробуйте позже.");
         }
 
-        if (typeof serverError === "object") {
-          if (serverError.detail) return rejectWithValue(serverError.detail);
-          if (serverError.message) return rejectWithValue(serverError.message);
+        if (serverError && typeof serverError === "object") {
+          if (serverError.detail) {
+            return rejectWithValue(serverError.detail);
+          }
+          if (serverError.message) {
+            return rejectWithValue(serverError.message);
+          }
 
           const firstKey = Object.keys(serverError)[0];
           const message = Array.isArray(serverError[firstKey])
-            ? serverError[firstKey][0]
+            ? (serverError[firstKey] as unknown[])[0]
             : serverError[firstKey];
           return rejectWithValue(`${firstKey}: ${message}`);
         }
@@ -73,7 +89,7 @@ const registerSlice = createSlice({
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload as string;
+        state.error = action.payload ?? "Неизвестная ошибка";
       });
   },
 });

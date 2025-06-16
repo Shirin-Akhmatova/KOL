@@ -5,6 +5,7 @@ import styles from "./UploadModal.module.scss";
 import CustomButton from "../CustomButton/CustomButton";
 import uploadIcon from "../../assets/icons/uploadIcon.svg";
 import uploadIconLoading from "../../assets/icons/uploadIconLoading.svg";
+import type { Area } from "react-easy-crop";
 
 type Props = {
   isOpen: boolean;
@@ -19,7 +20,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
   const [imageData, setImageData] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [isCropping, setIsCropping] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,11 +64,11 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
     e.preventDefault();
   };
 
-  const onCropComplete = useCallback((_: any, croppedAreaPixels: any) => {
+  const onCropComplete = useCallback((_: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
-  const showCroppedImage = async () => {
+  const showCroppedImage = useCallback(async () => {
     try {
       if (!imageData || !croppedAreaPixels) return;
       const croppedImage = await getCroppedImg(imageData, croppedAreaPixels);
@@ -76,17 +77,19 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
     } catch (e) {
       console.error("Crop failed:", e);
     }
-  };
+  }, [imageData, croppedAreaPixels, onUpload, onClose]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setFile(null);
     setImageData(null);
     setProgress(0);
     setIsCropping(false);
     onClose();
-  };
+  }, [onClose]);
 
-  return isOpen ? (
+  if (!isOpen) return null;
+
+  return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h2 className={styles.title}>Upload photo</h2>
@@ -108,7 +111,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
               accept="image/*"
               onChange={handleFileChange}
             />
-            <img src={uploadIcon} alt="uploadIcon" />
+            <img src={uploadIcon} alt="upload" />
             <p>Click to upload or drag and drop here...</p>
             <p className={styles.sub}>Max file size 30Mb</p>
           </div>
@@ -117,7 +120,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
         {file && !isCropping && (
           <div className={styles.filePreview}>
             <div className={styles.iconWrapper}>
-              <img src={uploadIconLoading} alt="uploadIcon" />
+              <img src={uploadIconLoading} alt="uploading" />
             </div>
             <div className={styles.fileInfo}>
               <p className={styles.fileName}>{file.name}</p>
@@ -160,7 +163,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
             </div>
 
             <div className={styles.avatarPreview}>
-              <img src={imageData} alt="Avatar preview" />
+              <img src={imageData} alt="Preview" />
             </div>
           </>
         )}
@@ -180,7 +183,7 @@ const UploadModal: React.FC<Props> = ({ isOpen, onClose, onUpload }) => {
         </div>
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default UploadModal;

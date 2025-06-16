@@ -10,7 +10,8 @@ const ChooseDate = () => {
     setValue,
     getValues,
     watch,
-    formState: { errors },
+
+    formState: {},
   } = useFormContext<FormData>();
 
   const hour = watch("hourHandle");

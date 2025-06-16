@@ -10,13 +10,10 @@ import {
   resetGoogleLoginState,
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
-import { auth, provider } from "../../shared/ui/firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useGoogleLogin } from "@react-oauth/google";
+import googleIcon from "../../assets/icons/google.svg";
 
 import styles from "./RegisterModal.module.scss";
-import googleIcon from "../../assets/icons/google.svg";
-import appleIcon from "../../assets/icons/apple.svg";
-import emailIcon from "../../assets/icons/email.svg";
 import exitIcon from "../../assets/icons/exitIcon.svg";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
@@ -24,6 +21,7 @@ import CustomCountryCode from "../CustomCountryCode/CustomCountryCode";
 import SmsModal from "../SmsModal/SmsModal";
 
 import "react-toastify/dist/ReactToastify.css";
+import { fetchUserData } from "@/app/services/redux/Register/googleLoginSlice";
 
 interface RegisterProps {
   onClose?: () => void;
@@ -45,17 +43,14 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     (state: RootState) => state.register
   );
 
-  const {
-    loading: googleLoading,
-    error: googleError,
-    success: googleSuccess,
-  } = useSelector((state: RootState) => state.googleLogin);
+  const { error: googleError, success: googleSuccess } = useSelector(
+    (state: RootState) => state.googleLogin
+  );
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
   const [showModal, setShowModal] = useState(false);
 
-  // Проверка валидности номера: для +996 — 9 цифр
   const isValid = phoneNumber.length === 9;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,7 +62,7 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
 
   const handleCountrySelect = (code: string) => {
     setCountryCode(code);
-    setPhoneNumber(""); // сброс номера при смене страны
+    setPhoneNumber("");
   };
 
   const displayValue = `${countryCode} ${formatPhoneNumber(phoneNumber)}`;
@@ -81,26 +76,20 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-
-      const idToken = await result.user.getIdToken();
-
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const accessToken = credential?.accessToken;
-
-      dispatch(
-        loginWithGoogle({
-          id_token: idToken,
-          access_token: accessToken,
-        })
-      );
-    } catch (error) {
-      console.error("Google sign-in error:", error);
-      toast.error("Ошибка при входе через Google");
-    }
-  };
+  // Google SDK инициализация
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      const accessToken = tokenResponse.access_token;
+      if (!accessToken) {
+        toast.error("Не удалось получить access_token от Google");
+        return;
+      }
+      dispatch(loginWithGoogle({ access_token: accessToken }));
+    },
+    onError: () => {
+      toast.error("Ошибка входа через Google");
+    },
+  });
 
   useEffect(() => {
     if (success) {
@@ -117,8 +106,11 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   useEffect(() => {
     if (googleSuccess) {
       toast.success("Успешный вход через Google!");
-      dispatch(resetGoogleLoginState());
-      onClose?.();
+      dispatch(fetchUserData());
+      setTimeout(() => {
+        dispatch(resetGoogleLoginState());
+        onClose?.();
+      }, 1800);
     }
     if (googleError) {
       toast.error(googleError);
@@ -171,22 +163,13 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
 
           <div className={styles.register__divider}>Or connect using</div>
 
-          <div className={styles.buttonsWrapper}>
-            <CustomButton
-              text={googleLoading ? "Loading..." : "Continue with Google"}
-              icon={<img src={googleIcon} alt="google" />}
-              onClick={handleGoogleSignIn}
-              disabled={googleLoading}
-            />
-            <CustomButton
-              text="Continue with Apple"
-              icon={<img src={appleIcon} alt="apple" />}
-            />
-            <CustomButton
-              text="Continue with eMail"
-              icon={<img src={emailIcon} alt="email" />}
-            />
-          </div>
+          <CustomButton
+            text="Continue with Google"
+            onClick={() => googleLogin()}
+            textColor="#000"
+            buttonColor="#fff"
+            icon={<img src={googleIcon} />}
+          />
         </div>
 
         {showModal && (

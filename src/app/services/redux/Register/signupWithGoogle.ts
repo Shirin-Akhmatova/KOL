@@ -5,36 +5,28 @@ interface GoogleLoginState {
   loading: boolean;
   error: string | null;
   success: boolean;
-  token: string | null;
+  access: string | null;
+  refresh: string | null;
 }
 
 const initialState: GoogleLoginState = {
   loading: false,
   error: null,
   success: false,
-  token: null,
+  access: null,
+  refresh: null,
 };
 
 interface GoogleTokens {
-  id_token?: string;
   access_token?: string;
-  code?: string;
 }
 
-export const loginWithGoogle = createAsyncThunk<
-  any,
-  GoogleTokens,
-  {
-    rejectValue: string;
-  }
->("auth/loginWithGoogle", async (tokens, { rejectWithValue }) => {
-  try {
-    const response = await apiClient.post(
-      "/account/auth/social/google/",
-      tokens
-    );
-
-    return response.data;
+export const loginWithGoogle = createAsyncThunk<any, GoogleTokens, { rejectValue: string }>(
+  "auth/loginWithGoogle",
+  async (tokens, { rejectWithValue }) => {
+    try {
+      const response = await apiClient.post("/account/auth/social/google/", tokens);
+      return response.data;
   } catch (error: any) {
     const serverError = error.response?.data;
 
@@ -67,7 +59,8 @@ const googleLoginSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.success = false;
-      state.token = null;
+      state.access = null;
+      state.refresh = null;
     },
   },
   extraReducers: (builder) => {
@@ -80,7 +73,8 @@ const googleLoginSlice = createSlice({
       .addCase(loginWithGoogle.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.token = action.payload?.token ?? null;
+        state.access = action.payload?.access ?? null;
+        state.refresh = action.payload?.refresh ?? null;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loading = false;
