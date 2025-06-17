@@ -37,6 +37,7 @@ const ChooseDate = () => {
             <div className={scss.inputGroup}>
               <span>Минимум ночей</span>
               <input
+                min={1}
                 type="number"
                 {...register("minNight", { required: true })}
               />
@@ -44,8 +45,10 @@ const ChooseDate = () => {
             <div className={scss.inputGroup}>
               <span>Максимальное число ночей</span>
               <input
+                min={1}
                 type="number"
                 {...register("maxNight", { required: true })}
+                onWheel={(e) => e.currentTarget.blur()}
               />
             </div>
           </div>
