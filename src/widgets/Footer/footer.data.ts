@@ -3,6 +3,7 @@ interface IFooterSocial {
   title?: string;
   link?: string;
 }
+
 interface IFooterColumn {
   columnTitle: string;
   columnItems: IColumnItem[];
@@ -12,6 +13,7 @@ interface IColumnItem {
   title: string;
   link?: string;
   icon?: string;
+  id?: string; // Добавляем необязательное поле id
 }
 
 const footerColumns: IFooterColumn[] = [
@@ -37,11 +39,13 @@ const footerColumns: IFooterColumn[] = [
     columnItems: [
       {
         title: "Регистрация/Вход",
-        link: "/login",
+        link: "#auth",
+        id: "auth" // Добавляем идентификатор
       },
       {
         title: "Сдать жилье на KÖL",
-        link: "/submit-property",
+        link: "#create-service",
+        id: "create-service" // Добавляем идентификатор
       },
     ],
   },

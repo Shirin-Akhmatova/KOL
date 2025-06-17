@@ -3,16 +3,19 @@ import './SmsModal.scss';
 import SmsCodeInput from '../SmsCodeInput/SmsCodeInput';
 import { useAppDispatch, useAppSelector } from '../../app/services/redux/hooks';
 import { verifyCode, resetVerifyState } from '../../app/services/redux/OTP/verifySlice';
+import { useNavigate } from 'react-router-dom';
 
 interface SmsModalProps {
   onClose: () => void;
-  phoneNumber: string; // номер без +
+  phoneNumber: string;
+  onSuccess?: () => void; // Добавляем новый пропс
 }
 
-const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
+const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber, onSuccess }) => {
   const [values, setValues] = useState(Array(4).fill(''));
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { loading, error, success } = useAppSelector((state) => state.verify);
 
   useEffect(() => {
@@ -23,10 +26,17 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
 
   useEffect(() => {
     if (success) {
-      const timer = setTimeout(() => onClose(), 1000);
+      const timer = setTimeout(() => {
+        onClose();
+        if (onSuccess) {
+          onSuccess(); // Вызываем колбэк при успехе
+        } else {
+          navigate('/create-service'); // Стандартный редирект
+        }
+      }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [success, onClose]);
+  }, [success, onClose, navigate, onSuccess]);
 
   const handleChange = (index: number, val: string) => {
     if (!/^\d?$/.test(val)) return;
@@ -61,9 +71,9 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
     <div className="sms-modal-overlay" onClick={onClose}>
       <div className="sms-modal" onClick={(e) => e.stopPropagation()}>
         <button className="back-button" onClick={onClose} disabled={loading}>&larr;</button>
-        <h2 className="modal-title">Confirm your number</h2>
+        <h2 className="modal-title">Подтвердите номер</h2>
         <p className="modal-subtitle">
-          Enter the code we sent over SMS to <strong>{phoneNumber}</strong>
+          Введите код, отправленный на номер <strong>{phoneNumber}</strong>
         </p>
 
         <div className="code-inputs">
@@ -91,10 +101,10 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
             dispatch(verifyCode({ phone_number: phoneNumber, code: fullCode }));
           }}
         >
-          Continue
+          Продолжить
         </button>
 
-        <p className="more-options">More options</p>
+        <p className="more-options">Дополнительные опции</p>
       </div>
     </div>
   );
