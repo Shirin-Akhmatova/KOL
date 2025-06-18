@@ -3,41 +3,53 @@ import type { IWeatherWidget } from "./weatherWidget.interface";
 import styles from "./weatherWidget.module.scss";
 import { getCustomIconByIdAndDayTime } from "./utils";
 
-function WeatherWidget({ weathers }: { weathers: IWeatherWidget[] }) {
+function WeatherWidget({
+  weathers,
+  inHeader = false,
+}: {
+  weathers: IWeatherWidget[];
+  inHeader?: boolean;
+}) {
   const [showWeather, setShowWeather] = useState<boolean>(false);
 
-  return (
-    <>
-      <div className={`${styles.weatherWidget}`}>
-        <button
-          className={styles.weatherWidgetArrow}
-          onClick={() => setShowWeather((prev) => !prev)}
-        >
-          <img
-            className={`${styles.weatherWidgetArrowImg} ${
-              showWeather ? styles.close : ""
-            }`}
-            src="/imgs/svgs/arrow_left.svg"
-            alt="weather"
-          />
-        </button>
-        <div
-          className={`${styles.weatherWidgetList} ${
-            showWeather ? styles.active : ""
-          }`}
-        >
-          {weathers?.map((weather) => (
-            <WeatherItem key={weather.date} weather={weather} />
-          ))}
-        </div>
-        <button
-          style={{ cursor: "pointer" }}
-          onClick={() => setShowWeather((prev) => !prev)}
-        >
-          <CurrentWeather weather={weathers[0]} />
-        </button>
+  if (inHeader) {
+    return (
+      <div className={styles.weatherHeaderWidget}>
+        <CurrentWeather weather={weathers[0]} />
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className={styles.weatherWidget}>
+      <button
+        className={styles.weatherWidgetArrow}
+        onClick={() => setShowWeather((prev) => !prev)}
+      >
+        <img
+          className={`${styles.weatherWidgetArrowImg} ${
+            showWeather ? styles.close : ""
+          }`}
+          src="/imgs/svgs/arrow_left.svg"
+          alt="weather"
+        />
+      </button>
+      <div
+        className={`${styles.weatherWidgetList} ${
+          showWeather ? styles.active : ""
+        }`}
+      >
+        {weathers.map((weather) => (
+          <WeatherItem key={weather.date} weather={weather} />
+        ))}
+      </div>
+      <button
+        style={{ cursor: "pointer" }}
+        onClick={() => setShowWeather((prev) => !prev)}
+      >
+        <CurrentWeather weather={weathers[0]} />
+      </button>
+    </div>
   );
 }
 
