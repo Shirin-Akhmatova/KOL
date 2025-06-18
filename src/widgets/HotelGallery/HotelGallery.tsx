@@ -158,7 +158,8 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
         </div>
       </div>
 
-      <AnimationBlock />
+      <AnimationBlock
+       />
 
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>

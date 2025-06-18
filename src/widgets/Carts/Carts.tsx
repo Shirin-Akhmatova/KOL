@@ -73,8 +73,7 @@ const Carts = () => {
                   <p>{block.place}</p>
                   <p>{block.data}</p>
                   <h4 className={scss.price}>
-                    {block.price.toLocaleString("ru-RU")}
-                    сом <p>за {block.day} ночей</p>
+                    {block.price.toLocaleString("ru-RU")} сом <p>за {block.day} ночей</p>
                   </h4>
                 </Link>
               </div>
