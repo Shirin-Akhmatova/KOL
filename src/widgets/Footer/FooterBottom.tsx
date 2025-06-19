@@ -8,12 +8,12 @@ function FooterBottom() {
         <ul className={styles.companyTerms}>
           <li key={"kol_2025"}>© 2025 KÖL Platform</li>
           <li key={"privacy_policy"}>
-            <a href="/politice.pdf" target="_blank" rel="noopener noreferrer">
+            <a href="/privacy policy.pdf" target="_blank" rel="noopener noreferrer">
               Политика конфиденциальности
             </a>
           </li>
           <li key={"user_agreement"}>
-            <a href="/user-Agree.pdf" target="_blank" rel="noopener noreferrer">
+            <a href="/user agreement.pdf" target="_blank" rel="noopener noreferrer">
               Пользовательское соглашение
             </a>
           </li>
