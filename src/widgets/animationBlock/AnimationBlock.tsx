@@ -20,7 +20,7 @@ const AnimationBlock: React.FC = () => {
   const velocityRef = useRef(0);
   const isInertiaActive = useRef(false);
 
-  const baseSpeed = 1.5;
+  const baseSpeed = 1;
   const currentSpeedRef = useRef<number>(baseSpeed);
   const targetSpeedRef = useRef<number>(baseSpeed);
   const maxDelta = 60;
