@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
-import {
-  registerUser,
-  resetRegisterState,
-} from "../../app/services/redux/Register/registerSlice";
-import {
-  loginWithGoogle,
-  resetGoogleLoginState,
-} from "../../app/services/redux/Register/signupWithGoogle";
+import {registerUser,resetRegisterState,} from "../../app/services/redux/Register/registerSlice";
+import {loginWithGoogle,resetGoogleLoginState,} from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
-
 import styles from "./RegisterModal.module.scss";
 import exitIcon from "../../assets/icons/exitIcon.svg";
 import CustomButton from "../CustomButton/CustomButton";
@@ -31,7 +23,6 @@ interface RegisterProps {
 
 const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
