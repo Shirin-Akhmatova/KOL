@@ -40,12 +40,12 @@ const footerColumns: IFooterColumn[] = [
       {
         title: "Регистрация/Вход",
         link: "#auth",
-        id: "auth" // Добавляем идентификатор
+        id: "auth", // Добавляем идентификатор
       },
       {
         title: "Сдать жилье на KÖL",
         link: "#create-service",
-        id: "create-service" // Добавляем идентификатор
+        id: "create-service", // Добавляем идентификатор
       },
     ],
   },
@@ -69,11 +69,11 @@ const footerColumns: IFooterColumn[] = [
 const footerSocials: IFooterSocial[] = [
   {
     icon: "/imgs/svgs/globe.svg",
-    title: "English(US)",
+    title: "Русский(RU)",
   },
   {
-    icon: "/imgs/svgs/dollar.svg",
-    title: "USD",
+    icon: "/imgs/somIcon.webp",
+    title: "СОМ",
   },
   {
     icon: "/imgs/socials/facebook.svg",
