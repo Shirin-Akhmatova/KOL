@@ -62,6 +62,7 @@ const PriceRoom = () => {
                   placeholder="1000"
                   type="number"
                   {...register("price", { required: true })}
+                  onWheel={(e) => e.currentTarget.blur()}
                 />
               </div>
             </label>
@@ -81,6 +82,7 @@ const PriceRoom = () => {
                     <input
                       type="number"
                       {...register("discountWeek", { required: true })}
+                      onWheel={(e) => e.currentTarget.blur()}
                     />
                   </div>
                   <p>Средняя скидка за неделю: $70 00</p>
@@ -98,6 +100,7 @@ const PriceRoom = () => {
                     <input
                       type="number"
                       {...register("discountMonth", { required: true })}
+                      onWheel={(e) => e.currentTarget.blur()}
                     />
                   </div>
                   <p>Средняя скидка за месяц: $70 00</p>
