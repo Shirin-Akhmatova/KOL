@@ -37,18 +37,33 @@ const ChooseDate = () => {
             <div className={scss.inputGroup}>
               <span>Минимум ночей</span>
               <input
-                min={1}
                 type="number"
                 {...register("minNight", { required: true })}
+                min={1}
+                inputMode="numeric"
+                onWheel={(e) => e.currentTarget.blur()}
+                onKeyDown={(e) => {
+                  const invalidChars = ["e", "E", ".", "+", "-", ","];
+                  if (invalidChars.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
             <div className={scss.inputGroup}>
               <span>Максимальное число ночей</span>
               <input
-                min={1}
                 type="number"
                 {...register("maxNight", { required: true })}
+                min={1}
+                inputMode="numeric"
                 onWheel={(e) => e.currentTarget.blur()}
+                onKeyDown={(e) => {
+                  const invalidChars = ["e", "E", ".", "+", "-", ","];
+                  if (invalidChars.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
           </div>
@@ -101,7 +116,6 @@ const ChooseDate = () => {
                       input.value = input.value.toString().slice(1);
                   }}
                 />
-                <div className={scss.timeInput}>{+hour > 12 ? "PM" : "AM"}</div>
               </div>
             </div>
 
