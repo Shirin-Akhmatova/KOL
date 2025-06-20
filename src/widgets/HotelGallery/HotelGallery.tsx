@@ -101,7 +101,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
         </div>
       ) : (
         <div className="grid">
-          {currentCotadge.images.map((src, idx) => (
+          {currentCotadge.images.slice(0, 5).map((src, idx) => (
             <div key={idx} className={`grid-item ${idx === 0 ? "large" : ""}`}>
               <img src={src} alt={`Hotel ${idx + 1}`} />
               {idx === 4 && (
