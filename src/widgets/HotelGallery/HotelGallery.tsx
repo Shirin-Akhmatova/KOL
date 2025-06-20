@@ -25,7 +25,8 @@ import ReserveBlock from "../ReserveBlock/ReserveBlock";
 import type { Block } from "../mockData";
 
 const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
-  const [currentImage, setCurrentImage] = useState(hotel1);
+  const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+  // const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -34,19 +35,29 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const midRef = useRef<HTMLDivElement>(null);
 
   // Управление каруселью
-  const setImage = (image: string) => setCurrentImage(image);
+  // const setImage = (image: string) => setCurrentImage(image);
   const toggleCarousel = () => setShowCarousel(!showCarousel);
   const closeCarousel = () => {
     setShowCarousel(false);
-    setCurrentImage(hotel1);
+    // setCurrentImage(hotel1);
   };
-  const goToNext = (images: string[]) => {
-    const index = images.indexOf(currentImage);
-    setCurrentImage(images[(index + 1) % images.length]);
+  // const goToNext = (images: string[]) => {
+  //   const index = images.indexOf(currentImage);
+  //   setCurrentImage(images[(index + 1) % images.length]);
+  // };
+  // const goToPrevious = (images: string[]) => {
+  //   const index = images.indexOf(currentImage);
+  //   setCurrentImage(images[(index - 1 + images.length) % images.length]);
+  // };
+  const goToPrevious = (idx: number) => {
+    if (idx > 0) {
+      setCurrentImageIdx(idx - 1);
+    }
   };
-  const goToPrevious = (images: string[]) => {
-    const index = images.indexOf(currentImage);
-    setCurrentImage(images[(index - 1 + images.length) % images.length]);
+  const goToNext = (idx: number) => {
+    if (idx < currentCotadge.images.length - 1) {
+      setCurrentImageIdx(idx + 1);
+    }
   };
 
   useEffect(() => {
@@ -70,14 +81,18 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
           <div className="carousel-container">
             <button
               className="arrow left"
-              onClick={() => goToPrevious(currentCotadge.images)}
+              onClick={() => goToPrevious(currentImageIdx)}
             >
               <AiOutlineLeft />
             </button>
-            <img src={currentImage} alt="Big view" className="carousel-image" />
+            <img
+              src={currentCotadge.images[currentImageIdx]}
+              alt="Big view"
+              className="carousel-image"
+            />
             <button
               className="arrow right"
-              onClick={() => goToNext(currentCotadge.images)}
+              onClick={() => goToNext(currentImageIdx)}
             >
               <AiOutlineRight />
             </button>
@@ -88,9 +103,9 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
                   src={src}
                   alt={`Thumbnail ${idx + 1}`}
                   className={`thumbnail ${
-                    currentImage === src ? "active" : ""
+                    currentImageIdx === idx ? "active" : ""
                   }`}
-                  onClick={() => setImage(src)}
+                  onClick={() => setCurrentImageIdx(idx)}
                 />
               ))}
             </div>
@@ -158,8 +173,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
         </div>
       </div>
 
-      <AnimationBlock
-       />
+      <AnimationBlock />
 
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>
