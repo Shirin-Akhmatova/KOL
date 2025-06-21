@@ -18,6 +18,7 @@ interface CustomInputProps {
   iconRight?: React.ReactNode;
   CalendarComponent?: React.FC<{ onSelect: (date: string) => void }>;
   onDateChange?: (date: string) => void;
+  required?: boolean;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -36,12 +37,11 @@ const CustomInput: React.FC<CustomInputProps> = ({
   iconRight,
   CalendarComponent,
   onDateChange,
+  required = false,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
   const showError = !!errorText;
-
-  // Убираем showLabel — не рендерим label над инпутом
 
   const toggleCalendar = () => setShowCalendar((prev) => !prev);
 
@@ -52,7 +52,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
 
   return (
     <div className={`${styles.inputWrapper} ${className || ""}`}>
-      {/* Убираем вывод label над инпутом */}
+      {/* {label && <label className={styles.label}>{label}</label>} */}
 
       <div className={styles.inputContainer}>
         <input
@@ -69,6 +69,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             border: `1px solid ${showError ? "#d32f2f" : borderColor}`,
             ...style,
           }}
+          required={required}
         />
 
         {showCalendarIcon && (

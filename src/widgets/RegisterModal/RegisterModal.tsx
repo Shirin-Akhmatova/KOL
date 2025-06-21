@@ -8,12 +8,13 @@ import {
 import {
   loginWithGoogle,
   resetGoogleLoginState,
+  resetGoogleUser,
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
 import { useGoogleLogin } from "@react-oauth/google";
-import googleIcon from "../../assets/icons/google.svg";
 
 import styles from "./RegisterModal.module.scss";
+import googleIcon from "../../assets/icons/google.svg";
 import exitIcon from "../../assets/icons/exitIcon.svg";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomInput from "../CustomInput/CustomInput";
@@ -22,6 +23,8 @@ import SmsModal from "../SmsModal/SmsModal";
 
 import "react-toastify/dist/ReactToastify.css";
 import { fetchUserData } from "@/app/services/redux/Register/googleLoginSlice";
+import FinishRegisterModal from "./FinishRegisterModal";
+import { resetUserState } from "@/app/services/redux/Register/userSlice";
 
 interface RegisterProps {
   onClose?: () => void;
@@ -47,9 +50,15 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     (state: RootState) => state.googleLogin
   );
 
+  const user = useSelector((state: RootState) => state.user.user);
+  const googleUserRaw = useSelector(
+    (state: RootState) => state.googleLogin.user
+  );
+
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
   const [showModal, setShowModal] = useState(false);
+  const [showFinishModal, setShowFinishModal] = useState(false);
 
   const isValid = phoneNumber.length === 9;
 
@@ -76,7 +85,6 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     setPhoneNumber(val);
   };
 
-  // Google SDK инициализация
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       const accessToken = tokenResponse.access_token;
@@ -107,23 +115,46 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
     if (googleSuccess) {
       toast.success("Успешный вход через Google!");
       dispatch(fetchUserData());
-      setTimeout(() => {
-        dispatch(resetGoogleLoginState());
-        onClose?.();
-      }, 1800);
     }
     if (googleError) {
       toast.error(googleError);
       dispatch(resetGoogleLoginState());
     }
-  }, [googleSuccess, googleError, dispatch, onClose]);
+  }, [googleSuccess, googleError, dispatch]);
+
+  useEffect(() => {
+    dispatch(resetUserState());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (googleSuccess) {
+      if (googleUserRaw === "False") {
+        setShowFinishModal(true);
+      } else {
+        setShowFinishModal(false);
+      }
+    }
+    if (googleError) {
+      toast.error(googleError);
+      dispatch(resetGoogleLoginState());
+    }
+  }, [googleSuccess, googleError, googleUserRaw, dispatch]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetGoogleUser());
+      dispatch(resetGoogleLoginState());
+      dispatch(resetRegisterState());
+      dispatch(resetUserState());
+    };
+  }, [dispatch]);
 
   return (
     <>
       <ToastContainer position="top-right" autoClose={3000} />
       <div className={styles.overlay}>
         <div className={styles.register}>
-          <header className={styles.register__header}>
+          <div className={styles.register__header}>
             <h4 className={styles.register__subtitle}>
               Log in or Registration
             </h4>
@@ -132,7 +163,7 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
             </button>
             <div className={styles.divider}></div>
             <h2 className={styles.register__title}>Welcome to KöL</h2>
-          </header>
+          </div>
 
           <form className={styles.register__form} onSubmit={handleSubmit}>
             <CustomCountryCode onSelect={handleCountrySelect} />
@@ -176,6 +207,17 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
           <SmsModal
             onClose={() => setShowModal(false)}
             phoneNumber={`${countryCode} ${formatPhoneNumber(phoneNumber)}`}
+          />
+        )}
+
+        {showFinishModal && user && (
+          <FinishRegisterModal
+            onClose={() => {
+              setShowFinishModal(false);
+              dispatch(resetGoogleUser());
+              onClose?.();
+            }}
+            user={user}
           />
         )}
       </div>

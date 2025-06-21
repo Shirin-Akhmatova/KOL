@@ -68,7 +68,7 @@ function LoginUserProfilePage() {
 
       <div className={styles.loginUserProfilePage_personalInfo}>
         <div className={styles.loginUserProfilePage_fixedInfo}>
-          <h6>Подтвержденная информация Алекса</h6>
+          <h6>Подтвержденная информация {user?.first_name || "Алекса"}</h6>
           <div className={styles.loginUserProfilePage_emailAndNumber}>
             <img src={markIcon} alt="иконка отметки" />
             <p>Адрес электронной почты</p>
