@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 import apiClient from "../../apiClient";
 
 interface VerifyState {
@@ -95,7 +96,7 @@ const verifySlice = createSlice({
           localStorage.setItem("refresh_token", action.payload.refresh_token);
         }
       })
-      .addCase(verifyCode.rejected, (state, action) => {
+      .addCase(verifyCode.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload ?? "Неизвестная ошибка";
       });

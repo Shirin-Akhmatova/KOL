@@ -39,6 +39,15 @@ const ChooseDate = () => {
               <input
                 type="number"
                 {...register("minNight", { required: true })}
+                min={1}
+                inputMode="numeric"
+                onWheel={(e) => e.currentTarget.blur()}
+                onKeyDown={(e) => {
+                  const invalidChars = ["e", "E", ".", "+", "-", ","];
+                  if (invalidChars.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
             <div className={scss.inputGroup}>
@@ -46,6 +55,15 @@ const ChooseDate = () => {
               <input
                 type="number"
                 {...register("maxNight", { required: true })}
+                min={1}
+                inputMode="numeric"
+                onWheel={(e) => e.currentTarget.blur()}
+                onKeyDown={(e) => {
+                  const invalidChars = ["e", "E", ".", "+", "-", ","];
+                  if (invalidChars.includes(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
           </div>
@@ -98,7 +116,6 @@ const ChooseDate = () => {
                       input.value = input.value.toString().slice(1);
                   }}
                 />
-                <div className={scss.timeInput}>{+hour > 12 ? "PM" : "AM"}</div>
               </div>
             </div>
 

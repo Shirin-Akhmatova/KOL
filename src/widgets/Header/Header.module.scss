@@ -15,6 +15,12 @@
   background: #fff;
 }
 
+.headerWeather {
+  position: absolute;
+  right: 80px;
+  z-index: 5;
+}
+
 .headerDefault {
   background: #fff;
   box-shadow: none;
@@ -452,6 +458,7 @@
       font-weight: normal;
     }
   }
+  
 }
 
 @keyframes slideInDown {

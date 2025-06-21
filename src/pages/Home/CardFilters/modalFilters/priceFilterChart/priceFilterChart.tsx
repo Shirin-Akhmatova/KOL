@@ -38,7 +38,7 @@ export default function PriceFilterChart({
     Number(getFilter(filterNameMax)) || priceMax
   );
 
-  // Преобразуем данные в частотную гистограмму
+  // Преобразуем данные в чатотную гистограмму
 
   useEffect(() => {
     setFilter(filterNameMax, String(selectedMax));

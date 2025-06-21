@@ -1,3 +1,6 @@
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/app/services/redux/store";
 import { footerColumns, type IColumnItem } from "./footer.data";
 import styles from "./footer.module.scss";
 
@@ -6,9 +9,18 @@ interface FooterTopProps {
 }
 
 function FooterTop({ onAuthClick }: FooterTopProps) {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
   const handleItemClick = (item: IColumnItem) => {
-    if (item.title === "Регистрация/Вход") {
+    if (item.id === "auth") {
       onAuthClick();
+    } else if (item.id === "create-service") {
+      if (isAuthenticated) {
+        navigate("/create-service");
+      } else {
+        onAuthClick();
+      }
     }
   };
 
@@ -63,14 +75,11 @@ function FooterColumn({
         {columnItems.map((item) => (
           <li key={item.title} className={styles.footerColumnItem}>
             <a
-              // href={item.link || "#"}
-              href="#"
+              href={item.link || "#"}
               className={styles.footerColumnItemLink}
               onClick={(e) => {
-                if (item.title === "Регистрация/Вход" && onItemClick) {
-                  e.preventDefault();
-                  onItemClick(item);
-                }
+                e.preventDefault();
+                onItemClick?.(item);
               }}
             >
               {item.icon && <img src={item.icon} alt={item.title} />}

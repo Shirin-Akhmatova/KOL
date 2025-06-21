@@ -59,9 +59,17 @@ const PriceRoom = () => {
               <div className={`${scss.inputPrice} ${scss.cart}`}>
                 <span>$</span>
                 <input
-                  placeholder="1000"
                   type="number"
+                  placeholder="1000"
                   {...register("price", { required: true })}
+                  inputMode="numeric"
+                  onWheel={(e) => e.currentTarget.blur()}
+                  onKeyDown={(e) => {
+                    const invalidChars = ["e", "E", ".", "+", "-", ","];
+                    if (invalidChars.includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </label>
@@ -81,6 +89,14 @@ const PriceRoom = () => {
                     <input
                       type="number"
                       {...register("discountWeek", { required: true })}
+                      inputMode="numeric"
+                      onWheel={(e) => e.currentTarget.blur()}
+                      onKeyDown={(e) => {
+                        const invalidChars = ["e", "E", ".", "+", "-", ","];
+                        if (invalidChars.includes(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                   <p>Средняя скидка за неделю: $70 00</p>
@@ -98,6 +114,13 @@ const PriceRoom = () => {
                     <input
                       type="number"
                       {...register("discountMonth", { required: true })}
+                      onWheel={(e) => e.currentTarget.blur()}
+                      onKeyDown={(e) => {
+                        const invalidChars = ["e", "E", ".", "+", "-", ","];
+                        if (invalidChars.includes(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                   <p>Средняя скидка за месяц: $70 00</p>
