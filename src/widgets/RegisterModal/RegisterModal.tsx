@@ -28,6 +28,7 @@ import { resetUserState } from "@/app/services/redux/Register/userSlice";
 
 interface RegisterProps {
   onClose?: () => void;
+    onSuccess?: () => void; 
 }
 
 // Форматируем номер как XXX XXX XXXX
