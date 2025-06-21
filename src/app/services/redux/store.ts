@@ -4,6 +4,7 @@ import verifyReducer from "./OTP/verifySlice";
 import googleLoginReducer from "./Register/signupWithGoogle";
 import userReducer from "./Register/googleLoginSlice";
 import putUserReducer from "./Register/userSlice";
+import authReducer from "./authSlice/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     googleLogin: googleLoginReducer,
     user: userReducer,
     putUser: putUserReducer,
+        auth: authReducer, 
   },
 });
 
