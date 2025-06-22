@@ -199,8 +199,7 @@ function Header() {
 
           <div className={styles.mainContent}>
             <div className={styles.langWrapper}>
-
-            {scrolled && weatherData && (
+              {scrolled && weatherData && !hideSearchBar && (
                 <div className={styles.headerWeather}>
                   <WeatherWidget weathers={weatherData} inHeader />
                 </div>
