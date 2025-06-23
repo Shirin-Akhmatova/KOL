@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import hotel1 from "../../assets/images/hotel1.png";
 import goldIcon from "../../assets/icons/gold.svg";
 import gold2Icon from "../../assets/icons/gold2.svg";
 import starIcon from "../../assets/icons/star.svg";
@@ -83,7 +82,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
               className="arrow left"
               onClick={() => goToPrevious(currentImageIdx)}
             >
-              <AiOutlineLeft />
+              <AiOutlineLeft color="#fff" />
             </button>
             <img
               src={currentCotadge.images[currentImageIdx]}
@@ -94,7 +93,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
               className="arrow right"
               onClick={() => goToNext(currentImageIdx)}
             >
-              <AiOutlineRight />
+              <AiOutlineRight color="#fff" />
             </button>
             <div className="carousel-thumbnails">
               {currentCotadge.images.map((src, idx) => (
