@@ -12,6 +12,7 @@ import {
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useNavigate } from "react-router-dom"; // Добавленный импорт
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
@@ -28,10 +29,9 @@ import { resetUserState } from "@/app/services/redux/Register/userSlice";
 
 interface RegisterProps {
   onClose?: () => void;
-    onSuccess?: () => void; 
+  onSuccess?: () => void; 
 }
 
-// Форматируем номер как XXX XXX XXXX
 const formatPhoneNumber = (num: string) => {
   const cleaned = num.replace(/\D/g, "");
   const part1 = cleaned.slice(0, 3);
@@ -40,8 +40,9 @@ const formatPhoneNumber = (num: string) => {
   return [part1, part2, part3].filter(Boolean).join(" ");
 };
 
-const Register: React.FC<RegisterProps> = ({ onClose }) => {
+const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate(); // Добавленный хук
 
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
@@ -62,6 +63,20 @@ const Register: React.FC<RegisterProps> = ({ onClose }) => {
   const [showFinishModal, setShowFinishModal] = useState(false);
 
   const isValid = phoneNumber.length === 9;
+
+  // Добавленный эффект для редиректа
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      const redirectPath = localStorage.getItem('redirectAfterAuth');
+      if (redirectPath) {
+        localStorage.removeItem('redirectAfterAuth');
+        navigate(redirectPath);
+        onClose?.();
+        onSuccess?.();
+      }
+    }
+  }, [navigate, onClose, onSuccess, user]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

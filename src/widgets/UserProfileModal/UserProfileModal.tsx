@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import type { RootState } from "../../app/services/redux/store";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
-// import FavoritesModal from "./FavoritesModal";
 
 type UserProfileModalProps = {
   onClose: () => void;
@@ -12,15 +11,14 @@ type UserProfileModalProps = {
 
 function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+  const isAuthenticated = useSelector((state: RootState) => 
+    state.auth.isAuthenticated || !!localStorage.getItem('access_token')
   );
-  // const [showModal, setShowModal] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = (e: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      onClose(); // закрывает модалку при клике вне блока бургера
+      onClose();
     }
   };
 
@@ -34,6 +32,7 @@ function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
       navigate("/create-service");
       onClose();
     } else {
+      localStorage.setItem('redirectAfterAuth', '/create-service');
       onRegisterClick();
     }
   };
@@ -47,11 +46,10 @@ function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
           <li onClick={handleCreateServiceClick}>Сдать жилье на KÖL</li>
           <li>Центр помощи</li>
           <li>
-            <Link to={"/favorites"}>Избранное</Link>
+            <Link to="/favorites" onClick={onClose}>Избранное</Link>
           </li>
         </ul>
       </div>
-      {/* {showModal && <FavoritesModal onClose={() => setShowModal(false)} />} */}
     </div>
   );
 }
