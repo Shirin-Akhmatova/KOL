@@ -7,6 +7,7 @@ import MapWithListings from "../../pages/MapWithListings/MapWithListings";
 import CardPage from "@/pages/cardPage/CardPage";
 import CreateService from "@/pages/CreateService/CreateService";
 import ProtectedRoute from "@/widgets/ProtectedRoute/ProtectedRoute";
+import FavoritesPage from "@/pages/Favorites/Favorites";
 
 export const myRouter = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const myRouter = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/favorites",
+        element: <FavoritesPage />,
       },
       {
         path: "/map",
