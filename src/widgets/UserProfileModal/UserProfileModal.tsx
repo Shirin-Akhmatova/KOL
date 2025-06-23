@@ -12,35 +12,37 @@ type UserProfileModalProps = {
 
 function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const [showModal, setShowModal] = useState(false)
-  const modalRef = useRef<HTMLDivElement>(null)
+  const isAuthenticated = useSelector((state: RootState) => 
+    state.auth.isAuthenticated || !!localStorage.getItem('access_token')
+  );
+  const [showModal, setShowModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   
   const handleClickOutside = (e: MouseEvent) => {
     if(modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      onClose() // закрывает модалку при клике вне блока бургера
+      onClose();
     };
   }
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleCreateServiceClick = () => {
     if (isAuthenticated) {
       navigate('/create-service');
       onClose();
     } else {
+      // Добавляем сохранение целевого пути перед открытием модалки регистрации
+      localStorage.setItem('redirectAfterAuth', '/create-service');
       onRegisterClick();
     }
   };
 
   return (
-    <div
-      className={styles.userProfileModal_overlay} ref={modalRef}
-    >
-      <div className={styles.userProfileModal_container} >
+    <div className={styles.userProfileModal_overlay} ref={modalRef}>
+      <div className={styles.userProfileModal_container}>
         <ul>
           <li onClick={onRegisterClick}>Регистрация/Вход</li>
           <div className={styles.divider}></div>

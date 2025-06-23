@@ -8,6 +8,7 @@ interface VerifyState {
   success: boolean;
   accessToken: string | null;
   refreshToken: string | null;
+  isAuthenticated: boolean; // Добавленное поле
 }
 
 interface VerifyResponse {
@@ -22,6 +23,7 @@ const initialState: VerifyState = {
   success: false,
   accessToken: null,
   refreshToken: null,
+  isAuthenticated: false, // Инициализация нового поля
 };
 
 export const verifyCode = createAsyncThunk<
@@ -74,6 +76,7 @@ const verifySlice = createSlice({
       state.success = false;
       state.accessToken = null;
       state.refreshToken = null;
+      state.isAuthenticated = false; // Сброс нового поля
     },
   },
   extraReducers: (builder) => {
@@ -86,6 +89,7 @@ const verifySlice = createSlice({
       .addCase(verifyCode.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
+        state.isAuthenticated = true; // Установка флага при успешной верификации
 
         if (action.payload.access_token) {
           state.accessToken = action.payload.access_token;
@@ -99,6 +103,7 @@ const verifySlice = createSlice({
       .addCase(verifyCode.rejected, (state, action: PayloadAction<string | undefined>) => {
         state.loading = false;
         state.error = action.payload ?? "Неизвестная ошибка";
+        state.isAuthenticated = false; // Сохранение состояния при ошибке
       });
   },
 });

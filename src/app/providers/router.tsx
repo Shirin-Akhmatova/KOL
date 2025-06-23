@@ -34,18 +34,14 @@ export const myRouter = createBrowserRouter([
         element: <LoginUserProfilePage />,
       },
       {
-        path: "/create-service",
-        element: <CreateService />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/create-service",
+            element: <CreateService />,
+          },
+        ],
       },
-      // {
-      //   element: <ProtectedRoute />,
-      //   children: [
-      //     {
-      //       path: "/create-service",
-      //       element: <CreateService />,
-      //     },
-      //   ],
-      // },
     ],
   },
 ]);
