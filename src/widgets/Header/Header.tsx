@@ -53,16 +53,15 @@ function Header() {
   });
 
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<
+    "travalers" | "calendar" | "search" | null
+  >(null);
   const [isUserProfileModalOpen, setIsUserProfileModalOpen] =
     useState<boolean>(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState<boolean>(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   const [isTitleVisible, setIsTitleVisible] = useState<boolean>(true);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [isTravelersModalOpen, setIsTravelersModalOpen] =
-    useState<boolean>(false);
-  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+  const [seatchActive, setSeatchActive] = useState<boolean>(false);
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [weatherData, setWeatherData] = useState<IWeatherWidget[] | null>(null);
 
@@ -72,8 +71,14 @@ function Header() {
   const [infants, setInfants] = useState(0);
 
   const searchModalRef = useRef<HTMLDivElement>(null);
+  const searchModalRefBtn = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
+  const travelersModalRefBtn = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const calendarRefBtn = useRef<HTMLDivElement>(null);
+  const calendarRefBtn2 = useRef<HTMLDivElement>(null);
+
+  console.log(isModalOpen);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -86,26 +91,18 @@ function Header() {
   const handleSelect = (destination: Destination) => {
     console.log("Выбрали:", destination);
     setSearchValue(destination.name);
-    setIsModalOpen(false);
-  };
-
-  const openTravelersModal = () => {
-    setIsTravelersModalOpen(true);
-    setIsSearchActive(true);
+    setIsModalOpen(null);
   };
 
   const openSearchModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen("search");
   };
 
-  const closeSearchModal = () => {
-    setIsModalOpen(false);
-    setIsSearchActive(false);
-  };
-
-  const closeTravelersModal = () => {
-    setIsTravelersModalOpen(false);
-    setIsSearchActive(false);
+  const closeModal = () => {
+    setIsModalOpen(null);
+    if (seatchActive) {
+      setSeatchActive(false);
+    }
   };
 
   const toggleLangDropdown = () => {
@@ -127,27 +124,28 @@ function Header() {
       const target = event.target as Node;
 
       if (
-        isModalOpen &&
-        searchModalRef.current &&
-        !searchModalRef.current.contains(target)
+        isModalOpen == "search" &&
+        !searchModalRef?.current?.contains(target) &&
+        !searchModalRefBtn?.current?.contains(target)
       ) {
-        closeSearchModal();
+        setIsModalOpen(null);
       }
 
       if (
-        isTravelersModalOpen &&
-        travelersModalRef.current &&
-        !travelersModalRef.current.contains(target)
+        isModalOpen === "travalers" &&
+        !travelersModalRef?.current?.contains(target) &&
+        !travelersModalRefBtn?.current?.contains(target)
       ) {
-        closeTravelersModal();
+        setIsModalOpen(null);
       }
 
       if (
-        isCalendarOpen &&
-        calendarRef.current &&
-        !calendarRef.current.contains(target)
+        isModalOpen === "calendar" &&
+        !calendarRef?.current?.contains(target) &&
+        !calendarRefBtn?.current?.contains(target) &&
+        !calendarRefBtn2?.current?.contains(target)
       ) {
-        setIsCalendarOpen(false);
+        setIsModalOpen(null);
       }
     };
 
@@ -155,7 +153,7 @@ function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isModalOpen, isTravelersModalOpen, isCalendarOpen]);
+  }, [isModalOpen]);
 
   const isHeaderDefault = isModalOpen || !scrolled;
 
@@ -258,7 +256,11 @@ function Header() {
             }`}
           >
             <div className={styles.dropdownOwerlay}>
-              <div className={styles.searchItem} onClick={openSearchModal}>
+              <div
+                ref={searchModalRefBtn}
+                className={styles.searchItem}
+                onClick={openSearchModal}
+              >
                 {!scrolled && <span className={styles.label}>Где</span>}
                 <input
                   type="search"
@@ -270,7 +272,7 @@ function Header() {
                   autoComplete="off"
                 />
               </div>
-              {isModalOpen && (
+              {isModalOpen === "search" && (
                 <div
                   ref={searchModalRef}
                   className={`${styles.modalWrapper} ${
@@ -284,7 +286,7 @@ function Header() {
                     onSearchChange={setSearchValue}
                     results={filteredDestinations}
                     onSelect={handleSelect}
-                    onClose={closeSearchModal}
+                    onClose={closeModal}
                     showInput={false}
                   />
                 </div>
@@ -296,11 +298,12 @@ function Header() {
             <div className={styles.dropdownOwerlay}>
               <div
                 className={styles.searchItem}
-                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                ref={calendarRefBtn}
+                onClick={() => setIsModalOpen("calendar")}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) =>
-                  e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
+                  e.key === "Enter" && setIsModalOpen("calendar")
                 }
               >
                 {!scrolled && <span className={styles.label}>Прибытие</span>}
@@ -315,20 +318,14 @@ function Header() {
                   <span className={styles.placeholder}>Когда?</span>
                 )}
               </div>
-              {isCalendarOpen && (
+              {isModalOpen === "calendar" && (
                 <div
                   ref={calendarRef}
                   className={`${styles.calendarWrapper} ${
-                    isCalendarOpen ? styles.calendarWrapperOpen : ""
+                    styles.calendarWrapperOpen
                   } ${scrolled ? styles.calendarWrapperScrolled : ""}`}
                 >
-                  <Calendar
-                    values={datePicker}
-                    onChangeValue={setDatePicker}
-                    onClose={() => {
-                      setIsCalendarOpen(false);
-                    }}
-                  />
+                  <Calendar values={datePicker} onChangeValue={setDatePicker} />
                 </div>
               )}
             </div>
@@ -337,12 +334,13 @@ function Header() {
               <>
                 <div className={styles.divider} />
                 <div
+                  ref={calendarRefBtn2}
                   className={styles.searchItem}
-                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                  onClick={() => setIsModalOpen("calendar")}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) =>
-                    e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
+                    e.key === "Enter" && setIsModalOpen("calendar")
                   }
                 >
                   <span className={styles.label}>Выезд</span>
@@ -360,16 +358,19 @@ function Header() {
             <div className={styles.divider} />
             <div className={styles.dropdownOwerlay}>
               <div
+                ref={travelersModalRefBtn}
                 className={`${styles.searchBarEnd} ${
                   scrolled ? styles.searchBarEndScrolled : ""
-                } ${isSearchActive ? styles.searchBarEndActive : ""}`}
-                onClick={openTravelersModal}
+                } ${styles.searchBarEndActive}`}
+                onClick={() => setIsModalOpen("travalers")}
               >
                 <div
                   className={styles.searchItem}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && setIsModalOpen("travalers")
+                  }
                 >
                   <div className={styles.label}>Кто</div>
                   <div className={styles.placeholder}>
@@ -387,19 +388,24 @@ function Header() {
                 <div
                   className={`${styles.searchButton} ${
                     scrolled ? styles.searchButtonScrolled : ""
-                  } ${isSearchActive ? styles.searchButtonActive : ""}`}
-                  onClick={openTravelersModal}
+                  } ${seatchActive ? styles.searchButtonActive : ""}`}
+                  onClick={() => {
+                    setIsModalOpen("travalers");
+                    setSeatchActive(true);
+                  }}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && setIsModalOpen("travalers")
+                  }
                 >
                   <img src={SearchIcon} alt="SearchIcon" />
-                  {isSearchActive && (
+                  {seatchActive && (
                     <span className={styles.searchText}>Искать</span>
                   )}
                 </div>
               </div>
-              {isTravelersModalOpen && (
+              {isModalOpen === "travalers" && (
                 <div
                   ref={travelersModalRef}
                   className={`${styles.travelersModalWrapper} ${
@@ -413,7 +419,7 @@ function Header() {
                     setAdults={setAdults}
                     setChildren={setChildren}
                     setInfants={setInfants}
-                    onClose={closeTravelersModal}
+                    onClose={closeModal}
                   />
                 </div>
               )}
