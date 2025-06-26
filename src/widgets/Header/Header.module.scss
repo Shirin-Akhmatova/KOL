@@ -251,14 +251,12 @@
 .searchBarEnd {
   display: flex;
   align-items: center;
-  gap: 106px;
+  justify-content: space-between;
   padding: 0 10px 0 0;
   border-radius: 25px;
   transition: all 0.3s ease;
 
-  &.searchBarEndActive {
-    gap: 34px;
-  }
+
   &:hover {
     cursor: pointer;
     background-color: #dddddd;
@@ -316,7 +314,14 @@
   top: 64px;
 }
 .dropdownOwerlay {
+  width: 22%;
   position: relative;
+  &:first-child {
+    width: 24%;
+  }
+  &:last-child {
+    width: 32%;
+  }
 }
 .modalWrapper {
   opacity: 0;
