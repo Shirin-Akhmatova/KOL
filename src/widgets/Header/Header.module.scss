@@ -251,7 +251,7 @@
 .searchBarEnd {
   display: flex;
   align-items: center;
-  gap: 106px;
+  justify-content: space-between;
   padding: 0 10px 0 0;
   border-radius: 25px;
   transition: all 0.3s ease;
@@ -316,7 +316,12 @@
   top: 64px;
 }
 .dropdownOwerlay{
+  width: 22%;
   position: relative;
+  &:last-child{
+    width: 34%;
+    
+  }
 }
 .modalWrapper {
   opacity: 0;
