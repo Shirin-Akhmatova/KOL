@@ -226,7 +226,35 @@
     background-color: #dddddd;
     outline: none;
   }
+
+  .highlight {
+   background-color: green;
+  }
+  
+  
 }
+.activeBgGray {
+  background-color: #dddddd;
+}
+
+.transitionBgGray {
+  background-color: transparent;
+  animation: fadeGray 0.5s forwards;
+}
+.noneBg {
+  background-color: transparent;
+}
+
+@keyframes fadeGray {
+  0% {
+    background-color: #dddddd
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+
 
 .divider {
   width: 1px;
@@ -299,9 +327,12 @@
   pointer-events: none;
   position: absolute;
   top: 100%;
-  left: 0;
-  width: 446px;
-  height: 415px;
+  left: 100%;
+  transform: translateX(-50%);
+  width: 336px;
+  height: 345px;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
 }
 
