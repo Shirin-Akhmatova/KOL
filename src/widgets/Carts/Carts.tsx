@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useMemo, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -20,14 +19,13 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
       return [];
     }
   }, []);
-  const [likes, setLikes] = useState<Block[]>(likesFromLocalStore); // ✅ Храним лайки в состоянии
+  const [likes, setLikes] = useState<Block[]>(likesFromLocalStore);
 
   function addLike(block: Block) {
-    setLikes(
-      (prevLikes) =>
-        prevLikes.find((el) => el.id === block.id)
-          ? prevLikes.filter((item) => item.id !== block.id) // Удаляем лайк
-          : [...prevLikes, block] // Добавляем лайк
+    setLikes((prevLikes) =>
+      prevLikes.find((el) => el.id === block.id)
+        ? prevLikes.filter((item) => item.id !== block.id)
+        : [...prevLikes, block]
     );
   }
 

@@ -220,7 +220,7 @@ function Header() {
                     Kg
                   </div>
                   <div
-                    className={styles.langDropdownItems}
+                    className={`${styles.langDropdownItems} ${styles.active}`}
                     onClick={() => console.log("Выбран: Ru")}
                   >
                     Ru
