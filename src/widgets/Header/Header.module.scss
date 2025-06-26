@@ -256,9 +256,7 @@
   border-radius: 25px;
   transition: all 0.3s ease;
 
-  &.searchBarEndActive {
-    gap: 34px;
-  }
+
   &:hover {
     cursor: pointer;
     background-color: #dddddd;
@@ -315,12 +313,14 @@
   position: fixed;
   top: 64px;
 }
-.dropdownOwerlay{
+.dropdownOwerlay {
   width: 22%;
   position: relative;
-  &:last-child{
-    width: 34%;
-    
+  &:first-child {
+    width: 24%;
+  }
+  &:last-child {
+    width: 32%;
   }
 }
 .modalWrapper {
@@ -453,19 +453,20 @@
 
   .langDropdownItems {
     border-radius: 19px;
-    padding: 12px 16px;
+    padding: 8px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
+    color: #a1a1a1;
 
     &:hover {
-      color: #000;
-      font-weight: bold;
+      cursor: not-allowed;
     }
-
-    &:active {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      font-weight: normal;
+  }
+  .active {
+    font-weight: bold;
+    color: black;
+    &:hover {
+      cursor: pointer;
     }
   }
 }
