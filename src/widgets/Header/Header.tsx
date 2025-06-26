@@ -52,6 +52,8 @@ function Header() {
     endDate: null,
   });
 
+  const isAllDateSelected = datePicker.startDate && datePicker.endDate
+
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isUserProfileModalOpen, setIsUserProfileModalOpen] =
@@ -74,6 +76,8 @@ function Header() {
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const arrivalCalendarRef = useRef<HTMLDivElement>(null)
+  const exitCalendarRef = useRef<HTMLDivElement>(null)
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -144,7 +148,13 @@ function Header() {
 
       if (
         isCalendarOpen &&
+
+        arrivalCalendarRef.current &&
+        exitCalendarRef.current &&
         calendarRef.current &&
+
+        !arrivalCalendarRef.current.contains(target) &&
+        !exitCalendarRef.current.contains(target) &&
         !calendarRef.current.contains(target)
       ) {
         setIsCalendarOpen(false);
@@ -174,6 +184,15 @@ function Header() {
   }, [isLangDropdownOpen]);
 
   const totalTravelers = adults + children + infants;
+
+  useEffect(() => {
+    if(datePicker.startDate && datePicker.endDate) {
+      setTimeout(() => {
+        setIsCalendarOpen(false)
+
+      }, 350)
+    }
+  }, [datePicker.endDate])
 
   return (
     <>
@@ -295,7 +314,10 @@ function Header() {
 
             <div className={styles.dropdownOwerlay}>
               <div
-                className={styles.searchItem}
+                ref={arrivalCalendarRef}
+                className={`${styles.searchItem} 
+                ${isAllDateSelected ? styles.noneBg : "" }`
+              }
                 onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                 role="button"
                 tabIndex={0}
@@ -325,9 +347,6 @@ function Header() {
                   <Calendar
                     values={datePicker}
                     onChangeValue={setDatePicker}
-                    onClose={() => {
-                      setIsCalendarOpen(false);
-                    }}
                   />
                 </div>
               )}
@@ -337,7 +356,12 @@ function Header() {
               <>
                 <div className={styles.divider} />
                 <div
-                  className={styles.searchItem}
+                  ref={exitCalendarRef}
+                  className={`${styles.searchItem} 
+                    ${isAllDateSelected ? styles.noneBg : "" }
+                    ${datePicker.startDate ? styles.activeBgGray : "" }
+                    `
+                  }
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                   role="button"
                   tabIndex={0}
