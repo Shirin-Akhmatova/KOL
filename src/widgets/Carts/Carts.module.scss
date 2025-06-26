@@ -16,6 +16,7 @@
       width: 100%;
 
       .block {
+        max-width: 250px;
         margin-block: 0.5rem;
         cursor: pointer;
         transition: transform 0.2s ease;
