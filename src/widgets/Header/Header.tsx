@@ -192,6 +192,7 @@ function Header() {
 
       }, 350)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [datePicker.endDate])
 
   return (

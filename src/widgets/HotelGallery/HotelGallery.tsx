@@ -32,6 +32,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
 
   const bottomRef = useRef<HTMLDivElement>(null);
   const midRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   // Управление каруселью
   // const setImage = (image: string) => setCurrentImage(image);
@@ -48,15 +49,12 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   //   const index = images.indexOf(currentImage);
   //   setCurrentImage(images[(index - 1 + images.length) % images.length]);
   // };
-  const goToPrevious = (idx: number) => {
-    if (idx > 0) {
-      setCurrentImageIdx(idx - 1);
-    }
+  const goToPrevious = () => {
+    setCurrentImageIdx((prev) => (prev === 0 ? currentCotadge.images.length - 1 : prev - 1));
   };
-  const goToNext = (idx: number) => {
-    if (idx < currentCotadge.images.length - 1) {
-      setCurrentImageIdx(idx + 1);
-    }
+  
+  const goToNext = () => {
+    setCurrentImageIdx((prev) => (prev === currentCotadge.images.length - 1 ? 0 : prev + 1));
   };
 
   useEffect(() => {
@@ -71,16 +69,45 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node
+
+      if (
+        carouselRef.current && 
+
+        !carouselRef.current.contains(target)
+      ) {
+        closeCarousel()
+      };
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") goToPrevious();
+      if (event.key === "ArrowRight") goToNext();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [currentImageIdx])
+
   return (
     <div className="gallery-wrapper">
       <h1 className="title">{currentCotadge.title}</h1>
 
       {showCarousel ? (
         <div className="carousel-overlay">
-          <div className="carousel-container">
+          <div className="carousel-container" ref={carouselRef}>
             <button
               className="arrow left"
-              onClick={() => goToPrevious(currentImageIdx)}
+              onClick={() => goToPrevious()}
             >
               <AiOutlineLeft color="#fff" />
             </button>
@@ -91,7 +118,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
             />
             <button
               className="arrow right"
-              onClick={() => goToNext(currentImageIdx)}
+              onClick={() => goToNext()}
             >
               <AiOutlineRight color="#fff" />
             </button>
