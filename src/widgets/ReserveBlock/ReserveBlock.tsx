@@ -9,40 +9,57 @@ type DatePicker = {
   endDate: Date | null;
 };
 
-function ReserveBlock() {
-  const [showPicker, setShowPicker] = useState(false);
+type Props = {
+  animationRef: React.RefObject<HTMLElement | null>;
+};
+
+
+function ReserveBlock({animationRef}: Props) {
+  const [showPicker, setShowPicker] = useState<boolean>(false);
   const [datePicker, setDatePicker] = useState<DatePicker>({
     startDate: null,
     endDate: null,
   });
 
-  const [isVisible, setIsVisible] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isCompact, setIsCompact] = useState<boolean>(false);
 
+useEffect(() => {
+  if (!animationRef.current) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      // Если анимационный блок видим — свернуть, иначе — развернуть
+      setIsCompact(entry.isIntersecting);
+    },
+    {
+      root: null,
+      threshold: 1, // чем выше, тем больше блока должно быть видно
+    }
+  );
+
+  observer.observe(animationRef.current);
+
+  return () => {
+    if (animationRef.current) observer.unobserve(animationRef.current);
+  };
+}, [animationRef]);
+
+
+  
+  
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
   useEffect(() => {
-    let lastScrollTop = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollTop = window.scrollY;
-
-      if (currentScrollTop > lastScrollTop + 10) {
-        setIsCompact(true); // Скролл вниз
-      } else if (currentScrollTop < lastScrollTop - 10) {
-        setIsCompact(false); // Скролл вверх
-      }
-
-      lastScrollTop = currentScrollTop;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+    if (datePicker.startDate && datePicker.endDate) {
+      setTimeout(() => {
+        setShowPicker(false)
+      }, 350)
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datePicker.endDate])
 
   return (
     <div

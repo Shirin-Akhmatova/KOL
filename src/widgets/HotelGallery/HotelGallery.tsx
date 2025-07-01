@@ -22,6 +22,7 @@ import "./carousel.scss";
 import AnimationBlock from "../animationBlock/AnimationBlock";
 import ReserveBlock from "../ReserveBlock/ReserveBlock";
 import type { Block } from "../mockData";
+import { Link } from "react-router-dom";
 
 const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
@@ -34,6 +35,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const midRef = useRef<HTMLDivElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null)
 
+  
   // Управление каруселью
   // const setImage = (image: string) => setCurrentImage(image);
   const toggleCarousel = () => setShowCarousel(!showCarousel);
@@ -46,7 +48,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   //   setCurrentImage(images[(index + 1) % images.length]);
   // };
   // const goToPrevious = (images: string[]) => {
-  //   const index = images.indexOf(currentImage);
+    //   const index = images.indexOf(currentImage);
   //   setCurrentImage(images[(index - 1 + images.length) % images.length]);
   // };
   const goToPrevious = () => {
@@ -56,26 +58,26 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
   const goToNext = () => {
     setCurrentImageIdx((prev) => (prev === currentCotadge.images.length - 1 ? 0 : prev + 1));
   };
-
+  
   useEffect(() => {
     const handleScroll = () => {
       if (!wrapperRef.current) return;
-
+      
       const top = wrapperRef.current.getBoundingClientRect().top;
       setIsSticky(top <= 90);
     };
-
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node
-
+      
       if (
         carouselRef.current && 
-
+        
         !carouselRef.current.contains(target)
       ) {
         closeCarousel()
@@ -97,7 +99,9 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
       window.removeEventListener("keydown", handleKeyDown);
     }
   }, [currentImageIdx])
+  const animationRef: React.RefObject<HTMLDivElement | null> = useRef(null);
 
+  
   return (
     <div className="gallery-wrapper">
       <h1 className="title">{currentCotadge.title}</h1>
@@ -163,7 +167,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
           <h5>{currentCotadge.description}</h5>
         </div>
         <div className={`reserve-box ${isSticky ? "is-sticky" : ""}`}>
-          <ReserveBlock />
+          <ReserveBlock animationRef={animationRef} />
         </div>
       </div>
 
@@ -190,6 +194,7 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
             </div>
           </div>
         </div>
+        <Link to="/ownerProfile">
         <div className="mid-bottom">
           <img src={profile} alt="host" />
           <div className="text">
@@ -197,9 +202,10 @@ const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
             <p>Суперхозяин · 1 год принимает гостей</p>
           </div>
         </div>
+        </Link> 
       </div>
 
-      <AnimationBlock />
+      <AnimationBlock ref={animationRef} />
 
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>
