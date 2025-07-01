@@ -8,6 +8,8 @@ import CardPage from "@/pages/cardPage/CardPage";
 import CreateService from "@/pages/CreateService/CreateService";
 import ProtectedRoute from "@/widgets/ProtectedRoute/ProtectedRoute";
 import FavoritesPage from "@/pages/Favorites/Favorites";
+import UserProfile from "@/pages/OwnerProfile/OwnerProfile";
+import OwnerProfile from "@/pages/OwnerProfile/OwnerProfile";
 
 export const myRouter = createBrowserRouter([
   {
@@ -50,6 +52,10 @@ export const myRouter = createBrowserRouter([
       {
         path: "/create-service",
         element: <CreateService />,
+      },
+      {
+        path: "/ownerProfile",
+        element: <OwnerProfile/>,
       },
     ],
   },

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./animationBlock.scss";
 import { blocks } from "../mockData";
 
-const AnimationBlock: React.FC = () => {
+const AnimationBlock= forwardRef<HTMLDivElement>((_, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number | null>(null);
@@ -40,48 +40,54 @@ const AnimationBlock: React.FC = () => {
   };
 
   useEffect(() => {
-    const list = listRef.current;
-    if (!list) return;
+  const list = listRef.current;
+  if (!list) return;
 
-    const listWidth = list.scrollWidth / 2;
+  const listWidth = list.scrollWidth / 2;
 
-    const animate = (time: number) => {
-      if (previousTimeRef.current !== null) {
-        if (!isDragging.current && !isPaused.current) {
-          if (isInertiaActive.current) {
-            positionRef.current -= velocityRef.current;
-            velocityRef.current *= friction;
-            if (Math.abs(velocityRef.current) < 0.1) {
-              isInertiaActive.current = false;
-              resumeAutoScroll();
-            }
+  const animate = (time: number) => {
+    if (previousTimeRef.current !== null) {
+      if (!isDragging.current && !isPaused.current) {
+        if (isInertiaActive.current) {
+          positionRef.current -= velocityRef.current;
+          velocityRef.current *= friction;
+          if (Math.abs(velocityRef.current) < 0.1) {
+            isInertiaActive.current = false;
+            resumeAutoScroll();
+          }
+        } else {
+          if (hoverDirection === "left") {
+            targetSpeedRef.current = -baseSpeed;
+          } else if (hoverDirection === "right") {
+            targetSpeedRef.current = baseSpeed;
           } else {
-            if (hoverDirection === "left") {
-              targetSpeedRef.current = -baseSpeed;
-            } else if (hoverDirection === "right") {
-              targetSpeedRef.current = baseSpeed;
-            } else {
-              targetSpeedRef.current = baseSpeed;
-            }
-
-            currentSpeedRef.current += (targetSpeedRef.current - currentSpeedRef.current) * 0.1;
-            positionRef.current += currentSpeedRef.current;
+            targetSpeedRef.current = baseSpeed;
           }
 
-          if (positionRef.current > listWidth) positionRef.current -= listWidth;
-          if (positionRef.current < 0) positionRef.current += listWidth;
-
-          list.style.transform = `translateX(${-positionRef.current}px)`;
+          currentSpeedRef.current += (targetSpeedRef.current - currentSpeedRef.current) * 0.1;
+          positionRef.current += currentSpeedRef.current;
         }
+
+        if (positionRef.current > listWidth) positionRef.current -= listWidth;
+        if (positionRef.current < 0) positionRef.current += listWidth;
+
+        list.style.transform = `translateX(${-positionRef.current}px)`;
       }
+    }
 
-      previousTimeRef.current = time;
-      requestRef.current = requestAnimationFrame(animate);
-    };
-
+    previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(animate);
-    return () => requestRef.current && cancelAnimationFrame(requestRef.current);
-  }, [hoverDirection]);
+  };
+
+  requestRef.current = requestAnimationFrame(animate);
+
+  return () => {
+    if (requestRef.current) {
+      cancelAnimationFrame(requestRef.current);
+    }
+  };
+}, [hoverDirection]);
+
 
   const handleMove = (clientX: number) => {
     if (!isDragging.current || !listRef.current) return;
@@ -170,7 +176,7 @@ const AnimationBlock: React.FC = () => {
   }, [id]);
 
   return (
-    <div className="animation-block">
+    <div className="animation-block" ref={ref}>
       <h2 className="section-title">Вас может заинтересовать</h2>
       <div
         className={`card-list-wrapper ${isDraggingState ? "dragging" : ""}`}
@@ -216,6 +222,6 @@ const AnimationBlock: React.FC = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AnimationBlock;
