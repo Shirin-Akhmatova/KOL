@@ -39,7 +39,7 @@ export const loginWithGoogle = createAsyncThunk<
 >("auth/loginWithGoogle", async (tokens, { rejectWithValue }) => {
   try {
     const response = await apiClient.post<GoogleLoginResponse>(
-      "/account/auth/social/google/", 
+      "/account/auth/social/google/",
       tokens
     );
     return response.data;

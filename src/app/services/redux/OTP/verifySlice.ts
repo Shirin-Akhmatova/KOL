@@ -8,13 +8,15 @@ interface VerifyState {
   success: boolean;
   accessToken: string | null;
   refreshToken: string | null;
-  isAuthenticated: boolean; // Добавленное поле
+  isAuthenticated: boolean;
+  user: string | null;
 }
 
 interface VerifyResponse {
   [key: string]: unknown;
   access_token?: string;
   refresh_token?: string;
+  user?: string | null | boolean;
 }
 
 const initialState: VerifyState = {
@@ -23,7 +25,8 @@ const initialState: VerifyState = {
   success: false,
   accessToken: null,
   refreshToken: null,
-  isAuthenticated: false, // Инициализация нового поля
+  isAuthenticated: false,
+  user: null,
 };
 
 export const verifyCode = createAsyncThunk<
@@ -76,7 +79,8 @@ const verifySlice = createSlice({
       state.success = false;
       state.accessToken = null;
       state.refreshToken = null;
-      state.isAuthenticated = false; // Сброс нового поля
+      state.isAuthenticated = false;
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -89,7 +93,13 @@ const verifySlice = createSlice({
       .addCase(verifyCode.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.isAuthenticated = true; // Установка флага при успешной верификации
+        state.isAuthenticated = true;
+        const user = action.payload?.user;
+        if (user === "False" || user === false || user === null) {
+          state.user = null;
+        } else {
+          state.user = user as string;
+        }
 
         if (action.payload.access_token) {
           state.accessToken = action.payload.access_token;
@@ -100,11 +110,15 @@ const verifySlice = createSlice({
           localStorage.setItem("refresh_token", action.payload.refresh_token);
         }
       })
-      .addCase(verifyCode.rejected, (state, action: PayloadAction<string | undefined>) => {
-        state.loading = false;
-        state.error = action.payload ?? "Неизвестная ошибка";
-        state.isAuthenticated = false; // Сохранение состояния при ошибке
-      });
+      .addCase(
+        verifyCode.rejected,
+        (state, action: PayloadAction<string | undefined>) => {
+          state.loading = false;
+          state.error = action.payload ?? "Неизвестная ошибка";
+          state.isAuthenticated = false;
+          state.user = null;
+        }
+      );
   },
 });
 

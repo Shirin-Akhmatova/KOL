@@ -7,7 +7,7 @@ export interface UserData {
   last_name: string;
   email: string;
   birth_date: string;
-  phone_number: string;
+  phone_number?: string;
 }
 
 interface UserState {
@@ -40,7 +40,7 @@ export const updateUserData = createAsyncThunk<
       );
     }
 
-    const response = await apiClient.put("/account/user/", user, {
+    const response = await apiClient.patch("/account/user/", user, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -126,6 +126,5 @@ const userSlice = createSlice({
   },
 });
 
-// Экспорт
 export const { resetUserState } = userSlice.actions;
 export default userSlice.reducer;
