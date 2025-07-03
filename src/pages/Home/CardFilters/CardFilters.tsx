@@ -24,8 +24,10 @@ function CartFilters() {
     <div className={styles.cardFiltersHr}>
       <div className={`container ${styles.cardFilters}`}>
         <FilterByType filters={roomTypeFilters} />
-        <WeatherWidget weathers={weathers} />
-        <ModalFiltersBtn modalFilters={rest} />
+        <div className={styles.cardFiltersWithWeather}>
+          <WeatherWidget weathers={weathers} />
+          <ModalFiltersBtn modalFilters={rest} />
+        </div>
       </div>
     </div>
   );
