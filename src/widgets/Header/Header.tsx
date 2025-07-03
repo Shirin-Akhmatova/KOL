@@ -52,6 +52,8 @@ function Header() {
     endDate: null,
   });
 
+  const isAllDateSelected = datePicker.startDate && datePicker.endDate;
+
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isUserProfileModalOpen, setIsUserProfileModalOpen] =
@@ -74,8 +76,8 @@ function Header() {
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
-  const arrive = useRef<HTMLDivElement>(null);
-  const depart = useRef<HTMLDivElement>(null);
+  const arrivalCalendarRef = useRef<HTMLDivElement>(null);
+  const exitCalendarRef = useRef<HTMLDivElement>(null);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -146,12 +148,12 @@ function Header() {
 
       if (
         isCalendarOpen &&
+        arrivalCalendarRef.current &&
+        exitCalendarRef.current &&
         calendarRef.current &&
-        arrive.current &&
-        depart.current &&
-        !calendarRef.current.contains(target) &&
-        !arrive.current.contains(target) &&
-        !depart.current.contains(target)
+        !arrivalCalendarRef.current.contains(target) &&
+        !exitCalendarRef.current.contains(target) &&
+        !calendarRef.current.contains(target)
       ) {
         setIsCalendarOpen(false);
       }
@@ -180,6 +182,15 @@ function Header() {
 
   const totalTravelers = adults + children + infants;
 
+  useEffect(() => {
+    if (datePicker.startDate && datePicker.endDate) {
+      setTimeout(() => {
+        setIsCalendarOpen(false);
+      }, 350);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [datePicker.endDate]);
+
   return (
     <>
       <header
@@ -204,7 +215,7 @@ function Header() {
 
           <div className={styles.mainContent}>
             <div className={styles.langWrapper}>
-              {scrolled && weatherData && (
+              {scrolled && weatherData && !hideSearchBar && (
                 <div className={styles.headerWeather}>
                   <WeatherWidget weathers={weatherData} inHeader />
                 </div>
@@ -225,7 +236,7 @@ function Header() {
                     Kg
                   </div>
                   <div
-                    className={styles.langDropdownItems}
+                    className={`${styles.langDropdownItems} ${styles.active}`}
                     onClick={() => console.log("Выбран: Ru")}
                   >
                     Ru
@@ -262,41 +273,75 @@ function Header() {
               scrolled ? styles.searchBarScrolled : ""
             }`}
           >
-            <div className={styles.searchItem} onClick={openSearchModal}>
-              {!scrolled && <span className={styles.label}>Где</span>}
-              <input
-                type="search"
-                placeholder={scrolled ? "Куда" : "Поиск направлений"}
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                className={styles.input}
-                aria-label="Поиск направлений"
-                autoComplete="off"
-              />
+            <div className={styles.dropdownOwerlay}>
+              <div className={styles.searchItem} onClick={openSearchModal}>
+                {!scrolled && <span className={styles.label}>Где</span>}
+                <input
+                  type="search"
+                  placeholder={scrolled ? "Куда" : "Поиск направлений"}
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className={styles.input}
+                  aria-label="Поиск направлений"
+                  autoComplete="off"
+                />
+              </div>
+              {isModalOpen && (
+                <div
+                  ref={searchModalRef}
+                  className={`${styles.modalWrapper} ${
+                    styles.modalWrapperOpen
+                  } ${scrolled ? styles.modalWrapperScrolled : ""}`}
+                >
+                  <SearchModal
+                    title="Рекомендуемые направления"
+                    placeholder="Введите город или страну"
+                    searchValue={searchValue}
+                    onSearchChange={setSearchValue}
+                    results={filteredDestinations}
+                    onSelect={handleSelect}
+                    onClose={closeSearchModal}
+                    showInput={false}
+                  />
+                </div>
+              )}
             </div>
 
             <div className={styles.divider} />
 
-            <div
-              ref={arrive}
-              className={styles.searchItem}
-              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) =>
-                e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
-              }
-            >
-              {!scrolled && <span className={styles.label}>Прибытие</span>}
+            <div className={styles.dropdownOwerlay}>
+              <div
+                ref={arrivalCalendarRef}
+                className={`${styles.searchItem} 
+                ${isAllDateSelected ? styles.noneBg : ""}`}
+                onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) =>
+                  e.key === "Enter" && setIsCalendarOpen(!isCalendarOpen)
+                }
+              >
+                {!scrolled && <span className={styles.label}>Прибытие</span>}
 
-              {scrolled ? (
-                <span className={styles.placeholder}>Дата</span>
-              ) : datePicker.startDate ? (
-                <span>
-                  {format(datePicker.startDate, "d LLL.", { locale: ru })}
-                </span>
-              ) : (
-                <span className={styles.placeholder}>Когда?</span>
+                {scrolled ? (
+                  <span className={styles.placeholder}>Дата</span>
+                ) : datePicker.startDate ? (
+                  <span>
+                    {format(datePicker.startDate, "d LLL.", { locale: ru })}
+                  </span>
+                ) : (
+                  <span className={styles.placeholder}>Когда?</span>
+                )}
+              </div>
+              {isCalendarOpen && (
+                <div
+                  ref={calendarRef}
+                  className={`${styles.calendarWrapper} ${
+                    isCalendarOpen ? styles.calendarWrapperOpen : ""
+                  } ${scrolled ? styles.calendarWrapperScrolled : ""}`}
+                >
+                  <Calendar values={datePicker} onChangeValue={setDatePicker} />
+                </div>
               )}
             </div>
 
@@ -304,8 +349,11 @@ function Header() {
               <>
                 <div className={styles.divider} />
                 <div
-                  ref={depart}
-                  className={styles.searchItem}
+                  ref={exitCalendarRef}
+                  className={`${styles.searchItem} 
+                    ${isAllDateSelected ? styles.noneBg : ""}
+                    ${datePicker.startDate ? styles.activeBgGray : ""}
+                    `}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                   role="button"
                   tabIndex={0}
@@ -326,106 +374,72 @@ function Header() {
             )}
 
             <div className={styles.divider} />
-
             <div
-              className={`${styles.searchBarEnd} ${
-                scrolled ? styles.searchBarEndScrolled : ""
-              } ${isSearchActive ? styles.searchBarEndActive : ""}`}
-              onClick={openTravelersModal}
+              className={styles.dropdownOwerlay}
+              style={scrolled ? { width: "45%" } : {}}
             >
               <div
-                className={styles.searchItem}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+                className={`${styles.searchBarEnd} ${
+                  scrolled ? styles.searchBarEndScrolled : ""
+                } ${isSearchActive ? styles.searchBarEndActive : ""}`}
+                onClick={openTravelersModal}
               >
-                <div className={styles.label}>Кто</div>
-                <div className={styles.placeholder}>
-                  {totalTravelers > 0
-                    ? `${totalTravelers} ${pluralize(
-                        totalTravelers,
-                        "гость",
-                        "гостя",
-                        "гостей"
-                      )}`
-                    : "Кто едет?"}
+                <div
+                  className={styles.searchItem}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+                >
+                  <div className={styles.label}>Кто</div>
+                  <div className={styles.placeholder}>
+                    {totalTravelers > 0
+                      ? `${totalTravelers} ${pluralize(
+                          totalTravelers,
+                          "гость",
+                          "гостя",
+                          "гостей"
+                        )}`
+                      : "Кто едет?"}
+                  </div>
+                </div>
+
+                <div
+                  className={`${styles.searchButton} ${
+                    scrolled ? styles.searchButtonScrolled : ""
+                  } ${isSearchActive ? styles.searchButtonActive : ""}`}
+                  onClick={openTravelersModal}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
+                >
+                  <img src={SearchIcon} alt="SearchIcon" />
+                  {isSearchActive && (
+                    <span className={styles.searchText}>Искать</span>
+                  )}
                 </div>
               </div>
-
-              <div
-                className={`${styles.searchButton} ${
-                  scrolled ? styles.searchButtonScrolled : ""
-                } ${isSearchActive ? styles.searchButtonActive : ""}`}
-                onClick={openTravelersModal}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === "Enter" && openTravelersModal()}
-              >
-                <img src={SearchIcon} alt="SearchIcon" />
-                {isSearchActive && (
-                  <span className={styles.searchText}>Искать</span>
-                )}
-              </div>
+              {isTravelersModalOpen && (
+                <div
+                  ref={travelersModalRef}
+                  className={`${styles.travelersModalWrapper} ${
+                    styles.travelersModalWrapperOpen
+                  } ${scrolled ? styles.travelersModalWrapperScrolled : ""}`}
+                >
+                  <TravelersModal
+                    adults={adults}
+                    children={children}
+                    infants={infants}
+                    setAdults={setAdults}
+                    setChildren={setChildren}
+                    setInfants={setInfants}
+                    onClose={closeTravelersModal}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}
-
-        {isCalendarOpen && (
-          <div
-            ref={calendarRef}
-            className={`${styles.calendarWrapper} ${
-              isCalendarOpen ? styles.calendarWrapperOpen : ""
-            }`}
-          >
-            <Calendar
-              values={datePicker}
-              onChangeValue={setDatePicker}
-              onClose={() => {
-                setIsCalendarOpen(false);
-              }}
-            />
-          </div>
-        )}
       </header>
-
-      {isModalOpen && (
-        <div
-          ref={searchModalRef}
-          className={`${styles.modalWrapper} ${styles.modalWrapperOpen} ${
-            scrolled ? styles.modalWrapperScrolled : ""
-          }`}
-        >
-          <SearchModal
-            title="Рекомендуемые направления"
-            placeholder="Введите город или страну"
-            searchValue={searchValue}
-            onSearchChange={setSearchValue}
-            results={filteredDestinations}
-            onSelect={handleSelect}
-            onClose={closeSearchModal}
-            showInput={false}
-          />
-        </div>
-      )}
-
-      {isTravelersModalOpen && (
-        <div
-          ref={travelersModalRef}
-          className={`${styles.travelersModalWrapper} ${
-            styles.travelersModalWrapperOpen
-          } ${scrolled ? styles.travelersModalWrapperScrolled : ""}`}
-        >
-          <TravelersModal
-            adults={adults}
-            children={children}
-            infants={infants}
-            setAdults={setAdults}
-            setChildren={setChildren}
-            setInfants={setInfants}
-            onClose={closeTravelersModal}
-          />
-        </div>
-      )}
 
       {isUserProfileModalOpen && (
         <UserProfileModal

@@ -25,7 +25,12 @@ export const fetchUserData = createAsyncThunk<
 >("user/fetchUserData", async (_, { getState, rejectWithValue }) => {
   try {
     const state: any = getState();
-    const access = state.googleLogin.access;
+    // Добавляем fallback на localStorage если access в state отсутствует
+    const access = state.googleLogin.access || localStorage.getItem('access_token');
+    
+    if (!access) {
+      throw new Error("Токен доступа не найден");
+    }
 
     const response = await apiClient.get<ApiResponse<User>>("/account/user/", {
       headers: {
@@ -33,10 +38,9 @@ export const fetchUserData = createAsyncThunk<
       },
     });
 
-    console.log(response.data);
     return response.data.data;
   } catch (error: any) {
-    return rejectWithValue("Не удалось получить данные пользователя");
+    return rejectWithValue(error.message || "Не удалось получить данные пользователя");
   }
 });
 
@@ -44,12 +48,14 @@ interface UserState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  isAuthenticated: boolean; // Добавленное поле
 }
 
 const initialState: UserState = {
   user: null,
   loading: false,
   error: null,
+  isAuthenticated: false, // Инициализация нового поля
 };
 
 const userSlice = createSlice({
@@ -60,7 +66,12 @@ const userSlice = createSlice({
       state.user = null;
       state.loading = false;
       state.error = null;
+      state.isAuthenticated = false; // Сброс состояния
     },
+    // Новый reducer для установки статуса аутентификации
+    setAuthenticated: (state, action) => {
+      state.isAuthenticated = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -71,13 +82,15 @@ const userSlice = createSlice({
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.user = action.payload;
         state.loading = false;
+        state.isAuthenticated = true; 
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
+        state.isAuthenticated = false;
       });
   },
 });
 
-export const { resetUserState } = userSlice.actions;
+export const { resetUserState, setAuthenticated } = userSlice.actions;
 export default userSlice.reducer;

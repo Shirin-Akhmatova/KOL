@@ -210,7 +210,7 @@ const AddPhoto = () => {
             <div className={scss.controls}>
               <div className={scss.sliders}>
                 <label>
-                  Zoom{" "}
+                  Zoom
                   <input
                     type="range"
                     min={1}
@@ -221,7 +221,7 @@ const AddPhoto = () => {
                   />
                 </label>
                 <label>
-                  Rotation{" "}
+                  Rotation
                   <input
                     type="range"
                     min={0}

@@ -1,7 +1,8 @@
 import styles from "./UserProfileModal.module.scss";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../app/services/redux/store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 type UserProfileModalProps = {
   onClose: () => void;
@@ -10,34 +11,43 @@ type UserProfileModalProps = {
 
 function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  
-  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
-    if ((e.target as HTMLElement).className.includes(styles.userProfileModal_overlay)) {
+  const isAuthenticated = useSelector((state: RootState) => 
+    state.auth.isAuthenticated || !!localStorage.getItem('access_token')
+  );
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
   };
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleCreateServiceClick = () => {
     if (isAuthenticated) {
-      navigate('/create-service');
+      navigate("/create-service");
       onClose();
     } else {
+      localStorage.setItem('redirectAfterAuth', '/create-service');
       onRegisterClick();
     }
   };
 
   return (
-    <div
-      className={styles.userProfileModal_overlay}
-      onClick={handleClickOutside}
-    >
+    <div className={styles.userProfileModal_overlay} ref={modalRef}>
       <div className={styles.userProfileModal_container}>
         <ul>
           <li onClick={onRegisterClick}>Регистрация/Вход</li>
           <div className={styles.divider}></div>
           <li onClick={handleCreateServiceClick}>Сдать жилье на KÖL</li>
           <li>Центр помощи</li>
+          <li>
+            <Link to="/favorites" onClick={onClose}>Избранное</Link>
+          </li>
         </ul>
       </div>
     </div>

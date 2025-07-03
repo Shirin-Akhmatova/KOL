@@ -1,5 +1,5 @@
 import { useForm, FormProvider } from "react-hook-form";
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { debounce } from "lodash";
 import AddPhoto from "@/widgets/CreateService/AddPhoto";
 import ObjectForm from "@/widgets/CreateService/ObjectForm";
@@ -7,7 +7,7 @@ import Amenities from "@/widgets/CreateService/Amenities";
 import Date from "@/widgets/CreateService/ChooseDate";
 import PriceRoom from "@/widgets/CreateService/PriceRoom";
 import IndicateMap from "@/widgets/CreateService/IndicateMap";
-
+import style from "./CreateService.module.scss";
 
 type ImageItem = {
   id: string;
@@ -68,11 +68,22 @@ const defaultValues: FormData = {
 };
 
 const CreateService = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const methods = useForm<FormData>({ mode: "onSubmit", defaultValues });
   const { handleSubmit, reset, watch } = methods;
 
-  const onSubmit = (data: FormData) => {
-    console.log("Форма отправлена:", data);
+  const onSubmit = async (data: FormData) => {
+    try {
+      setLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Ошибка при отправке формы:", error);
+      setLoading(false);
+    }
   };
 
   const saveToLocalStorage = useCallback(
@@ -91,7 +102,6 @@ const CreateService = () => {
     const savedData = localStorage.getItem("objectDraft");
     if (savedData) reset(JSON.parse(savedData));
   }, [reset]);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -104,6 +114,17 @@ const CreateService = () => {
         <button type="submit" style={{ marginTop: "20px" }}>
           Сохранить
         </button>
+        {loading ? (
+          <button disabled className={`${style.btn} ${style.loadingDots}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        ) : (
+          <button className={`${style.btn} ${style.save}`} type="submit">
+            Сохранить
+          </button>
+        )}
       </form>
     </FormProvider>
   );
