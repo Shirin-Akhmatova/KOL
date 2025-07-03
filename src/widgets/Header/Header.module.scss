@@ -177,6 +177,7 @@
     }
   }
   .searchItem {
+    text-wrap: nowrap;
     position: relative;
     padding: 14px 20px;
 
@@ -228,10 +229,8 @@
   }
 
   .highlight {
-   background-color: green;
+    background-color: green;
   }
-  
-  
 }
 .activeBgGray {
   background-color: #dddddd;
@@ -247,14 +246,12 @@
 
 @keyframes fadeGray {
   0% {
-    background-color: #dddddd
+    background-color: #dddddd;
   }
   100% {
     background-color: transparent;
   }
 }
-
-
 
 .divider {
   width: 1px;
@@ -283,7 +280,6 @@
   padding: 0 10px 0 0;
   border-radius: 25px;
   transition: all 0.3s ease;
-
 
   &:hover {
     cursor: pointer;
@@ -425,6 +421,9 @@
 
 .searchBarScrolled .searchBarEnd {
   gap: 0;
+}
+.searchBarEndActive {
+  background-color: #dddddd;
 }
 
 .langWrapper {

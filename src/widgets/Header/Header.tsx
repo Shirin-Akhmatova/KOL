@@ -52,7 +52,7 @@ function Header() {
     endDate: null,
   });
 
-  const isAllDateSelected = datePicker.startDate && datePicker.endDate
+  const isAllDateSelected = datePicker.startDate && datePicker.endDate;
 
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -76,8 +76,8 @@ function Header() {
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
-  const arrivalCalendarRef = useRef<HTMLDivElement>(null)
-  const exitCalendarRef = useRef<HTMLDivElement>(null)
+  const arrivalCalendarRef = useRef<HTMLDivElement>(null);
+  const exitCalendarRef = useRef<HTMLDivElement>(null);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -148,11 +148,9 @@ function Header() {
 
       if (
         isCalendarOpen &&
-
         arrivalCalendarRef.current &&
         exitCalendarRef.current &&
         calendarRef.current &&
-
         !arrivalCalendarRef.current.contains(target) &&
         !exitCalendarRef.current.contains(target) &&
         !calendarRef.current.contains(target)
@@ -186,14 +184,13 @@ function Header() {
   const totalTravelers = adults + children + infants;
 
   useEffect(() => {
-    if(datePicker.startDate && datePicker.endDate) {
+    if (datePicker.startDate && datePicker.endDate) {
       setTimeout(() => {
-        setIsCalendarOpen(false)
-
-      }, 350)
+        setIsCalendarOpen(false);
+      }, 350);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [datePicker.endDate])
+  }, [datePicker.endDate]);
 
   return (
     <>
@@ -317,8 +314,7 @@ function Header() {
               <div
                 ref={arrivalCalendarRef}
                 className={`${styles.searchItem} 
-                ${isAllDateSelected ? styles.noneBg : "" }`
-              }
+                ${isAllDateSelected ? styles.noneBg : ""}`}
                 onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                 role="button"
                 tabIndex={0}
@@ -345,10 +341,7 @@ function Header() {
                     isCalendarOpen ? styles.calendarWrapperOpen : ""
                   } ${scrolled ? styles.calendarWrapperScrolled : ""}`}
                 >
-                  <Calendar
-                    values={datePicker}
-                    onChangeValue={setDatePicker}
-                  />
+                  <Calendar values={datePicker} onChangeValue={setDatePicker} />
                 </div>
               )}
             </div>
@@ -359,10 +352,9 @@ function Header() {
                 <div
                   ref={exitCalendarRef}
                   className={`${styles.searchItem} 
-                    ${isAllDateSelected ? styles.noneBg : "" }
-                    ${datePicker.startDate ? styles.activeBgGray : "" }
-                    `
-                  }
+                    ${isAllDateSelected ? styles.noneBg : ""}
+                    ${datePicker.startDate ? styles.activeBgGray : ""}
+                    `}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                   role="button"
                   tabIndex={0}
@@ -383,7 +375,10 @@ function Header() {
             )}
 
             <div className={styles.divider} />
-            <div className={styles.dropdownOwerlay}>
+            <div
+              className={styles.dropdownOwerlay}
+              style={scrolled ? { width: "45%" } : {}}
+            >
               <div
                 className={`${styles.searchBarEnd} ${
                   scrolled ? styles.searchBarEndScrolled : ""
