@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import starIcon from "../../assets/icons/star.svg";
@@ -8,37 +8,27 @@ import { Link } from "react-router-dom";
 import "swiper/swiper-bundle.css";
 
 import scss from "./Carts.module.scss";
-import { type Block } from "../mockData";
+import { blocks } from "../mockData";
 
-const Carts = ({ cardList }: { cardList: Block[] }) => {
-  const likesFromLocalStore: Block[] = useMemo(() => {
-    try {
-      const item = localStorage.getItem("favorites");
-      return item ? JSON.parse(item) : [];
-    } catch {
-      return [];
-    }
-  }, []);
-  const [likes, setLikes] = useState<Block[]>(likesFromLocalStore);
 
-  function addLike(block: Block) {
-    setLikes((prevLikes) =>
-      prevLikes.find((el) => el.id === block.id)
-        ? prevLikes.filter((item) => item.id !== block.id)
-        : [...prevLikes, block]
+const Carts = () => {
+  const [likes, setLikes] = useState<number[]>([]);
+
+  function addLike(id: number) {
+    setLikes(
+      (prevLikes) =>
+        prevLikes.includes(id)
+          ? prevLikes.filter((item) => item !== id) 
+          : [...prevLikes, id]
     );
   }
-
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(likes));
-  }, [likes]);
 
   return (
     <div className={scss.Carts}>
       <div className="container">
         <div className={scss.content}>
           <div className={scss.blocks}>
-            {cardList.map((block, index) => (
+            {blocks.map((block, index) => (
               <div className={scss.block} key={index}>
                 <div className={scss.images}>
                   <Swiper
@@ -56,19 +46,19 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
                       </SwiperSlide>
                     ))}
                   </Swiper>
-                  {likes.find((el) => el.id === block.id) ? (
+                  {likes.includes(index) ? (
                     <img
                       className={scss.like}
                       src={like}
                       alt="like"
-                      onClick={() => addLike(block)}
+                      onClick={() => addLike(index)}
                     />
                   ) : (
                     <img
                       className={scss.like}
                       src={notLike}
                       alt="notLike"
-                      onClick={() => addLike(block)}
+                      onClick={() => addLike(index)}
                     />
                   )}
                 </div>
@@ -83,8 +73,7 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
                   <p>{block.place}</p>
                   <p>{block.data}</p>
                   <h4 className={scss.price}>
-                    {block.price.toLocaleString("ru-RU")} сом{" "}
-                    <p>за {block.day} ночей</p>
+                    {block.price.toLocaleString("ru-RU")} сом <p>за {block.day} ночей</p>
                   </h4>
                 </Link>
               </div>
