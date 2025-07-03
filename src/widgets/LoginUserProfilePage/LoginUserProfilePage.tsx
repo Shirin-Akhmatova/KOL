@@ -42,7 +42,7 @@ function LoginUserProfilePage() {
           {image ? (
             <img src={image} alt="аватар" className={styles.avatarImage} />
           ) : (
-            <span>А</span>
+            <span>{user?.first_name?.[0] || "Г"}</span>
           )}
 
           <div className={styles.avatarOverlay}>

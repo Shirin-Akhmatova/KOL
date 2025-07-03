@@ -20,12 +20,26 @@ interface FinishRegisterProps {
   };
 }
 
+const cleanPhoneNumber = (input: string) => {
+  let digits = input.replace(/\D/g, "");
+  if (digits.startsWith("996996")) {
+    digits = digits.slice(3);
+  }
+  if (digits.startsWith("996")) {
+    digits = digits.slice(3);
+  }
+  if (digits.length > 9) {
+    digits = digits.slice(0, 9);
+  }
+  return digits;
+};
+
 const formatPhoneNumber = (num: string) => {
-  const cleaned = num.replace(/\D/g, "");
-  const part1 = cleaned.slice(0, 3);
-  const part2 = cleaned.slice(3, 6);
-  const part3 = cleaned.slice(6, 9);
-  return [part1, part2, part3].filter(Boolean).join(" ");
+  const parts = [];
+  for (let i = 0; i < num.length; i += 3) {
+    parts.push(num.slice(i, i + 3));
+  }
+  return parts.join(" ");
 };
 
 const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
@@ -38,19 +52,18 @@ const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [rawNumber, setRawNumber] = useState(() => {
-    if (!phoneNumber) return "";
-    return phoneNumber.replace(/^\+996\s?/, "").replace(/\D/g, "");
-  });
+  const [rawNumber, setRawNumber] = useState(() =>
+    phoneNumber ? cleanPhoneNumber(phoneNumber) : ""
+  );
   const [birthDate, setBirthDate] = useState({ day: "", month: "", year: "" });
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const countryCode = "+996";
+  const countryCode = "996";
 
   useEffect(() => {
     if (phoneNumber) {
-      setRawNumber(phoneNumber.replace(/^\+996\s?/, "").replace(/\D/g, ""));
+      setRawNumber(cleanPhoneNumber(phoneNumber));
     }
   }, [phoneNumber]);
 
@@ -60,9 +73,7 @@ const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
       setLastName(user.last_name || "");
       setEmail(user.email || "");
       if (user.phone_number) {
-        setRawNumber(
-          user.phone_number.replace(/^\+996\s?/, "").replace(/\D/g, "")
-        );
+        setRawNumber(cleanPhoneNumber(user.phone_number));
       }
       if (user.birth_date) {
         const [year, month, day] = user.birth_date.split("-");
@@ -77,13 +88,20 @@ const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
 
   const handlePhoneInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value;
-    if (val.startsWith(countryCode)) {
-      val = val.slice(countryCode.length).trim();
+    val = val.replace(/[^\d+]/g, "");
+
+    if (val.startsWith("+996")) {
+      val = val.slice(4);
+    } else if (val.startsWith("996")) {
+      val = val.slice(3);
     }
-    setRawNumber(val.replace(/\D/g, ""));
+
+    val = val.replace(/\D/g, "").slice(0, 12);
+
+    setRawNumber(val);
   };
 
-  const displayValue = `${countryCode} ${formatPhoneNumber(rawNumber)}`;
+  const displayValue = rawNumber ? `+996 ${formatPhoneNumber(rawNumber)}` : "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,10 +121,13 @@ const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
       first_name: firstName.trim(),
       last_name: lastName.trim(),
       email: email.trim(),
-      phone_number: `${countryCode}${rawNumber}`,
+      ...(rawNumber.length === 9 && {
+        phone_number: `${countryCode}${rawNumber}`,
+      }),
       birth_date: `${birthDate.year}-${birthDate.month}-${birthDate.day}`,
     };
 
+    console.log("Отправляемые данные:", payload);
     dispatch(updateUserData(payload))
       .unwrap()
       .then(() => {
@@ -162,15 +183,21 @@ const FinishRegisterModal: React.FC<FinishRegisterProps> = ({
                   onChange={(e) => setEmail(e.target.value)}
                   style={{ marginBottom: "20px" }}
                 />
-                <CustomInput
-                  value={displayValue}
-                  label="Phone number"
-                  placeholder={
-                    rawNumber.length === 0 ? "Your number here..." : ""
-                  }
-                  onChange={handlePhoneInputChange}
-                  style={{ marginBottom: "20px" }}
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: "20px",
+                  }}
+                >
+                  <CustomInput
+                    value={displayValue}
+                    placeholder="Your number here..."
+                    onChange={handlePhoneInputChange}
+                    maxLength={16}
+                    style={{ marginBottom: "20px" }}
+                  />
+                </div>
               </div>
 
               <div className={styles.date_of_birth_container}>

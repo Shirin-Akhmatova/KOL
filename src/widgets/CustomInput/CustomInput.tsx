@@ -19,6 +19,7 @@ interface CustomInputProps {
   CalendarComponent?: React.FC<{ onSelect: (date: string) => void }>;
   onDateChange?: (date: string) => void;
   required?: boolean;
+  maxLength?: number;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -38,6 +39,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   CalendarComponent,
   onDateChange,
   required = false,
+  maxLength,
 }) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
@@ -70,6 +72,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             ...style,
           }}
           required={required}
+          maxLength={maxLength}
         />
 
         {showCalendarIcon && (
