@@ -12,14 +12,14 @@ import { blocks } from "../mockData";
 
 
 const Carts = () => {
-  const [likes, setLikes] = useState<number[]>([]); // ✅ Храним лайки в состоянии
+  const [likes, setLikes] = useState<number[]>([]);
 
   function addLike(id: number) {
     setLikes(
       (prevLikes) =>
         prevLikes.includes(id)
-          ? prevLikes.filter((item) => item !== id) // Удаляем лайк
-          : [...prevLikes, id] // Добавляем лайк
+          ? prevLikes.filter((item) => item !== id) 
+          : [...prevLikes, id]
     );
   }
 

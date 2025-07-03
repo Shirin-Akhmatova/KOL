@@ -74,6 +74,8 @@ function Header() {
   const searchModalRef = useRef<HTMLDivElement>(null);
   const travelersModalRef = useRef<HTMLDivElement>(null);
   const calendarRef = useRef<HTMLDivElement>(null);
+  const arrive = useRef<HTMLDivElement>(null);
+  const depart = useRef<HTMLDivElement>(null);
 
   const filteredDestinations = destinations.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -145,7 +147,11 @@ function Header() {
       if (
         isCalendarOpen &&
         calendarRef.current &&
-        !calendarRef.current.contains(target)
+        arrive.current &&
+        depart.current &&
+        !calendarRef.current.contains(target) &&
+        !arrive.current.contains(target) &&
+        !depart.current.contains(target)
       ) {
         setIsCalendarOpen(false);
       }
@@ -158,7 +164,6 @@ function Header() {
   }, [isModalOpen, isTravelersModalOpen, isCalendarOpen]);
 
   const isHeaderDefault = isModalOpen || !scrolled;
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
@@ -199,8 +204,7 @@ function Header() {
 
           <div className={styles.mainContent}>
             <div className={styles.langWrapper}>
-
-            {scrolled && weatherData && (
+              {scrolled && weatherData && (
                 <div className={styles.headerWeather}>
                   <WeatherWidget weathers={weatherData} inHeader />
                 </div>
@@ -274,6 +278,7 @@ function Header() {
             <div className={styles.divider} />
 
             <div
+              ref={arrive}
               className={styles.searchItem}
               onClick={() => setIsCalendarOpen(!isCalendarOpen)}
               role="button"
@@ -299,6 +304,7 @@ function Header() {
               <>
                 <div className={styles.divider} />
                 <div
+                  ref={depart}
                   className={styles.searchItem}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
                   role="button"

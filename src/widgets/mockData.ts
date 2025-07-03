@@ -1,4 +1,5 @@
 export interface Block {
+  id: number;
   images: string[];
   title: string;
   place: string;
@@ -6,12 +7,13 @@ export interface Block {
   price: number;
   day: number;
   rating: number;
-  coordinates: number[];
+  coordinates: [number, number];
   description: string;
 }
 
 export const blocks: Block[] = [
   {
+    id: 1,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-1208478853883571250/original/03aef6b8-3992-463d-94ca-2422c2d82757.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/cba06c3e-f0e0-4ef0-b991-aa6fd2348c50.jpg?im_w=720",
@@ -30,11 +32,12 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6565, 77.0853],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
+    id: 2,
     images: [
       "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MjYxMTc4MTc=/original/ed42e4b2-2563-4887-bbd9-29dfb096db88.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-1265698983331884820/original/bc073cb4-1f5d-4348-a0d9-0eb31c657b96.jpeg?im_w=720",
@@ -53,11 +56,12 @@ export const blocks: Block[] = [
     price: 247139,
     day: 6,
     rating: 4.7,
-    coordinates: [42.635034, 76.757008],
+    coordinates: [42.6221, 76.9914],
     description:
       "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
+    id: 3,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-854065432551935839/original/270e6f4f-5fea-4117-a552-523370f62a74.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-1243609850535519033/original/41b8ebfd-6da4-499d-be74-775144a277d5.jpeg?im_w=720",
@@ -76,11 +80,12 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],description:
+    coordinates: [42.4605, 76.1862],
+    description:
       "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 4,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-1304959172770902956/original/382d469a-7747-4bfe-a72a-f15cfd4bbbb1.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-668620215138733009/original/cdf158ed-b31c-40cc-8305-d8d1ef1b588e.jpeg?im_w=720",
@@ -99,11 +104,12 @@ export const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
-    coordinates: [42.275572, 77.903053],description:
+    coordinates: [42.7256, 77.4468],
+    description:
       "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 5,
     images: [
       "https://a0.muscache.com/im/pictures/f5ceadbd-a34f-47d1-913f-7087a2c34398.jpg?im_w=720",
       "https://a0.muscache.com/im/pictures/e169a5d1-0e7c-4aff-a5e8-0538518aa941.jpg?im_w=720",
@@ -122,11 +128,12 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],description:
+    coordinates: [42.51182, 76.58748],
+    description:
       "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 6,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-853189955208971108/original/bdefcb9d-5e3f-495d-bc04-013125cd99c6.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/e43414c9-9cd6-429a-ab17-9e08d6bb189a.jpg?im_w=720",
@@ -145,12 +152,13 @@ export const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
-    coordinates: [42.28786, 76.341774],description:
+    coordinates: [42.6902, 77.2017],
+    description:
       "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
-  
+
   {
+    id: 7,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-1208478853883571250/original/03aef6b8-3992-463d-94ca-2422c2d82757.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/cba06c3e-f0e0-4ef0-b991-aa6fd2348c50.jpg?im_w=720",
@@ -169,11 +177,12 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6034, 76.9045],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
+    id: 8,
     images: [
       "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MjYxMTc4MTc=/original/ed42e4b2-2563-4887-bbd9-29dfb096db88.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-1265698983331884820/original/bc073cb4-1f5d-4348-a0d9-0eb31c657b96.jpeg?im_w=720",
@@ -192,11 +201,12 @@ export const blocks: Block[] = [
     price: 247139,
     day: 6,
     rating: 4.7,
-    coordinates: [42.635034, 76.757008],
+    coordinates: [42.6681, 77.2993],
     description:
       "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
+    id: 9,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-854065432551935839/original/270e6f4f-5fea-4117-a552-523370f62a74.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-1243609850535519033/original/41b8ebfd-6da4-499d-be74-775144a277d5.jpeg?im_w=720",
@@ -215,11 +225,12 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],description:
+    coordinates: [42.1192, 77.0036],
+    description:
       "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 10,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-1304959172770902956/original/382d469a-7747-4bfe-a72a-f15cfd4bbbb1.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-668620215138733009/original/cdf158ed-b31c-40cc-8305-d8d1ef1b588e.jpeg?im_w=720",
@@ -238,11 +249,12 @@ export const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
-    coordinates: [42.275572, 77.903053],description:
+    coordinates: [42.7103, 77.1124],
+    description:
       "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 11,
     images: [
       "https://a0.muscache.com/im/pictures/f5ceadbd-a34f-47d1-913f-7087a2c34398.jpg?im_w=720",
       "https://a0.muscache.com/im/pictures/e169a5d1-0e7c-4aff-a5e8-0538518aa941.jpg?im_w=720",
@@ -261,11 +273,12 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],description:
+    coordinates: [42.3434, 77.9989],
+    description:
       "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
   {
+    id: 12,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-853189955208971108/original/bdefcb9d-5e3f-495d-bc04-013125cd99c6.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/e43414c9-9cd6-429a-ab17-9e08d6bb189a.jpg?im_w=720",
@@ -284,12 +297,13 @@ export const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
-    coordinates: [42.28786, 76.341774],description:
+    coordinates: [42.3502, 76.1682],
+    description:
       "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
   },
-  
+
   {
+    id: 13,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-1208478853883571250/original/03aef6b8-3992-463d-94ca-2422c2d82757.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/cba06c3e-f0e0-4ef0-b991-aa6fd2348c50.jpg?im_w=720",
@@ -308,80 +322,12 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6609, 77.466],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
-    images: [
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MjYxMTc4MTc=/original/ed42e4b2-2563-4887-bbd9-29dfb096db88.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1265698983331884820/original/bc073cb4-1f5d-4348-a0d9-0eb31c657b96.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MjYxMTc4MTc=/original/ed42e4b2-2563-4887-bbd9-29dfb096db88.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1265698983331884820/original/bc073cb4-1f5d-4348-a0d9-0eb31c657b96.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-    ],
-    title: "Half Moon Bay (Калифорния, США)",
-    place: "пляж и океан",
-    data: "4–10 мая",
-    price: 247139,
-    day: 6,
-    rating: 4.7,
-    coordinates: [42.635034, 76.757008],
-    description:
-      "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  },
-  {
-    images: [
-      "https://a0.muscache.com/im/pictures/miso/Hosting-854065432551935839/original/270e6f4f-5fea-4117-a552-523370f62a74.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1243609850535519033/original/41b8ebfd-6da4-499d-be74-775144a277d5.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
-    ],
-    title: "Jibhi (Индия)",
-    place: "горы и долина",
-    data: "11-24 мая",
-    price: 310595,
-    day: 13,
-    rating: 4.9,
-    coordinates: [42.553519, 76.458039],description:
-      "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
-  },
-  {
-    images: [
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1304959172770902956/original/382d469a-7747-4bfe-a72a-f15cfd4bbbb1.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-668620215138733009/original/cdf158ed-b31c-40cc-8305-d8d1ef1b588e.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-904319036347745143/original/e6bf9e8c-2002-4ae2-909f-8f9f36ea0bda.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-40910232/original/1da673da-6164-40f3-8f1c-a74730bdce25.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1304959172770902956/original/382d469a-7747-4bfe-a72a-f15cfd4bbbb1.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-668620215138733009/original/cdf158ed-b31c-40cc-8305-d8d1ef1b588e.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-904319036347745143/original/e6bf9e8c-2002-4ae2-909f-8f9f36ea0bda.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-40910232/original/1da673da-6164-40f3-8f1c-a74730bdce25.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-904319036347745143/original/e6bf9e8c-2002-4ae2-909f-8f9f36ea0bda.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-40910232/original/1da673da-6164-40f3-8f1c-a74730bdce25.jpeg?im_w=720",
-    ],
-    title: "Манали (Индия)",
-    place: "горы и сад",
-    data: "17-22 июнь",
-    price: 190650,
-    day: 5,
-    rating: 4.5,
-    coordinates: [42.275572, 77.903053],description:
-      "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
-  },
-  {
+    id: 14,
     images: [
       "https://a0.muscache.com/im/pictures/f5ceadbd-a34f-47d1-913f-7087a2c34398.jpg?im_w=720",
       "https://a0.muscache.com/im/pictures/e169a5d1-0e7c-4aff-a5e8-0538518aa941.jpg?im_w=720",
@@ -400,57 +346,12 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],description:
-      "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
-  },
-  {
-    images: [
-      "https://a0.muscache.com/im/pictures/miso/Hosting-853189955208971108/original/bdefcb9d-5e3f-495d-bc04-013125cd99c6.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/e43414c9-9cd6-429a-ab17-9e08d6bb189a.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/e17f60e0-62e3-4e82-b4d9-f25968beac53.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/9e6fea38-3842-4057-b78f-25b865479352.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/ace0f6cc-7bce-4b49-ac58-958215b18e47.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/9e6fea38-3842-4057-b78f-25b865479352.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/ace0f6cc-7bce-4b49-ac58-958215b18e47.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/9e6fea38-3842-4057-b78f-25b865479352.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/ace0f6cc-7bce-4b49-ac58-958215b18e47.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-853189955208971108/original/ace0f6cc-7bce-4b49-ac58-958215b18e47.jpeg?im_w=720",
-    ],
-    title: "Sainjand (Индия)",
-    place: "горы и долина",
-    data: "11–16 мая",
-    price: 180000,
-    day: 5,
-    rating: 4.9,
-    coordinates: [42.28786, 76.341774],description:
-      "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
-  
-  },
-   {
-    images: [
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MjYxMTc4MTc=/original/ed42e4b2-2563-4887-bbd9-29dfb096db88.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/miso/Hosting-1265698983331884820/original/bc073cb4-1f5d-4348-a0d9-0eb31c657b96.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-      "https://a0.muscache.com/im/pictures/27117c5b-3ba2-4300-aaa7-c5b5f93c589b.jpg?im_w=720",
-      "https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6NzMxNjcyODcyNTg1MTAzNjU4/original/1c0f99dc-295c-4ead-9fa9-fd7277be7ced.jpeg?im_w=720",
-    ],
-    title: "Half Moon Bay (Калифорния, США)",
-    place: "пляж и океан",
-    data: "4–10 мая",
-    price: 247139,
-    day: 6,
-    rating: 4.7,
-    coordinates: [42.635034, 76.757008],
+    coordinates: [42.581, 76.7524],
     description:
-      "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+      "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
   {
+    id: 15,
     images: [
       "https://a0.muscache.com/im/pictures/miso/Hosting-854065432551935839/original/270e6f4f-5fea-4117-a552-523370f62a74.jpeg?im_w=720",
       "https://a0.muscache.com/im/pictures/miso/Hosting-1243609850535519033/original/41b8ebfd-6da4-499d-be74-775144a277d5.jpeg?im_w=720",
@@ -469,7 +370,8 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],description:
+    coordinates: [42.1556, 77.5997],
+    description:
       "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
 ];
