@@ -11,7 +11,6 @@ type DatePicker = {
 interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
   onChangeValue: (data: DatePicker) => void;
   values: DatePicker;
-  onClose: () => void;
 }
 
 const Calendar: React.FC<CalendarProps> = ({

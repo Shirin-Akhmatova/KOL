@@ -40,7 +40,7 @@ export const updateUserData = createAsyncThunk<
       );
     }
 
-    const response = await apiClient.patch("/account/user/", user, {
+    const response:any = await apiClient.put("/account/user/", user, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -121,7 +121,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload ?? "Неизвестная ошибка";
+        state.error = action.payload as string ?? "Неизвестная ошибка";
       });
   },
 });

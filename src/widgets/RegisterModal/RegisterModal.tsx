@@ -158,8 +158,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
 
   useEffect(() => {
     const isUserEmpty =
-      googleUserRaw === null ||
-      googleUserRaw === false ||
+      googleUserRaw ||
       googleUserRaw === "False" ||
       (typeof googleUserRaw === "string" &&
         googleUserRaw.toLowerCase() === "false");

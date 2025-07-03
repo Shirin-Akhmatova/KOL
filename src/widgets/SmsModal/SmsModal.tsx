@@ -94,8 +94,7 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
   useEffect(() => {
     if (success) {
       const userExists =
-        user !== null &&
-        user !== false &&
+        user &&
         user !== "False" &&
         !(typeof user === "string" && user.toLowerCase() === "false");
 
@@ -115,7 +114,7 @@ const SmsModal: React.FC<SmsModalProps> = ({ onClose, phoneNumber }) => {
     <>
       {showFinishModal ? (
         <FinishRegisterModal
-          user={user}
+          user={user as any}
           onClose={() => {
             setShowFinishModal(false);
             onClose();
