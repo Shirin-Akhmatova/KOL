@@ -6,8 +6,20 @@ import ObjectForm from "@/widgets/CreateService/ObjectForm";
 import Amenities from "@/widgets/CreateService/Amenities";
 import Date from "@/widgets/CreateService/ChooseDate";
 import PriceRoom from "@/widgets/CreateService/PriceRoom";
+import IndicateMap from "@/widgets/CreateService/IndicateMap";
 import style from "./CreateService.module.scss";
 
+type ImageItem = {
+  id: string;
+  file: File;
+  preview: string;
+  croppedPreview?: string;
+};
+
+interface Location {
+  cordinates: [number, number];
+  locationName: string;
+}
 export interface FormData {
   photos: ImageItem[];
   category: string;
@@ -27,14 +39,8 @@ export interface FormData {
   bathroom: number;
   guests: number;
   subject: boolean;
+  location: Location;
 }
-
-type ImageItem = {
-  id: string;
-  file: File;
-  preview: string;
-  croppedPreview?: string;
-};
 
 const defaultValues: FormData = {
   photos: [],
@@ -55,6 +61,10 @@ const defaultValues: FormData = {
   bathroom: 0,
   guests: 1,
   subject: false,
+  location: {
+    cordinates: [42.4602, 77.5085],
+    locationName: "",
+  },
 };
 
 const CreateService = () => {
@@ -69,7 +79,6 @@ const CreateService = () => {
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // здесь можно добавить логику отправки данных на сервер
       setLoading(false);
     } catch (error) {
       console.error("Ошибка при отправке формы:", error);
@@ -101,6 +110,10 @@ const CreateService = () => {
         <Amenities />
         <Date />
         <PriceRoom />
+        <IndicateMap />
+        <button type="submit" style={{ marginTop: "20px" }}>
+          Сохранить
+        </button>
         {loading ? (
           <button disabled className={`${style.btn} ${style.loadingDots}`}>
             <span></span>

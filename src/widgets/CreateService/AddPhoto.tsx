@@ -166,7 +166,7 @@ const AddPhoto = () => {
         />
 
         <div className={scss.deleteAll}>
-          <button onClick={() => setShowDeleteModal(true)}>Удалить всё</button>
+          <button type="button" onClick={() => setShowDeleteModal(true)}>Удалить всё</button>
         </div>
 
         {showDeleteModal && (

@@ -41,8 +41,6 @@ const Calendar: React.FC<CalendarProps> = ({
   useEffect(() => {
     onChangeValue({ endDate: selectedEnd, startDate: selectedStart });
   }, [selectedEnd, selectedStart]);
-  // Обработчик клика вне календаря
-
 
   const year = date.getFullYear();
   const month = date.getMonth();

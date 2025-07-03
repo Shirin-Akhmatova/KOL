@@ -7,7 +7,7 @@ export interface Block {
   price: number;
   day: number;
   rating: number;
-  coordinates: number[];
+  coordinates: [number, number];
   description: string;
 }
 
@@ -32,7 +32,7 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6565, 77.0853],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -56,7 +56,7 @@ export const blocks: Block[] = [
     price: 247139,
     day: 6,
     rating: 4.7,
-    coordinates: [42.635034, 76.757008],
+    coordinates: [42.6221, 76.9914],
     description:
       "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -80,7 +80,7 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],
+    coordinates: [42.4605, 76.1862],
     description:
       "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -104,7 +104,7 @@ export const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
-    coordinates: [42.275572, 77.903053],
+    coordinates: [42.7256, 77.4468],
     description:
       "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -128,7 +128,7 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],
+    coordinates: [42.51182, 76.58748],
     description:
       "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -152,7 +152,7 @@ export const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
-    coordinates: [42.28786, 76.341774],
+    coordinates: [42.6902, 77.2017],
     description:
       "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -177,7 +177,7 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6034, 76.9045],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -201,7 +201,7 @@ export const blocks: Block[] = [
     price: 247139,
     day: 6,
     rating: 4.7,
-    coordinates: [42.635034, 76.757008],
+    coordinates: [42.6681, 77.2993],
     description:
       "Half Moon Bay — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -225,7 +225,7 @@ export const blocks: Block[] = [
     price: 310595,
     day: 13,
     rating: 4.9,
-    coordinates: [42.553519, 76.458039],
+    coordinates: [42.1192, 77.0036],
     description:
       "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -249,7 +249,7 @@ export const blocks: Block[] = [
     price: 190650,
     day: 5,
     rating: 4.5,
-    coordinates: [42.275572, 77.903053],
+    coordinates: [42.7103, 77.1124],
     description:
       "Манали — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -273,7 +273,7 @@ export const blocks: Block[] = [
     price: 130000,
     day: 5,
     rating: 4.8,
-    coordinates: [42.119712, 76.984002],
+    coordinates: [42.3434, 77.9989],
     description:
       "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -297,7 +297,7 @@ export const blocks: Block[] = [
     price: 180000,
     day: 5,
     rating: 4.9,
-    coordinates: [42.28786, 76.341774],
+    coordinates: [42.3502, 76.1682],
     description:
       "Sainjand — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
@@ -322,8 +322,56 @@ export const blocks: Block[] = [
     price: 149721,
     day: 5,
     rating: 4.8,
-    coordinates: [42.728644, 77.255288],
+    coordinates: [42.6609, 77.466],
     description:
       "Moss Beach — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  },
+  {
+    id: 14,
+    images: [
+      "https://a0.muscache.com/im/pictures/f5ceadbd-a34f-47d1-913f-7087a2c34398.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/e169a5d1-0e7c-4aff-a5e8-0538518aa941.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/hosting/Hosting-16105121/original/4c3142cf-093d-46d9-97d7-e63735866364.png?im_w=720",
+      "https://a0.muscache.com/im/pictures/45a176c5-3f17-44b0-8854-c2d640e01a64.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/28e31c21-cd06-4208-9398-cf78aea94a2f.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/7c2335c1-c008-4538-a71e-1d8fec905ed7.jpg?im_w=720  ",
+      "https://a0.muscache.com/im/pictures/28e31c21-cd06-4208-9398-cf78aea94a2f.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/7c2335c1-c008-4538-a71e-1d8fec905ed7.jpg?im_w=720  ",
+      "https://a0.muscache.com/im/pictures/28e31c21-cd06-4208-9398-cf78aea94a2f.jpg?im_w=720",
+      "https://a0.muscache.com/im/pictures/7c2335c1-c008-4538-a71e-1d8fec905ed7.jpg?im_w=720  ",
+    ],
+    title: "Mashobra (Индия)",
+    place: "вид на горы",
+    data: "9–14 июнь",
+    price: 130000,
+    day: 5,
+    rating: 4.8,
+    coordinates: [42.581, 76.7524],
+    description:
+      "Mashobra — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
+  },
+  {
+    id: 15,
+    images: [
+      "https://a0.muscache.com/im/pictures/miso/Hosting-854065432551935839/original/270e6f4f-5fea-4117-a552-523370f62a74.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1243609850535519033/original/41b8ebfd-6da4-499d-be74-775144a277d5.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1310576659813772445/original/45f6369d-6b6b-48bb-8a75-6dd51ebf1b54.jpeg?im_w=720",
+      "https://a0.muscache.com/im/pictures/miso/Hosting-1316413277822512898/original/33f6ac90-1c47-4db5-87b6-acd903358810.jpeg?im_w=720",
+    ],
+    title: "Jibhi (Индия)",
+    place: "горы и долина",
+    data: "11-24 мая",
+    price: 310595,
+    day: 13,
+    rating: 4.9,
+    coordinates: [42.1556, 77.5997],
+    description:
+      "Jibhi — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...",
   },
 ];

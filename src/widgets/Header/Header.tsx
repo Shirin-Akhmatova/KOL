@@ -166,7 +166,6 @@ function Header() {
   }, [isModalOpen, isTravelersModalOpen, isCalendarOpen]);
 
   const isHeaderDefault = isModalOpen || !scrolled;
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;

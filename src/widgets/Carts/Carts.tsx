@@ -21,11 +21,15 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
   }, []);
   const [likes, setLikes] = useState<Block[]>(likesFromLocalStore);
 
-  function addLike(block: Block) {
-    setLikes((prevLikes) =>
-      prevLikes.find((el) => el.id === block.id)
-        ? prevLikes.filter((item) => item.id !== block.id)
-        : [...prevLikes, block]
+const Carts = () => {
+  const [likes, setLikes] = useState<number[]>([]);
+
+  function addLike(id: number) {
+    setLikes(
+      (prevLikes) =>
+        prevLikes.includes(id)
+          ? prevLikes.filter((item) => item !== id) 
+          : [...prevLikes, id]
     );
   }
 
