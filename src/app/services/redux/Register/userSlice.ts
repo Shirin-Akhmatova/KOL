@@ -7,7 +7,7 @@ export interface UserData {
   last_name: string;
   email: string;
   birth_date: string;
-  phone_number: string;
+  phone_number?: string;
 }
 
 interface UserState {
@@ -40,7 +40,7 @@ export const updateUserData = createAsyncThunk<
       );
     }
 
-    const response = await apiClient.put("/account/user/", user, {
+    const response:any = await apiClient.put("/account/user/", user, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -121,11 +121,10 @@ const userSlice = createSlice({
       })
       .addCase(updateUserData.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload ?? "Неизвестная ошибка";
+        state.error = action.payload as string ?? "Неизвестная ошибка";
       });
   },
 });
 
-// Экспорт
 export const { resetUserState } = userSlice.actions;
 export default userSlice.reducer;
