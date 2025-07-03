@@ -177,6 +177,7 @@
     }
   }
   .searchItem {
+    text-wrap: nowrap;
     position: relative;
     padding: 14px 20px;
 
@@ -226,6 +227,30 @@
     background-color: #dddddd;
     outline: none;
   }
+
+  .highlight {
+    background-color: green;
+  }
+}
+.activeBgGray {
+  background-color: #dddddd;
+}
+
+.transitionBgGray {
+  background-color: transparent;
+  animation: fadeGray 0.5s forwards;
+}
+.noneBg {
+  background-color: transparent;
+}
+
+@keyframes fadeGray {
+  0% {
+    background-color: #dddddd;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 .divider {
@@ -251,14 +276,11 @@
 .searchBarEnd {
   display: flex;
   align-items: center;
-  gap: 106px;
+  justify-content: space-between;
   padding: 0 10px 0 0;
   border-radius: 25px;
   transition: all 0.3s ease;
 
-  &.searchBarEndActive {
-    gap: 34px;
-  }
   &:hover {
     cursor: pointer;
     background-color: #dddddd;
@@ -301,9 +323,12 @@
   pointer-events: none;
   position: absolute;
   top: 100%;
-  left: 0;
-  width: 446px;
-  height: 415px;
+  left: 100%;
+  transform: translateX(-50%);
+  width: 336px;
+  height: 345px;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
 }
 
@@ -315,8 +340,15 @@
   position: fixed;
   top: 64px;
 }
-.dropdownOwerlay{
+.dropdownOwerlay {
+  width: 22%;
   position: relative;
+  &:first-child {
+    width: 24%;
+  }
+  &:last-child {
+    width: 32%;
+  }
 }
 .modalWrapper {
   opacity: 0;
@@ -390,6 +422,9 @@
 .searchBarScrolled .searchBarEnd {
   gap: 0;
 }
+.searchBarEndActive {
+  background-color: #dddddd;
+}
 
 .langWrapper {
   position: relative;
@@ -448,19 +483,20 @@
 
   .langDropdownItems {
     border-radius: 19px;
-    padding: 12px 16px;
+    padding: 8px 14px;
     cursor: pointer;
     transition: all 0.2s ease;
+    color: #a1a1a1;
 
     &:hover {
-      color: #000;
-      font-weight: bold;
+      cursor: not-allowed;
     }
-
-    &:active {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      font-weight: normal;
+  }
+  .active {
+    font-weight: bold;
+    color: black;
+    &:hover {
+      cursor: pointer;
     }
   }
 }

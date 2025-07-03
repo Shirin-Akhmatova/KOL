@@ -50,7 +50,7 @@
     transition: 0.5s;
     width: 0;
     &.active {
-      width: 340px;
+      width: 130px;
       opacity: 1;
       transform: translateX(0);
       .weatherWidget {
@@ -58,7 +58,6 @@
       }
     }
   }
-  left: 40px;
   padding: 2px 5px;
   align-items: center;
   border: 1px solid #F0F0F0;
