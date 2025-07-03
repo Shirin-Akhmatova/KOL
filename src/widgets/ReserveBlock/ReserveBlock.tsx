@@ -156,9 +156,6 @@ useEffect(() => {
                       values={datePicker}
                       onChangeValue={setDatePicker}
                       className={styles.reserveCalendar}
-                      onClose={() => {
-                        setShowPicker(false);
-                      }}
                     />
                   </div>
                 )}
