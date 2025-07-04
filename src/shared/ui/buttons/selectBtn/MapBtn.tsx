@@ -1,5 +1,5 @@
 import { useState } from "react";
-import scss from "./mapBtn.module.scss";
+import scss from "./MapBtn.module.scss";
 import mapIcon from "../../../../assets/icons/mapIcon.svg";
 
 type Props = {
