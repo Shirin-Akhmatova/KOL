@@ -11,7 +11,7 @@ const feedbacks = [
     text: 'Красивое пространство, высотное здание, очень просторное, красивый маленький балкон, очень отзывчивые хозяева.',
   },
   {
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaMKCGSvsFQ9oCJj1TF3BxbKuAWxE1i7UPcQ&s',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEM9pXaI1HvNPnddwbUtgLkK21MggGGWeF_Q&s',
     name: 'Бахтияр',
     since: '5 лет на KÖL',
     time: '1 неделю назад',
