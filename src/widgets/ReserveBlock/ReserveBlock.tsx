@@ -14,7 +14,7 @@ type Props = {
 };
 
 
-function ReserveBlock({animationRef}: Props) {
+function ReserveBlock({ animationRef }: Props) {
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const [datePicker, setDatePicker] = useState<DatePicker>({
     startDate: null,
@@ -34,7 +34,7 @@ useEffect(() => {
     },
     {
       root: null,
-      threshold: 1, // чем выше, тем больше блока должно быть видно
+      threshold: 0.1, // чем выше, тем больше блока должно быть видно
     }
   );
 
@@ -45,10 +45,7 @@ useEffect(() => {
   };
 }, [animationRef]);
 
-
-  
-  
-  useEffect(() => {
+    useEffect(() => {
     setIsVisible(true);
   }, []);
 
