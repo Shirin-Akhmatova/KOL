@@ -5,73 +5,65 @@ import { Link } from "react-router-dom";
 
 const blocks = [
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
   },
   {
-    image:
-      "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
+    image: "https://a0.muscache.com/im/pictures/b82c0a78-ff1e-44bf-ab79-3174b51c03c3.jpg?im_w=720",
     title: "Karven Four Seasons",
-    description: "Центр отдыха «Карвен Четыре Сезона",
+    description: "Центр отдыха «Карвен Четыре Сезона»",
     price: 289,
     rating: 4.91,
     feedbacks: 259,
@@ -89,21 +81,21 @@ const ObjectsModal = ({ isOpen, onClose }: Props) => {
   return (
     <div className={scss.ObjectsModal} onClick={onClose}>
       <div className={scss.modal} onClick={(e) => e.stopPropagation()}>
-        <h1>Your object’s</h1>
+        <h1>Ваши объекты</h1>
 
         <div className={scss.content}>
           <Link to="/create-service" className={scss.create}>
-            <img src={create} alt="create" />
-            <button>Create a Service</button>
+            <img src={create} alt="создать" />
+            <button>Создать услугу</button>
           </Link>
           {blocks.map((block, index) => (
             <Link to="/cardPage" className={scss.card} key={index}>
-              <img src={block.image} alt="block" />
+              <img src={block.image} alt="объект" />
               <div className={scss.info}>
                 <div>
                   <h3>{block.title}</h3>
                   <div className={scss.rating}>
-                    <img src={starIcon} alt="star" />
+                    <img src={starIcon} alt="рейтинг" />
                     <span>{block.rating}</span>
                     <span>{`(${block.feedbacks})`}</span>
                   </div>

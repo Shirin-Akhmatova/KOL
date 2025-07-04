@@ -6,18 +6,18 @@ interface Props {
   onClose: () => void;
 }
 
-const Payment = ({ isOpen, onClose }: Props) => {
+const PaymentModal = ({ isOpen, onClose }: Props) => {
   if (!isOpen) return null;
 
   return (
     <div className={scss.overlay} onClick={onClose}>
       <div className={scss.modal} onClick={(e) => e.stopPropagation()}>
-        <h1 className={scss.title}>Payment methods</h1>
+        <h1 className={scss.title}>Способы оплаты</h1>
         <div className={scss.form}>
-          <h4 className={scss.subtitle}>Your payments</h4>
-          <p className={scss.description}>All your payment methods</p>
+          <h4 className={scss.subtitle}>Ваши платежи</h4>
+          <p className={scss.description}>Все ваши способы оплаты</p>
           <CustomButton
-            text="Manage payments"
+            text="Управление платежами"
             buttonColor="linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
             textColor="#fff"
             style={{
@@ -25,15 +25,25 @@ const Payment = ({ isOpen, onClose }: Props) => {
               width: "304px",
               height: "40px",
               marginBottom: "61px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
             }}
           />
-          <h4 className={scss.subtitle}>Payment methods</h4>
-          <p className={scss.description}>Add a payment method</p>
+          <h4 className={scss.subtitle}>Платежные методы</h4>
+          <p className={scss.description}>Добавить способ оплаты</p>
           <CustomButton
-            text="Add payment methods"
+            text="Добавить способ оплаты"
             buttonColor="linear-gradient(90deg, #16BBB4, #50C9C4, #15B3AC)"
             textColor="#fff"
-            style={{ border: "none", width: "378px", height: "40px" }}
+            style={{ 
+              border: "none", 
+              width: "378px", 
+              height: "40px",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis"
+            }}
           />
         </div>
       </div>
@@ -41,4 +51,4 @@ const Payment = ({ isOpen, onClose }: Props) => {
   );
 };
 
-export default Payment;
+export default PaymentModal;

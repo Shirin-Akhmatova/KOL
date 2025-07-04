@@ -1,309 +1,309 @@
-.loginUserProfilePage_container {
-  padding: 101px 40px 187px;
-  background: #f2f2f2;
-  width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
-  
-}
-
-.loginUserProfilePage_wrapper {
-  display: flex;
-  align-items: center;
-  width: 25%;
-  max-width: 497px;
-  padding-bottom: 61px;
-  position: relative;
-}
-
-.loginUserProfilePage_circleAvatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: black;
-  color: white;
-  font-size: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-
-  &:hover .avatarOverlay {
-    opacity: 1;
-  }
-}
-
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.avatarOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 25%;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-}
-
-.cameraIconWrapper {
-  img {
-    width: 34px;
-    height: 21px;
-  }
-}
-
-.loginUserProfilePage_info {
-  text-align: center;
-  margin-left: 30px;
-  
-  h1 {
-    font-weight: 700;
-    font-size: 45px;
-    margin: 0;
-    color: #000;
-  }
-  
-  p {
-    font-weight: 700;
-    font-size: 16px;
-    margin: 7px 0 0;
-    color: #000;
-  }
-  
-  h3 {
-    font-weight: 700;
-    font-size: 35px;
-    margin: 0;
-    color: #000;
-  }
-}
-
-.loginUserProfilePage_personalInfo {
-  max-width: 500px;
-  width: 100%;
-  margin: 0 30px;
-}
-
-.loginUserProfilePage_fixedInfo {
-  margin-bottom: 40px;
-  
-  h6 {
-    font-weight: 600;
-    font-size: 22px;
-    font-family: Montserrat;
-    margin: 0 0 18px;
-  }
-}
-
-.loginUserProfilePage_emailAndNumber {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-  
-  p {
-    font-size: 18px;
-    font-weight: 500;
-    font-family: Montserrat;
-    margin: 0;
+  .loginUserProfilePage_container {
+    padding: 101px 40px 187px;
+    background: #f2f2f2;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
     
-    &.emailText {
-      color: #E53935; // Красный цвет для email
+  }
+
+  .loginUserProfilePage_wrapper {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    max-width: 497px;
+    padding-bottom: 61px;
+    position: relative;
+  }
+
+  .loginUserProfilePage_circleAvatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    font-size: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &:hover .avatarOverlay {
+      opacity: 1;
     }
   }
-  
-  .crossIcon {
-    width: 15px;
-    height: 15px;
-    filter: invert(27%) sepia(86%) saturate(7464%) hue-rotate(356deg) brightness(91%) contrast(126%);
-  }
-  
-  .markIcon {
-    width: 15px;
-    height: 15px;
-  }
-}
 
-.loginUserProfilePage_divider {
-  border: 1px solid #e1e1e1;
-  margin: 20px 0;
-}
+  .avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-.loginUserProfilePage_settings {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  h6 {
-color: rgb(0, 0, 0);
-font-family: Montserrat;
-font-size: 18px;
-font-weight: 600;
-line-height: 22px;
-letter-spacing: 0%;
-text-align: left;
+  .avatarOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
+
+  .cameraIconWrapper {
+    img {
+      width: 34px;
+      height: 21px;
+    }
+  }
+
+  .loginUserProfilePage_info {
+    text-align: center;
+    margin-left: 30px;
     
-    span {
-      position: relative;
+    h1 {
+      font-weight: 700;
+      font-size: 45px;
+      margin: 0;
+      color: #000;
+    }
+    
+    p {
+      font-weight: 700;
+      font-size: 16px;
+      margin: 7px 0 0;
+      color: #000;
+    }
+    
+    h3 {
+      font-weight: 700;
+      font-size: 35px;
+      margin: 0;
+      color: #000;
+    }
+  }
+
+  .loginUserProfilePage_personalInfo {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 30px;
+  }
+
+  .loginUserProfilePage_fixedInfo {
+    margin-bottom: 40px;
+    
+    h6 {
+      font-weight: 600;
+      font-size: 22px;
+      font-family: Montserrat;
+      margin: 0 0 18px;
+    }
+  }
+
+  .loginUserProfilePage_emailAndNumber {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      font-family: Montserrat;
+      margin: 0;
       
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: #000;
-        transition: width 0.3s ease;
+      &.emailText {
+        color: #E53935; // Красный цвет для email
       }
     }
     
-    &:hover span::after {
-      width: 100%;
-    }
-  }
-  
-  .logoutButton {
-    margin-top: 80px;
-    color: rgb(229, 57, 53);
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0.15px;
-    text-align: center;
-    display: flex;
-    gap: 10px;
-    
-    .logoutIcon {
-      width: 24px;
-      height: 24px;
+    .crossIcon {
+      width: 15px;
+      height: 15px;
       filter: invert(27%) sepia(86%) saturate(7464%) hue-rotate(356deg) brightness(91%) contrast(126%);
     }
     
-    &:hover {
-      opacity: 0.8;
+    .markIcon {
+      width: 15px;
+      height: 15px;
     }
   }
-}
 
-.previewOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.previewModal {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  max-width: 80%;
-  max-height: 80vh;
-  
-  img {
-    max-width: 100%;
-    max-height: calc(80vh - 40px);
-    border-radius: 8px;
+  .loginUserProfilePage_divider {
+    border: 1px solid #e1e1e1;
+    margin: 20px 0;
   }
-}
 
-.confirmationOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.confirmationModal {
-  background: #fff;
-  border-radius: 8px;
-  padding: 24px;
-  width: 100%;
-  max-width: 440px;
-  
-  h3 {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 16px;
-    color: #000;
-  }
-  
-  p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0 0 24px;
-    color: #666;
-  }
-}
-
-.confirmationButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  
-  button {
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 135px;
-    height: 36px;
-    transition: all 0.2s ease;
-  }
-  
-  .cancelButton {
-    border: 1px solid rgb(34, 34, 34);
-    border-radius: 8px;
-    background: rgb(255, 255, 255);
-    color: rgb(34, 34, 34);
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: 0px;
-    text-align: center;
+  .loginUserProfilePage_settings {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    h6 {
+  color: rgb(0, 0, 0);
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0%;
+  text-align: left;
+      
+      span {
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #000;
+          transition: width 0.3s ease;
+        }
+      }
+      
+      &:hover span::after {
+        width: 100%;
+      }
+    }
     
-    &:hover {
-      background: #e0e0e0;
+    .logoutButton {
+      margin-top: 80px;
+      color: rgb(229, 57, 53);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+      text-align: center;
+      display: flex;
+      gap: 10px;
+      
+      .logoutIcon {
+        width: 24px;
+        height: 24px;
+        filter: invert(27%) sepia(86%) saturate(7464%) hue-rotate(356deg) brightness(91%) contrast(126%);
+      }
+      
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
-  
-  .confirmButton {
-    background: rgb(229, 57, 53);
-    color: rgb(255, 255, 255);
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: 0px;
-    text-align: center;
+
+  .previewOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .previewModal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 80%;
+    max-height: 80vh;
     
-    &:hover {
-      background: #e0352b;
+    img {
+      max-width: 100%;
+      max-height: calc(80vh - 40px);
+      border-radius: 8px;
     }
   }
-}
+
+  .confirmationOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .confirmationModal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 16px;
+      color: #000;
+    }
+    
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0 0 24px;
+      color: #666;
+    }
+  }
+
+  .confirmationButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    
+    button {
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 135px;
+      height: 36px;
+      transition: all 0.2s ease;
+    }
+    
+    .cancelButton {
+      border: 1px solid rgb(34, 34, 34);
+      border-radius: 8px;
+      background: rgb(255, 255, 255);
+      color: rgb(34, 34, 34);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0px;
+      text-align: center;
+      
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+    
+    .confirmButton {
+      background: rgb(229, 57, 53);
+      color: rgb(255, 255, 255);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0px;
+      text-align: center;
+      
+      &:hover {
+        background: #e0352b;
+      }
+    }
+  }
