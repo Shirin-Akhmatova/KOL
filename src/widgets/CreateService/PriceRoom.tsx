@@ -1,18 +1,48 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaPlus } from "react-icons/fa6";
 import scss from "./PriceRoom.module.scss";
 import type { FormData } from "@/pages/CreateService/CreateService";
 
-const rooms = ["Спальни", "Кровати", "Ванные"];
+const rooms = [
+  { key: "bedroom", label: "Спальни" },
+  { key: "bed", label: "Кровати" },
+  { key: "bathroom", label: "Ванные" },
+] as const;
+
 const PriceRoom = () => {
   const {
     register,
     watch,
-    formState: { errors },
+    setValue,
+    getValues,
+    formState: {},
   } = useFormContext<FormData>();
 
-  useEffect(() => {}, [watch]);
+  const guests = watch("guests") ?? 1;
+
+  const handleGuestChange = (type: "increment" | "decrement") => {
+    const current = getValues("guests");
+
+    if (type === "decrement" && current > 1) {
+      setValue("guests", current - 1);
+    }
+    if (type === "increment") {
+      setValue("guests", current + 1);
+    }
+  };
+
+  const handleRoomChange = (
+    key: (typeof rooms)[number]["key"],
+    type: "increment" | "decrement"
+  ) => {
+    const current = getValues(key);
+    if (type === "decrement" && current > 0) {
+      setValue(key, current - 1);
+    }
+    if (type === "increment") {
+      setValue(key, current + 1);
+    }
+  };
 
   return (
     <div className={scss.PriceRoom}>
@@ -25,14 +55,21 @@ const PriceRoom = () => {
               даты
             </p>
             <h3>Цена за ночь</h3>
-            <label htmlFor="price">
+            <label>
               <div className={`${scss.inputPrice} ${scss.cart}`}>
                 <span>$</span>
                 <input
-                  id="price"
-                  placeholder="1000"
                   type="number"
+                  placeholder="1000"
                   {...register("price", { required: true })}
+                  inputMode="numeric"
+                  onWheel={(e) => e.currentTarget.blur()}
+                  onKeyDown={(e) => {
+                    const invalidChars = ["e", "E", ".", "+", "-", ","];
+                    if (invalidChars.includes(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
                 />
               </div>
             </label>
@@ -41,7 +78,7 @@ const PriceRoom = () => {
               <FaPlus />
             </div>
             <h3>Скидки</h3>
-            <label htmlFor="discountWeek" className={scss.discountWeek}>
+            <label className={scss.discountWeek}>
               <div className={scss.cart}>
                 <h4>
                   За неделю<span> От 7 ночей</span>
@@ -51,16 +88,22 @@ const PriceRoom = () => {
                     <span>%</span>
                     <input
                       type="number"
-                      id="discountWeek"
-                      placeholder="0"
                       {...register("discountWeek", { required: true })}
+                      inputMode="numeric"
+                      onWheel={(e) => e.currentTarget.blur()}
+                      onKeyDown={(e) => {
+                        const invalidChars = ["e", "E", ".", "+", "-", ","];
+                        if (invalidChars.includes(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                   <p>Средняя скидка за неделю: $70 00</p>
                 </div>
               </div>
             </label>
-            <label htmlFor="discountMonth" className={scss.discountMonth}>
+            <label className={scss.discountMonth}>
               <div className={scss.cart}>
                 <h4>
                   За месяц<span> От 7 ночей</span>
@@ -70,9 +113,14 @@ const PriceRoom = () => {
                     <span>%</span>
                     <input
                       type="number"
-                      id="discountMonth"
-                      placeholder="0"
                       {...register("discountMonth", { required: true })}
+                      onWheel={(e) => e.currentTarget.blur()}
+                      onKeyDown={(e) => {
+                        const invalidChars = ["e", "E", ".", "+", "-", ","];
+                        if (invalidChars.includes(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                   <p>Средняя скидка за месяц: $70 00</p>
@@ -85,25 +133,57 @@ const PriceRoom = () => {
               <h2>Комната и кровати </h2>
               <p>Выберите комнату, кровати.</p>
               <div className={scss.rooms}>
-                {rooms.map((room, index) => (
-                  <div key={index} className={scss.room}>
-                    <h4>{room}</h4>
-                    <div className={scss.plus_minus}>
-                      <button className={scss.minus}>-</button>
-                      <span>Неважно</span>
-                      <button className={scss.minus}>+</button>
+                {rooms.map((room) => {
+                  const value = watch(room.key);
+
+                  return (
+                    <div key={room.key} className={scss.room}>
+                      <h4>{room.label}</h4>
+                      <div className={scss.plus_minus}>
+                        <button
+                          className={`${scss.minus} ${
+                            value <= 0 && scss.disabled
+                          }`}
+                          onClick={() =>
+                            handleRoomChange(room.key, "decrement")
+                          }
+                          disabled={value <= 0}
+                        >
+                          -
+                        </button>
+                        <span>{value || "Неважно"}</span>
+                        <button
+                          className={scss.minus}
+                          onClick={() =>
+                            handleRoomChange(room.key, "increment")
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
             <div>
               <h2>Число гостей</h2>
               <p>Сколько гостей с комфортом разместиться в жилье?</p>
               <div className={scss.counter}>
-                <button className={scss.minus}>-</button>
-                <span>1</span>
-                <button className={scss.minus}>+</button>
+                <button
+                  className={`${scss.plus} ${guests <= 1 && scss.disabled}`}
+                  onClick={() => handleGuestChange("decrement")}
+                  disabled={guests <= 1}
+                >
+                  -
+                </button>
+                <span>{guests}</span>
+                <button
+                  className={scss.minus}
+                  onClick={() => handleGuestChange("increment")}
+                >
+                  +
+                </button>
               </div>
             </div>
           </div>

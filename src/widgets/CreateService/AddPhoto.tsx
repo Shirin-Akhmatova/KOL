@@ -1,150 +1,153 @@
-import { useEffect, useState } from "react";
-import scss from "./AddPhoto.module.scss";
+import { useState, useCallback } from "react";
+import { useFormContext } from "react-hook-form";
 import {
   DndContext,
   closestCenter,
+  PointerSensor,
   useSensor,
   useSensors,
-  PointerSensor,
 } from "@dnd-kit/core";
-import { RiDragMove2Fill, RiEdit2Fill, RiCloseFill } from "react-icons/ri";
 import {
+  arrayMove,
   SortableContext,
   useSortable,
-  arrayMove,
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import Cropper from "react-easy-crop";
-import type { Area, Point } from "react-easy-crop";
+import Cropper, { type Area } from "react-easy-crop";
+import { RiDragMove2Fill, RiEdit2Fill, RiCloseFill } from "react-icons/ri";
 import { getCroppedImg } from "../../shared/ui/cropImage";
+import scss from "./AddPhoto.module.scss";
+import type { FormData } from "@/pages/CreateService/CreateService";
 
-type ImageItem = {
-  id: string;
-  file: File;
-  preview: string;
-  croppedPreview?: string;
-};
+type ImageItem = FormData["photos"][0];
 
-const generateId = () => {
-  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+const generateId = () =>
+  `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+
+const SortableImage = ({ id, url, onRemove, onEdit }: any) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      className={scss.imageCard}
+    >
+      <div className={scss.image} style={{ backgroundImage: `url(${url})` }}>
+        <RiDragMove2Fill
+          className={scss.dragHandle}
+          {...attributes}
+          {...listeners}
+        />
+        <div className={scss.actions}>
+          <RiEdit2Fill className={scss.editBtn} onClick={onEdit} />
+          <RiCloseFill className={scss.removeBtn} onClick={onRemove} />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const AddPhoto = () => {
-  const [images, setImages] = useState<ImageItem[]>([]);
+  const { watch, setValue, getValues } = useFormContext<FormData>();
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState<number>(0);
   const [croppedArea, setCroppedArea] = useState<Area | null>(null);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
   const sensors = useSensors(useSensor(PointerSensor));
+  const images = watch("photos");
 
-  const generatePreviews = async (files: File[]) =>
-    Promise.all(
-      files.map(
-        (file) =>
-          new Promise<ImageItem>((resolve) => {
-            const reader = new FileReader();
-            reader.onload = () =>
-              resolve({
-                id: generateId(),
-                file,
-                preview: reader.result as string,
-              });
-            reader.readAsDataURL(file);
-          })
-      )
+  const generatePreviews = useCallback(async (files: File[]) => {
+    return Promise.all(
+      files.map((file) => {
+        const reader = new FileReader();
+        return new Promise<ImageItem>((resolve) => {
+          reader.onload = () =>
+            resolve({
+              id: generateId(),
+              file,
+              preview: reader.result as string,
+            });
+          reader.readAsDataURL(file);
+        });
+      })
     );
+  }, []);
 
-  const saveImages = (imagesToSave: ImageItem[]) => {
-    const data = imagesToSave.map((img) => ({
-      id: img.id,
-      file: img.file.name,
-      preview: img.croppedPreview || img.preview,
-    }));
-    localStorage.setItem("objectDraft", JSON.stringify({ images: data }));
-  };
+  const handleAddImages = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
 
-  const handleAddImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
+      const newPreviews = await generatePreviews(files);
+      const currentPhotos = getValues("photos");
+      const updated = [...currentPhotos, ...newPreviews].slice(0, 10);
 
-    const newPreviews = await generatePreviews(files);
-    const updated = [...images, ...newPreviews].slice(0, 10);
+      setValue("photos", updated);
 
-    setImages(updated);
-    if (newPreviews.length === 1) setEditingIndex(images.length);
-    else saveImages(updated);
-  };
+      if (newPreviews.length > 0) {
+        setEditingIndex(currentPhotos.length);
+      }
+    },
+    [generatePreviews, getValues, setValue]
+  );
 
-  const handleSaveCrop = async () => {
+  const handleSaveCrop = useCallback(async () => {
     if (editingIndex === null || !croppedArea) return;
 
     try {
-      const image = images[editingIndex];
+      const image = getValues("photos")[editingIndex];
       const croppedImage = await getCroppedImg(
         image.preview,
         croppedArea,
         rotation
       );
-      const updated = [...images];
+      const updated = [...getValues("photos")];
       updated[editingIndex] = { ...image, croppedPreview: croppedImage };
-
-      setImages(updated);
-      saveImages(updated);
+      setValue("photos", updated);
       setEditingIndex(null);
     } catch (e) {
       console.error("Error cropping image", e);
     }
-  };
+  }, [editingIndex, croppedArea, getValues, rotation, setValue]);
 
-  const handleRemove = (index: number) => {
-    const updated = images.filter((_, i) => i !== index);
-    setImages(updated);
-    saveImages(updated);
-    if (editingIndex === index) setEditingIndex(null);
-    else if (editingIndex !== null && editingIndex > index)
-      setEditingIndex(editingIndex - 1);
-  };
+  const handleRemove = useCallback(
+    (index: number) => {
+      const updated = getValues("photos").filter((_, i) => i !== index);
+      setValue("photos", updated);
+      if (editingIndex === index) setEditingIndex(null);
+      else if (editingIndex !== null && editingIndex > index)
+        setEditingIndex(editingIndex - 1);
+    },
+    [editingIndex, getValues, setValue]
+  );
 
-  const handleDeleteAll = () => {
-    setImages([]);
-    localStorage.removeItem("objectDraft");
+  const handleDeleteAll = useCallback(() => {
+    setValue("photos", []);
     setShowDeleteModal(false);
-  };
+  }, [setValue]);
 
-  const handleDragEnd = ({ active, over }: any) => {
-    if (active.id !== over?.id) {
-      const oldIndex = images.findIndex((img) => img.id === active.id);
-      const newIndex = images.findIndex((img) => img.id === over.id);
-      const reordered = arrayMove(images, oldIndex, newIndex);
-
-      setImages(reordered);
-      saveImages(reordered);
-      if (editingIndex === oldIndex) setEditingIndex(newIndex);
-    }
-  };
-
-  useEffect(() => {
-    const stored = localStorage.getItem("objectDraft");
-    if (stored)
-      try {
-        const { images } = JSON.parse(stored);
-        if (Array.isArray(images))
-          setImages(
-            images.map((img: any) => ({
-              id: generateId(),
-              file: new File([], img.file),
-              preview: img.preview,
-              croppedPreview: img.preview,
-            }))
-          );
-      } catch (e) {
-        console.warn("Failed to load images from localStorage", e);
+  const handleDragEnd = useCallback(
+    ({ active, over }: any) => {
+      if (active.id !== over?.id) {
+        const oldIndex = getValues("photos").findIndex(
+          (img) => img.id === active.id
+        );
+        const newIndex = getValues("photos").findIndex(
+          (img) => img.id === over.id
+        );
+        const reordered = arrayMove(getValues("photos"), oldIndex, newIndex);
+        setValue("photos", reordered);
+        if (editingIndex === oldIndex) setEditingIndex(newIndex);
       }
-  }, []);
+    },
+    [editingIndex, getValues, setValue]
+  );
 
   return (
     <div className="container">
@@ -161,9 +164,11 @@ const AddPhoto = () => {
           id="photo-input"
           hidden
         />
+
         <div className={scss.deleteAll}>
-          <button onClick={() => setShowDeleteModal(true)}>Удалить всё</button>
+          <button type="button" onClick={() => setShowDeleteModal(true)}>Удалить всё</button>
         </div>
+
         {showDeleteModal && (
           <div className={scss.confirmationModal}>
             <div className={scss.modalContent}>
@@ -186,6 +191,7 @@ const AddPhoto = () => {
             </div>
           </div>
         )}
+
         {editingIndex !== null && (
           <div className={scss.cropModal}>
             <div className={scss.cropArea}>
@@ -204,7 +210,7 @@ const AddPhoto = () => {
             <div className={scss.controls}>
               <div className={scss.sliders}>
                 <label>
-                  Zoom{" "}
+                  Zoom
                   <input
                     type="range"
                     min={1}
@@ -215,7 +221,7 @@ const AddPhoto = () => {
                   />
                 </label>
                 <label>
-                  Rotation{" "}
+                  Rotation
                   <input
                     type="range"
                     min={0}
@@ -267,30 +273,6 @@ const AddPhoto = () => {
             </div>
           </SortableContext>
         </DndContext>
-      </div>
-    </div>
-  );
-};
-
-const SortableImage = ({ id, url, onRemove, onEdit }: any) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
-  return (
-    <div
-      ref={setNodeRef}
-      style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={scss.imageCard}
-    >
-      <div className={scss.image} style={{ backgroundImage: `url(${url})` }}>
-        <RiDragMove2Fill
-          className={scss.dragHandle}
-          {...attributes}
-          {...listeners}
-        />
-        <div className={scss.actions}>
-          <RiEdit2Fill className={scss.editBtn} onClick={onEdit} />
-          <RiCloseFill className={scss.removeBtn} onClick={onRemove} />
-        </div>
       </div>
     </div>
   );

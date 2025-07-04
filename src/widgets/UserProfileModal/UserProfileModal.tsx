@@ -1,24 +1,53 @@
 import styles from "./UserProfileModal.module.scss";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../app/services/redux/store";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
-function UserProfileModal({ onClose, onRegisterClick }) {
-  const handleClickOutside = (e) => {
-    if (e.target.className.includes(styles.userProfileModal_overlay)) {
+type UserProfileModalProps = {
+  onClose: () => void;
+  onRegisterClick: () => void;
+};
+
+function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state: RootState) => 
+    state.auth.isAuthenticated || !!localStorage.getItem('access_token')
+  );
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       onClose();
     }
   };
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleCreateServiceClick = () => {
+    if (isAuthenticated) {
+      navigate("/create-service");
+      onClose();
+    } else {
+      localStorage.setItem('redirectAfterAuth', '/create-service');
+      onRegisterClick();
+    }
+  };
+
   return (
-    <div
-      className={styles.userProfileModal_overlay}
-      onClick={handleClickOutside}
-    >
+    <div className={styles.userProfileModal_overlay} ref={modalRef}>
       <div className={styles.userProfileModal_container}>
         <ul>
-          <li onClick={onRegisterClick}>Зарегистрироваться</li>
-          <li>Войти</li>
+          <li onClick={onRegisterClick}>Регистрация/Вход</li>
           <div className={styles.divider}></div>
-          <li>Сдать жилье на KÖL</li>
+          <li onClick={handleCreateServiceClick}>Сдать жилье на KÖL</li>
           <li>Центр помощи</li>
+          <li>
+            <Link to="/favorites" onClick={onClose}>Избранное</Link>
+          </li>
         </ul>
       </div>
     </div>

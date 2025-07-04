@@ -1,211 +1,309 @@
-.loginUserProfilePage_container {
-  padding: 101px 0 187px 0;
-  background: #f2f2f2;
-  width: 100%;
-  max-width: 1920px;
-  padding-inline: 40px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.loginUserProfilePage_wrapper {
-  align-items: center;
-  width: 22%;
-  max-width: 497px;
-  height: 100%;
-  max-height: 916px;
-  justify-content: space-between;
-  display: flex;
-  padding-bottom: 61px;
-}
-
-.loginUserProfilePage_circleAvatar {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background: black;
-  color: white;
-  font-size: 65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-
-  &:hover .cameraIconWrapper {
-    opacity: 1;
-    transform: translate(-50%, 0);
-    pointer-events: all;
+  .loginUserProfilePage_container {
+    padding: 101px 40px 187px;
+    background: #f2f2f2;
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+    
   }
-}
 
-.avatarImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.loginUserProfilePage_info {
-  text-align: center;
-
-  h1 {
-    font-weight: 700;
-    font-size: 45px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #000;
+  .loginUserProfilePage_wrapper {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    max-width: 497px;
+    padding-bottom: 61px;
+    position: relative;
   }
-  p {
-    padding-top: 7px;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #000;
-  }
-  h3 {
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #000;
-  }
-}
 
-.loginUserProfilePage_personalInfo {
-  gap: 40px;
-  max-width: 500px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  margin: 0 30px;
-
-  h6 {
-    font-weight: 600;
-    font-size: 22px;
-    font-family: Montserrat;
-  }
-}
-
-.loginUserProfilePage_fixedInfo {
-  gap: 18px;
-  display: flex;
-  flex-direction: column;
-}
-
-.loginUserProfilePage_settings {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-
-  h6 {
-    font-weight: 600;
-    font-size: 22px;
-    font-family: Montserrat;
+  .loginUserProfilePage_circleAvatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: black;
+    color: white;
+    font-size: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     position: relative;
-    width: fit-content;
+    overflow: hidden;
 
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      width: 0;
-      height: 2px;
-      background-color: black;
-      transition: width 0.3s ease;
-    }
-
-    &:hover::after {
-      width: 100%;
+    &:hover .avatarOverlay {
+      opacity: 1;
     }
   }
-}
 
-.loginUserProfilePage_divider {
-  border: 1px solid #e1e1e1;
-}
-
-.loginUserProfilePage_emailAndNumber {
-  display: flex;
-  gap: 12px;
-
-  p {
-    font-size: 18px;
-    font-weight: 500;
-    font-family: Montserrat;
+  .avatarImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
-}
 
-.previewOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 3000;
-  cursor: pointer;
-}
+  .avatarOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 25%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+  }
 
-.previewModal {
-  background: #fff;
-  border-radius: 12px;
-  padding: 12px;
-  max-width: 40%;
-  max-height: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  cursor: default;
+  .cameraIconWrapper {
+    img {
+      width: 34px;
+      height: 21px;
+    }
+  }
 
-  img {
-    max-width: 100%;
-    max-height: 100%;
+  .loginUserProfilePage_info {
+    text-align: center;
+    margin-left: 30px;
+    
+    h1 {
+      font-weight: 700;
+      font-size: 45px;
+      margin: 0;
+      color: #000;
+    }
+    
+    p {
+      font-weight: 700;
+      font-size: 16px;
+      margin: 7px 0 0;
+      color: #000;
+    }
+    
+    h3 {
+      font-weight: 700;
+      font-size: 35px;
+      margin: 0;
+      color: #000;
+    }
+  }
+
+  .loginUserProfilePage_personalInfo {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 30px;
+  }
+
+  .loginUserProfilePage_fixedInfo {
+    margin-bottom: 40px;
+    
+    h6 {
+      font-weight: 600;
+      font-size: 22px;
+      font-family: Montserrat;
+      margin: 0 0 18px;
+    }
+  }
+
+  .loginUserProfilePage_emailAndNumber {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    
+    p {
+      font-size: 18px;
+      font-weight: 500;
+      font-family: Montserrat;
+      margin: 0;
+      
+      &.emailText {
+        color: #E53935; // Красный цвет для email
+      }
+    }
+    
+    .crossIcon {
+      width: 15px;
+      height: 15px;
+      filter: invert(27%) sepia(86%) saturate(7464%) hue-rotate(356deg) brightness(91%) contrast(126%);
+    }
+    
+    .markIcon {
+      width: 15px;
+      height: 15px;
+    }
+  }
+
+  .loginUserProfilePage_divider {
+    border: 1px solid #e1e1e1;
+    margin: 20px 0;
+  }
+
+  .loginUserProfilePage_settings {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    h6 {
+  color: rgb(0, 0, 0);
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: 0%;
+  text-align: left;
+      
+      span {
+        position: relative;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background-color: #000;
+          transition: width 0.3s ease;
+        }
+      }
+      
+      &:hover span::after {
+        width: 100%;
+      }
+    }
+    
+    .logoutButton {
+      margin-top: 80px;
+      color: rgb(229, 57, 53);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+      text-align: center;
+      display: flex;
+      gap: 10px;
+      
+      .logoutIcon {
+        width: 24px;
+        height: 24px;
+        filter: invert(27%) sepia(86%) saturate(7464%) hue-rotate(356deg) brightness(91%) contrast(126%);
+      }
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .previewOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .previewModal {
+    background: #fff;
     border-radius: 12px;
-    object-fit: contain;
+    padding: 20px;
+    max-width: 80%;
+    max-height: 80vh;
+    
+    img {
+      max-width: 100%;
+      max-height: calc(80vh - 40px);
+      border-radius: 8px;
+    }
   }
-}
 
-.cameraIconWrapper {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  border-radius: 50px;
-  padding: 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 2002;
-  opacity: 0;
-  pointer-events: none;
-
-  img {
-    width: 34px;
-    height: 21px;
-    display: block;
+  .confirmationOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
   }
-}
 
-.avatarOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 25%;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-}
+  .confirmationModal {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    max-width: 440px;
+    
+    h3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 16px;
+      color: #000;
+    }
+    
+    p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0 0 24px;
+      color: #666;
+    }
+  }
 
-.loginUserProfilePage_circleAvatar:hover .avatarOverlay {
-  opacity: 1;
-  pointer-events: all;
-}
+  .confirmationButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    
+    button {
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      width: 135px;
+      height: 36px;
+      transition: all 0.2s ease;
+    }
+    
+    .cancelButton {
+      border: 1px solid rgb(34, 34, 34);
+      border-radius: 8px;
+      background: rgb(255, 255, 255);
+      color: rgb(34, 34, 34);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0px;
+      text-align: center;
+      
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+    
+    .confirmButton {
+      background: rgb(229, 57, 53);
+      color: rgb(255, 255, 255);
+      font-family: Montserrat;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 20px;
+      letter-spacing: 0px;
+      text-align: center;
+      
+      &:hover {
+        background: #e0352b;
+      }
+    }
+  }

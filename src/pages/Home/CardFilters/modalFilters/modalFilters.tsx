@@ -26,7 +26,7 @@ const ModalFiltersBtn = ({
           src="/imgs/svgs/settings.svg"
           alt=""
         />
-        Settings
+        Фильтры
       </button>
       {isOpenModal && (
         <ModalFilters

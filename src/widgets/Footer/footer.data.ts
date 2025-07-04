@@ -3,6 +3,7 @@ interface IFooterSocial {
   title?: string;
   link?: string;
 }
+
 interface IFooterColumn {
   columnTitle: string;
   columnItems: IColumnItem[];
@@ -12,9 +13,10 @@ interface IColumnItem {
   title: string;
   link?: string;
   icon?: string;
+  id?: string; // Добавляем необязательное поле id
 }
 
- const footerColumns: IFooterColumn[] = [
+const footerColumns: IFooterColumn[] = [
   {
     columnTitle: "Поддержка",
     columnItems: [
@@ -36,16 +38,14 @@ interface IColumnItem {
     columnTitle: "KÖL",
     columnItems: [
       {
-        title: "Зарегистрироваться",
-        link: "/register",
-      },
-      {
-        title: "Войти",
-        link: "/login",
+        title: "Регистрация/Вход",
+        link: "#auth",
+        id: "auth", // Добавляем идентификатор
       },
       {
         title: "Сдать жилье на KÖL",
-        link: "/submit-property",
+        link: "#create-service",
+        id: "create-service", // Добавляем идентификатор
       },
     ],
   },
@@ -66,14 +66,14 @@ interface IColumnItem {
   },
 ];
 
- const footerSocials: IFooterSocial[] = [
+const footerSocials: IFooterSocial[] = [
   {
     icon: "/imgs/svgs/globe.svg",
-    title: "English(US)",
+    title: "Русский(RU)", 
   },
   {
-    icon: "/imgs/svgs/dollar.svg",
-    title: "USD",
+    icon: "/imgs/somIcon.webp",
+    title: "СОМ",
   },
   {
     icon: "/imgs/socials/facebook.svg",
@@ -81,7 +81,7 @@ interface IColumnItem {
   },
   {
     icon: "/imgs/socials/instagram.svg",
-    link: "https://www.instagram.com/",
+    link: "https://www.instagram.com/kyrgyzanimation/",
   },
   {
     icon: "/imgs/socials/telegram.svg",

@@ -6,6 +6,10 @@ import LoginUserProfilePage from "../../widgets/LoginUserProfilePage/LoginUserPr
 import MapWithListings from "../../pages/MapWithListings/MapWithListings";
 import CardPage from "@/pages/cardPage/CardPage";
 import CreateService from "@/pages/CreateService/CreateService";
+import ProtectedRoute from "@/widgets/ProtectedRoute/ProtectedRoute";
+import FavoritesPage from "@/pages/Favorites/Favorites";
+import UserProfile from "@/pages/OwnerProfile/OwnerProfile";
+import OwnerProfile from "@/pages/OwnerProfile/OwnerProfile";
 
 export const myRouter = createBrowserRouter([
   {
@@ -21,20 +25,37 @@ export const myRouter = createBrowserRouter([
         element: <About />,
       },
       {
+        path: "/favorites",
+        element: <FavoritesPage />,
+      },
+      {
         path: "/map",
         element: <MapWithListings />,
       },
       {
-        path: "/cardPage",
+        path: "/cardPage/:id",
         element: <CardPage />,
       },
       {
         path: "/loginUserProfilePage",
         element: <LoginUserProfilePage />,
       },
+      // {
+      //   element: <ProtectedRoute />,
+      //   children: [
+      //     {
+      //       path: "/create-service",
+      //       element: <CreateService />,
+      //     },
+      //   ],
+      // },
       {
         path: "/create-service",
         element: <CreateService />,
+      },
+      {
+        path: "/ownerProfile",
+        element: <OwnerProfile/>,
       },
     ],
   },

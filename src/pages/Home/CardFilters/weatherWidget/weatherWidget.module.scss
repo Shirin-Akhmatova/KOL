@@ -1,6 +1,20 @@
 .weatherWidget {
   display: flex;
   position: relative;
+
+  .weatherWidget.scrolled {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .weatherWidget.scrolled .weatherWidgetArrow {
+    display: none;
+  }
+  
+  .weatherWidget.scrolled .weatherWidgetList {
+    display: none;
+  }
   .weatherWidgetArrow {
     background: #ffffff;
     border: 1px solid #f0f0f0;
@@ -8,7 +22,7 @@
     content: "";
     position: absolute;
     top: 50%;
-    left: -10px;
+    left: -14px;
     width: 19px;
     height: 19px;
     transform: translateY(-50%);
@@ -36,7 +50,7 @@
     transition: 0.5s;
     width: 0;
     &.active {
-      width: 340px;
+      width: 130px;
       opacity: 1;
       transform: translateX(0);
       .weatherWidget {
@@ -46,7 +60,7 @@
   }
   padding: 2px 5px;
   align-items: center;
-  border: 1px solid var(--color-background);
+  border: 1px solid #F0F0F0;
   border-radius: 8px;
 }
 .weatherItem {

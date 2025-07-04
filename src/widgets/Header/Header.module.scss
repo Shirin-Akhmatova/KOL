@@ -15,6 +15,12 @@
   background: #fff;
 }
 
+.headerWeather {
+  position: absolute;
+  right: 80px;
+  z-index: 5;
+}
+
 .headerDefault {
   background: #fff;
   box-shadow: none;
@@ -123,7 +129,7 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  overflow: hidden;
+  // overflow: hidden;
   transition: all 0.3s ease, transform 0.3s ease, width 0.3s ease, top 0.3s ease;
   z-index: 0;
 }
@@ -171,6 +177,8 @@
     }
   }
   .searchItem {
+    text-wrap: nowrap;
+    position: relative;
     padding: 14px 20px;
 
     &:hover,
@@ -192,6 +200,7 @@
 }
 
 .searchItem {
+  position: relative;
   cursor: pointer;
   padding: 14px 24px;
   flex: 1;
@@ -218,6 +227,30 @@
     background-color: #dddddd;
     outline: none;
   }
+
+  .highlight {
+    background-color: green;
+  }
+}
+.activeBgGray {
+  background-color: #dddddd;
+}
+
+.transitionBgGray {
+  background-color: transparent;
+  animation: fadeGray 0.5s forwards;
+}
+.noneBg {
+  background-color: transparent;
+}
+
+@keyframes fadeGray {
+  0% {
+    background-color: #dddddd;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 .divider {
@@ -243,20 +276,19 @@
 .searchBarEnd {
   display: flex;
   align-items: center;
-  gap: 106px;
+  justify-content: space-between;
   padding: 0 10px 0 0;
   border-radius: 25px;
   transition: all 0.3s ease;
 
-  &.searchBarEndActive {
-    gap: 34px;
-  }
   &:hover {
     cursor: pointer;
     background-color: #dddddd;
   }
 
   .searchButton {
+    overflow: hidden;
+
     flex: 0 0 auto;
     display: flex;
     align-items: center;
@@ -287,22 +319,77 @@
 
 .calendarWrapper {
   opacity: 0;
-  transform: translateY(-10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   position: absolute;
-  top: 130px;
-  left: 50%;
+  top: 100%;
+  left: 100%;
   transform: translateX(-50%);
-  width: 446px;
-  height: 415px;
+  width: 336px;
+  height: 345px;
+  justify-content: center;
+  align-items: center;
   z-index: 10;
 }
 
 .calendarWrapperOpen {
   opacity: 1;
-  transform: translate(-50%, 0);
   pointer-events: auto;
+}
+.calendarWrapperScrolled {
+  position: fixed;
+  top: 64px;
+}
+.dropdownOwerlay {
+  width: 22%;
+  position: relative;
+  &:first-child {
+    width: 24%;
+  }
+  &:last-child {
+    width: 32%;
+  }
+}
+.modalWrapper {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+}
+
+.modalWrapperOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.modalWrapperScrolled {
+  position: fixed;
+  top: 64px;
+}
+
+.travelersModalWrapper {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+}
+
+.travelersModalWrapperOpen {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.travelersModalWrapperScrolled {
+  position: fixed;
+  top: 64px;
 }
 
 .searchText {
@@ -334,4 +421,93 @@
 
 .searchBarScrolled .searchBarEnd {
   gap: 0;
+}
+.searchBarEndActive {
+  background-color: #dddddd;
+}
+
+.langWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  align-items: center;
+
+  .langIcon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 1px;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+
+    &:hover {
+      filter: brightness(0.7);
+      border-color: #ccc;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #000;
+    }
+
+    &:active {
+      filter: brightness(0.5);
+      border-color: #888;
+    }
+  }
+}
+
+.langDropdown {
+  position: absolute;
+  top: 50px;
+  right: -16px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 19px;
+  z-index: 100;
+  min-width: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: slideInDown 0.3s ease forwards;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: top right;
+
+  &.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .langDropdownItems {
+    border-radius: 19px;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #a1a1a1;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+  .active {
+    font-weight: bold;
+    color: black;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translateY(-16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

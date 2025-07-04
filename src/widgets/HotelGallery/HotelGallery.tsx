@@ -1,143 +1,174 @@
-import React, { useState, useEffect, useRef } from 'react';
-import hotel1 from '../../assets/images/hotel1.png';
-import hotel2 from '../../assets/images/hotel2.png';
-import hotel3 from '../../assets/images/hotel3.png';
-import hotel4 from '../../assets/images/hotel4.png';
-import hotel5 from '../../assets/images/hotel5.png';
+import { useState, useRef, useEffect } from "react";
+import goldIcon from "../../assets/icons/gold.svg";
+import gold2Icon from "../../assets/icons/gold2.svg";
+import starIcon from "../../assets/icons/star.svg";
+import profile from "../../assets/images/profile.png";
 
-import goldIcon from '../../assets/icons/gold.svg';
-import gold2Icon from '../../assets/icons/gold2.svg';
-import starIcon from '../../assets/icons/star.svg';
-import profile from '../../assets/images/profile.png';
+import firstIcon from "../../assets/icons/firstIcon.svg";
+import secondIcon from "../../assets/icons/secondIcon.svg";
+import thirdIcon from "../../assets/icons/thirdIcon.svg";
+import fourthIcon from "../../assets/icons/fourthIcon.svg";
+import fifthIcon from "../../assets/icons/fifthIcon.svg";
+import sixthIcon from "../../assets/icons/sixthIcon.svg";
+import seventhIcon from "../../assets/icons/seventhIcon.svg";
+import eighthIcon from "../../assets/icons/eighthIcon.svg";
+import ninthIcon from "../../assets/icons/ninthIcon.svg";
+import tenthIcon from "../../assets/icons/tenthIcon.svg";
 
-import firstIcon from '../../assets/icons/firstIcon.svg';
-import secondIcon from '../../assets/icons/secondIcon.svg';
-import thirdIcon from '../../assets/icons/thirdIcon.svg';
-import fourthIcon from '../../assets/icons/fourthIcon.svg';
-import fifthIcon from '../../assets/icons/fifthIcon.svg';
-import sixthIcon from '../../assets/icons/sixthIcon.svg';
-import seventhIcon from '../../assets/icons/seventhIcon.svg';
-import eighthIcon from '../../assets/icons/eighthIcon.svg';
-import ninthIcon from '../../assets/icons/ninthIcon.svg';
-import tenthIcon from '../../assets/icons/tenthIcon.svg';
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import "./hotelGallerry.scss";
+import "./carousel.scss";
 
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
-import './hotelGallerry.scss';
-import './carousel.scss';
+import AnimationBlock from "../animationBlock/AnimationBlock";
+import ReserveBlock from "../ReserveBlock/ReserveBlock";
+import type { Block } from "../mockData";
+import { Link } from "react-router-dom";
 
-import AnimationBlock from '../animationBlock/AnimationBlock';
-import ReserveBlock from '../ReserveBlock/ReserveBlock';
-
-const images = [hotel1, hotel2, hotel3, hotel4, hotel5];
-
-const HotelGallery = () => {
-  const [currentImage, setCurrentImage] = useState(hotel1);
+const HotelGallery = ({ currentCotadge }: { currentCotadge: Block }) => {
+  const [currentImageIdx, setCurrentImageIdx] = useState<number>(0);
+  // const [currentImage, setCurrentImage] = useState(hotel1);
   const [showCarousel, setShowCarousel] = useState(false);
-  const [reserveVisible, setReserveVisible] = useState(false);
-  const [reserveFixed, setReserveFixed] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const reserveRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const midRef = useRef<HTMLDivElement>(null);
+  const carouselRef = useRef<HTMLDivElement>(null)
 
-  // Для плавного подъема при открытии
-  useEffect(() => {
-    // Показываем ReserveBlock с анимацией через CSS (opacity + transform)
-    setReserveVisible(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!reserveRef.current || !bottomRef.current || !midRef.current) return;
-
-      const reserveHeight = reserveRef.current.offsetHeight;
-      const bottomRect = bottomRef.current.getBoundingClientRect();
-      const midRect = midRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Логика:
-      // Если мы "прокрутили" до блока mid (его верх виден), фиксируем ReserveBlock
-      // Если ниже mid, то снимаем фиксированное позиционирование (оставляем внутри flow)
-      if (midRect.top <= windowHeight - reserveHeight - 20) {
-        setReserveFixed(true);
-      } else {
-        setReserveFixed(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // вызовем сразу, чтобы учесть позицию при загрузке
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  
   // Управление каруселью
-  const setImage = (image: string) => setCurrentImage(image);
+  // const setImage = (image: string) => setCurrentImage(image);
   const toggleCarousel = () => setShowCarousel(!showCarousel);
   const closeCarousel = () => {
     setShowCarousel(false);
-    setCurrentImage(hotel1);
+    // setCurrentImage(hotel1);
   };
-  const goToNext = () => {
-    const index = images.indexOf(currentImage);
-    setCurrentImage(images[(index + 1) % images.length]);
-  };
+  // const goToNext = (images: string[]) => {
+  //   const index = images.indexOf(currentImage);
+  //   setCurrentImage(images[(index + 1) % images.length]);
+  // };
+  // const goToPrevious = (images: string[]) => {
+    //   const index = images.indexOf(currentImage);
+  //   setCurrentImage(images[(index - 1 + images.length) % images.length]);
+  // };
   const goToPrevious = () => {
-    const index = images.indexOf(currentImage);
-    setCurrentImage(images[(index - 1 + images.length) % images.length]);
+    setCurrentImageIdx((prev) => (prev === 0 ? currentCotadge.images.length - 1 : prev - 1));
   };
+  
+  const goToNext = () => {
+    setCurrentImageIdx((prev) => (prev === currentCotadge.images.length - 1 ? 0 : prev + 1));
+  };
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!wrapperRef.current) return;
+      
+      const top = wrapperRef.current.getBoundingClientRect().top;
+      setIsSticky(top <= 90);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node
+      
+      if (
+        carouselRef.current && 
+        
+        !carouselRef.current.contains(target)
+      ) {
+        closeCarousel()
+      };
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [])
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") goToPrevious();
+      if (event.key === "ArrowRight") goToNext();
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [currentImageIdx])
+  const animationRef: React.RefObject<HTMLDivElement | null> = useRef(null);
+
+  
   return (
     <div className="gallery-wrapper">
-      <h1 className="title">Роскошный и захватывающий дух KARVEN</h1>
+      <h1 className="title">{currentCotadge.title}</h1>
 
       {showCarousel ? (
         <div className="carousel-overlay">
-          <div className="carousel-container">
-            <button className="arrow left" onClick={goToPrevious}><AiOutlineLeft /></button>
-            <img src={currentImage} alt="Big view" className="carousel-image" />
-            <button className="arrow right" onClick={goToNext}><AiOutlineRight /></button>
+          <div className="carousel-container" ref={carouselRef}>
+            <button
+              className="arrow left"
+              onClick={() => goToPrevious()}
+            >
+              <AiOutlineLeft color="#fff" />
+            </button>
+            <img
+              src={currentCotadge.images[currentImageIdx]}
+              alt="Big view"
+              className="carousel-image"
+            />
+            <button
+              className="arrow right"
+              onClick={() => goToNext()}
+            >
+              <AiOutlineRight color="#fff" />
+            </button>
             <div className="carousel-thumbnails">
-              {images.map((src, idx) => (
+              {currentCotadge.images.map((src, idx) => (
                 <img
                   key={idx}
                   src={src}
                   alt={`Thumbnail ${idx + 1}`}
-                  className={`thumbnail ${currentImage === src ? 'active' : ''}`}
-                  onClick={() => setImage(src)}
+                  className={`thumbnail ${
+                    currentImageIdx === idx ? "active" : ""
+                  }`}
+                  onClick={() => setCurrentImageIdx(idx)}
                 />
               ))}
             </div>
-            <button className="close-carousel" onClick={closeCarousel}>Закрыть</button>
+            <button className="close-carousel" onClick={closeCarousel}>
+              Закрыть
+            </button>
           </div>
         </div>
       ) : (
         <div className="grid">
-          {images.map((src, idx) => (
-            <div key={idx} className={`grid-item ${idx === 0 ? 'large' : ''}`}>
+          {currentCotadge.images.slice(0, 5).map((src, idx) => (
+            <div key={idx} className={`grid-item ${idx === 0 ? "large" : ""}`}>
               <img src={src} alt={`Hotel ${idx + 1}`} />
               {idx === 4 && (
-                <button className="show-more" onClick={toggleCarousel}>Показать все фото</button>
+                <button className="show-more" onClick={toggleCarousel}>
+                  Показать все фото
+                </button>
               )}
             </div>
           ))}
         </div>
       )}
 
-      {/* ReserveBlock */}
-      <div
-        ref={reserveRef}
-        className={`reserve-container ${reserveVisible ? 'visible' : ''} ${reserveFixed ? 'fixed' : ''}`}
-      >
-        <ReserveBlock />
-      </div>
-
       {/* Блоки mid и bottom */}
-      <div className="bottom" ref={bottomRef}>
-        <h1>Жилье целиком</h1>
-        <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
-        <h5>
-          Карван в Ыссык-Куле — это уютное место на берегу озера, предлагающее комфортные номера и традиционную киргизскую кухню...
-        </h5>
+      <div className="bottom-reserve-wrapper" ref={wrapperRef}>
+        <div className="bottom" ref={bottomRef}>
+          <h1>{currentCotadge.place}</h1>
+          <p>2 гостя · 1 спальня · 1 кровать · 1 ванная</p>
+          <h5>{currentCotadge.description}</h5>
+        </div>
+        <div className={`reserve-box ${isSticky ? "is-sticky" : ""}`}>
+          <ReserveBlock animationRef={animationRef} />
+        </div>
       </div>
 
       <div className="mid" ref={midRef}>
@@ -150,7 +181,7 @@ const HotelGallery = () => {
           <h2>Это жилье — одно из самых любимых у гостей на KÖL</h2>
           <div className="team">
             <div className="left">
-              <p>4.98</p>
+              <p>{currentCotadge.rating}</p>
               <div className="stars">
                 {[...Array(5)].map((_, i) => (
                   <img key={i} src={starIcon} alt="star" />
@@ -163,6 +194,7 @@ const HotelGallery = () => {
             </div>
           </div>
         </div>
+        <Link to="/ownerProfile">
         <div className="mid-bottom">
           <img src={profile} alt="host" />
           <div className="text">
@@ -170,24 +202,25 @@ const HotelGallery = () => {
             <p>Суперхозяин · 1 год принимает гостей</p>
           </div>
         </div>
+        </Link> 
       </div>
 
-      <AnimationBlock />
+      <AnimationBlock ref={animationRef} />
 
       <div className="low">
         <h1 className="low-title">Какие удобства вас ждут</h1>
         <div className="low-grid">
           {[
-            [firstIcon, 'Набережная'],
-            [sixthIcon, 'Кухня'],
-            [secondIcon, 'Wi-Fi'],
-            [seventhIcon, 'Бесплатная парковка'],
-            [thirdIcon, 'Бассейн'],
-            [eighthIcon, 'Общая сауна'],
-            [fourthIcon, 'Телевизор'],
-            [ninthIcon, 'Лифт'],
-            [fifthIcon, 'Зарядка для авто'],
-            [tenthIcon, 'Кондиционер'],
+            [firstIcon, "Набережная"],
+            [sixthIcon, "Кухня"],
+            [secondIcon, "Wi-Fi"],
+            [seventhIcon, "Бесплатная парковка"],
+            [thirdIcon, "Бассейн"],
+            [eighthIcon, "Общая сауна"],
+            [fourthIcon, "Телевизор"],
+            [ninthIcon, "Лифт"],
+            [fifthIcon, "Зарядка для авто"],
+            [tenthIcon, "Кондиционер"],
           ].map(([icon, text], idx) => (
             <div className="low-item" key={idx}>
               <img src={icon} alt={text} />
@@ -200,4 +233,4 @@ const HotelGallery = () => {
   );
 };
 
-export default HotelGallery; 
+export default HotelGallery;

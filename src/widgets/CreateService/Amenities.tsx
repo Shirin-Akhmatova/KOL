@@ -11,7 +11,8 @@ import heating from "@/assets/icons/heating.svg";
 import yoga from "@/assets/icons/Yogo-room.svg";
 import cleaner from "@/assets/icons/cleaner.svg";
 import scss from "./Amenities.module.scss";
-import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import type { FormData } from "@/pages/CreateService/CreateService";
 
 interface Options {
   icon: string;
@@ -70,13 +71,19 @@ const options: Options[] = [
 ];
 
 const Amenities = () => {
-  const [active, setActive] = useState<number[]>([]);
+  const { setValue, watch } = useFormContext<FormData>();
 
-  const handleClick = (index: number) => {
-    if (active.includes(index)) {
-      setActive(active.filter((item) => item !== index));
+  const amenities = watch("amenities");
+
+  const handleClick = (title: string) => {
+    const current = amenities || [];
+    if (!current.includes(title)) {
+      setValue("amenities", [...current, title]);
     } else {
-      setActive([...active, index]);
+      setValue(
+        "amenities",
+        current.filter((item) => item !== title)
+      );
     }
   };
   return (
@@ -84,11 +91,11 @@ const Amenities = () => {
       <div className="container">
         <h1>Удобства</h1>
         <div className={scss.content}>
-          {options.map((option, index) => (
+          {options.map((option) => (
             <div
-              onClick={() => handleClick(index)}
+              onClick={() => handleClick(option.title)}
               className={`${scss.option} ${
-                active.includes(index) && scss.active
+                (amenities || []).includes(option.title) ? scss.active : ""
               }`}
               key={option.title}
             >

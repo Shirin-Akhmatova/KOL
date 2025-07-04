@@ -10,15 +10,16 @@ import "swiper/swiper-bundle.css";
 import scss from "./Carts.module.scss";
 import { blocks } from "../mockData";
 
+
 const Carts = () => {
-  const [likes, setLikes] = useState<number[]>([]); // ✅ Храним лайки в состоянии
+  const [likes, setLikes] = useState<number[]>([]);
 
   function addLike(id: number) {
     setLikes(
       (prevLikes) =>
         prevLikes.includes(id)
-          ? prevLikes.filter((item) => item !== id) // Удаляем лайк
-          : [...prevLikes, id] // Добавляем лайк
+          ? prevLikes.filter((item) => item !== id) 
+          : [...prevLikes, id]
     );
   }
 
@@ -39,7 +40,7 @@ const Carts = () => {
                   >
                     {block.images.map((image, imgIndex) => (
                       <SwiperSlide className={scss.slide} key={imgIndex}>
-                        <Link to="/cardPage">
+                        <Link to={`/cardPage/${index}`}>
                           <img src={image} alt="image" />
                         </Link>
                       </SwiperSlide>
@@ -72,8 +73,7 @@ const Carts = () => {
                   <p>{block.place}</p>
                   <p>{block.data}</p>
                   <h4 className={scss.price}>
-                    {block.price.toLocaleString("ru-RU")}
-                    сом <p>за {block.day} ночей</p>
+                    {block.price.toLocaleString("ru-RU")} сом <p>за {block.day} ночей</p>
                   </h4>
                 </Link>
               </div>

@@ -9,28 +9,40 @@ type SearchResultItem = {
 
 type SearchModalProps = {
   onClose: () => void;
-  searchValue?: string;
-  onSearchChange?: (value: string) => void;
   results?: SearchResultItem[];
   onSelect: (item: SearchResultItem) => void;
-  placeholder?: string;
   title?: string;
+  placeholder?: string;
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
+  showInput?: boolean;
 };
 
 function SearchModal({
   onClose,
-  searchValue,
-  onSearchChange,
   results = [],
   onSelect,
-  placeholder = "Поиск...",
   title = "Результаты поиска",
+  placeholder = "Поиск...",
+  searchValue = "",
+  onSearchChange,
+  showInput = true,
 }: SearchModalProps) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
           <h4>{title}</h4>
+          {showInput && (
+            <input
+              type="search"
+              placeholder={placeholder}
+              value={searchValue}
+              onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
+              className={styles.input}
+              autoComplete="off"
+            />
+          )}
         </div>
 
         <div className={styles.destinations}>

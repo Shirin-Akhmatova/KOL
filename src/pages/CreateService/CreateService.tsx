@@ -1,95 +1,107 @@
-import { useEffect, useCallback } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useEffect, useCallback, useState } from "react";
+import { debounce } from "lodash";
 import AddPhoto from "@/widgets/CreateService/AddPhoto";
 import ObjectForm from "@/widgets/CreateService/ObjectForm";
 import Amenities from "@/widgets/CreateService/Amenities";
-import Date from "@/widgets/CreateService/Date";
+import Date from "@/widgets/CreateService/ChooseDate";
 import PriceRoom from "@/widgets/CreateService/PriceRoom";
-import { debounce } from "lodash";
+import IndicateMap from "@/widgets/CreateService/IndicateMap";
+import style from "./CreateService.module.scss";
 
+type ImageItem = {
+  id: string;
+  file: File;
+  preview: string;
+  croppedPreview?: string;
+};
+
+interface Location {
+  cordinates: [number, number];
+  locationName: string;
+}
 export interface FormData {
-  name: {
-    ru: string;
-    en: string;
-  };
-  description: {
-    ru: string;
-    en: string;
-  };
+  photos: ImageItem[];
   category: string;
+  name: { ru: string; en: string };
+  description: { ru: string; en: string };
   rentalOption: string;
-  images: File[];
+  amenities: string[];
+  minNight: number;
+  maxNight: number;
+  hourHandle: string;
+  minuteHandle: string;
   price: number;
   discountWeek: number;
   discountMonth: number;
+  bedroom: number;
+  bed: number;
+  bathroom: number;
+  guests: number;
+  subject: boolean;
+  location: Location;
 }
 
-const CreateService = () => {
-  const methods = useForm<FormData>({
-    mode: "onSubmit",
-    defaultValues: {
-      name: { ru: "", en: "" },
-      description: { ru: "", en: "" },
-      category: "",
-      rentalOption: "",
-      images: [],
-      price: 0,
-      discountWeek: 0,
-      discountMonth: 0,
-    },
-  });
+const defaultValues: FormData = {
+  photos: [],
+  category: "",
+  name: { ru: "", en: "" },
+  description: { ru: "", en: "" },
+  rentalOption: "",
+  amenities: [],
+  minNight: 1,
+  maxNight: 365,
+  hourHandle: "00",
+  minuteHandle: "00",
+  price: 0,
+  discountWeek: 0,
+  discountMonth: 0,
+  bedroom: 0,
+  bed: 0,
+  bathroom: 0,
+  guests: 1,
+  subject: false,
+  location: {
+    cordinates: [42.4602, 77.5085],
+    locationName: "",
+  },
+};
 
+const CreateService = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const methods = useForm<FormData>({ mode: "onSubmit", defaultValues });
   const { handleSubmit, reset, watch } = methods;
 
-  const onSubmit = (data: FormData) => {
-    console.log("Форма отправлена:", data);
-    // Очищаем localStorage после успешной отправки
-    // localStorage.removeItem("objectDraft");
+  const onSubmit = async (data: FormData) => {
+    try {
+      setLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Ошибка при отправке формы:", error);
+      setLoading(false);
+    }
   };
 
-  // Функция для сохранения в localStorage с debounce
   const saveToLocalStorage = useCallback(
     debounce((data: FormData) => {
-      try {
-        // Преобразуем данные для хранения (особенно если есть File объекты)
-        const dataToStore = {
-          ...data,
-          // FileList/File объекты не сериализуются, нужно обработать отдельно
-          photos: data.images.map((file) => ({
-            name: file.name,
-            size: file.size,
-            type: file.type,
-          })),
-        };
-        localStorage.setItem("objectDraft", JSON.stringify(dataToStore));
-      } catch (error) {
-        console.error("Ошибка при сохранении в localStorage:", error);
-      }
+      localStorage.setItem("objectDraft", JSON.stringify(data));
     }, 500),
     []
   );
 
-  // Следим за изменениями формы
   useEffect(() => {
-    const subscription = watch((data) => {
-      saveToLocalStorage(data as FormData);
-    });
+    const subscription = watch((data) => saveToLocalStorage(data as FormData));
     return () => subscription.unsubscribe();
   }, [watch, saveToLocalStorage]);
 
-  // Загрузка сохраненных данных при монтировании
   useEffect(() => {
     const savedData = localStorage.getItem("objectDraft");
-    if (savedData) {
-      try {
-        const parsed = JSON.parse(savedData);
-        reset(parsed);
-      } catch (e) {
-        console.warn("Не удалось загрузить черновик из localStorage");
-      }
-    }
+    if (savedData) reset(JSON.parse(savedData));
   }, [reset]);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -98,9 +110,21 @@ const CreateService = () => {
         <Amenities />
         <Date />
         <PriceRoom />
-        <div style={{ marginTop: "20px" }}>
-          <button type="submit">Сохранить</button>
-        </div>
+        <IndicateMap />
+        <button type="submit" style={{ marginTop: "20px" }}>
+          Сохранить
+        </button>
+        {loading ? (
+          <button disabled className={`${style.btn} ${style.loadingDots}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        ) : (
+          <button className={`${style.btn} ${style.save}`} type="submit">
+            Сохранить
+          </button>
+        )}
       </form>
     </FormProvider>
   );

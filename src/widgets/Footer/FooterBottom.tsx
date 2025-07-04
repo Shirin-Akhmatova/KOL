@@ -7,10 +7,20 @@ function FooterBottom() {
       <div className={`container ${styles.footerBottom}`}>
         <ul className={styles.companyTerms}>
           <li key={"kol_2025"}>© 2025 KÖL Platform</li>
-          <li key={"privacy_policy"}>Политика конфиденциальности</li>
-          <li key={"user_agreement"}>Пользовательское соглашение</li>
+          <li key={"privacy_policy"}>
+            <a href="/privacy policy.pdf" target="_blank" rel="noopener noreferrer">
+              Политика конфиденциальности
+            </a>
+          </li>
+          <li key={"user_agreement"}>
+            <a href="/user agreement.pdf" target="_blank" rel="noopener noreferrer">
+              Пользовательское соглашение
+            </a>
+          </li>
         </ul>
-        <img src="/imgs/logo.svg" className={styles.companyLogo} alt="logo" />
+        <a href="#" rel="noopener noreferrer">
+          <img src="/imgs/logo.svg" className={styles.companyLogo} alt="logo" />
+        </a>
         <div className={styles.companySocials}>
           {footerSocials.map((item) => (
             <FooterSocial
