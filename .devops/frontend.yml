@@ -6,7 +6,7 @@ services:
       context: ..
       dockerfile: .devops/Dockerfile
     volumes:
-      - frontend_dist:/opt/kol_frontend/frontend_dist
+      - frontend_dist:/frontend_dist
 
 volumes:
   frontend_dist:
