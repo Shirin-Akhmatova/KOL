@@ -15,6 +15,7 @@ interface PropsType {
 }
 
 const Card = ({ block, mapModalBlock,height }: PropsType) => {
+
   if (!block) return null;
 
   const [likes, setLikes] = useState<Block[]>([]);
