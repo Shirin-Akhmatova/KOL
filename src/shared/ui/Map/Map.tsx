@@ -27,9 +27,8 @@ const IndicateMap = () => {
               {blocks.map((block) => (
                 <Card
                   block={block.id === loc.id ? block : null}
-                  addLike={() => {}}
-                  likes={[]}
                   mapModalBlock={true}
+                  height="200px"
                   key={block.id}
                 />
               ))}

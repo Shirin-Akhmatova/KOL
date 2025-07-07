@@ -15,6 +15,7 @@ const Carts = () => {
               <Card
                 block={block}
                 mapModalBlock={false}
+                height="250px"
                 key={block.id}
               />
             ))}

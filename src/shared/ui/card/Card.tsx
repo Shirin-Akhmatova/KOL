@@ -11,9 +11,11 @@ import { useEffect, useState } from "react";
 interface PropsType {
   block: Block | null;
   mapModalBlock: boolean;
+  height?: string
 }
 
-const Card = ({ block, mapModalBlock }: PropsType) => {
+const Card = ({ block, mapModalBlock,height }: PropsType) => {
+
   if (!block) return null;
 
   const [likes, setLikes] = useState<Block[]>([]);
@@ -36,7 +38,7 @@ const Card = ({ block, mapModalBlock }: PropsType) => {
   }
   return (
     <div className={style.Card}>
-      <div className={style.images}>
+      <div style={{height: height}} className={style.images}>
         <Swiper
           modules={[Navigation, Pagination]}
           pagination={{ clickable: true, dynamicBullets: true }}

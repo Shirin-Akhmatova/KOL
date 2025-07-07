@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: .devops/Dockerfile
+    volumes:
+      - frontend_dist:/frontend_dist
+
+volumes:
+  frontend_dist:
+    external: true

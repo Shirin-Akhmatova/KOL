@@ -1,4 +1,4 @@
-import "./home.scss";
+import "./Home.scss";
 import { useState } from "react";
 import Carts from "../../widgets/Carts/Carts";
 import MapBtn from "@/shared/ui/buttons/selectBtn/MapBtn";
