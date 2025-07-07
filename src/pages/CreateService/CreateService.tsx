@@ -6,6 +6,7 @@ import ObjectForm from "@/widgets/CreateService/ObjectForm";
 import Amenities from "@/widgets/CreateService/Amenities";
 import Date from "@/widgets/CreateService/ChooseDate";
 import PriceRoom from "@/widgets/CreateService/PriceRoom";
+import IndicateMap from "@/widgets/CreateService/IndicateMap";
 
 export interface FormData {
   photos: ImageItem[];
@@ -89,6 +90,7 @@ const CreateService = () => {
         <Amenities />
         <Date />
         <PriceRoom />
+        <IndicateMap />
         <button type="submit" style={{ marginTop: "20px" }}>
           Сохранить
         </button>

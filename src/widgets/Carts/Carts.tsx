@@ -1,17 +1,12 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
-import starIcon from "../../assets/icons/star.svg";
-import like from "../../assets/icons/like.png";
-import notLike from "../../assets/icons/without like.png";
-import { Link } from "react-router-dom";
 import "swiper/swiper-bundle.css";
-
 import scss from "./Carts.module.scss";
 import { type Block } from "../mockData";
+import Card from "@/shared/ui/card/Card";
+import { blocks } from "@/widgets/mockData";
 
-const Carts = ({ cardList }: { cardList: Block[] }) => {
+const Carts = () => {
   const likesFromLocalStore: Block[] = useMemo(() => {
     try {
       const item = localStorage.getItem("favorites");
@@ -20,14 +15,13 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
       return [];
     }
   }, []);
-  const [likes, setLikes] = useState<Block[]>(likesFromLocalStore); // ✅ Храним лайки в состоянии
+  const [likes, setLikes] = useState<Block[]>(likesFromLocalStore);
 
   function addLike(block: Block) {
-    setLikes(
-      (prevLikes) =>
-        prevLikes.find((el) => el.id === block.id)
-          ? prevLikes.filter((item) => item.id !== block.id) // Удаляем лайк
-          : [...prevLikes, block] // Добавляем лайк
+    setLikes((prevLikes) =>
+      prevLikes.find((el) => el.id === block.id)
+        ? prevLikes.filter((item) => item.id !== block.id)
+        : [...prevLikes, block]
     );
   }
 
@@ -40,56 +34,8 @@ const Carts = ({ cardList }: { cardList: Block[] }) => {
       <div className="container">
         <div className={scss.content}>
           <div className={scss.blocks}>
-            {cardList.map((block, index) => (
-              <div className={scss.block} key={index}>
-                <div className={scss.images}>
-                  <Swiper
-                    modules={[Navigation, Pagination]}
-                    pagination={{ clickable: true, dynamicBullets: true }}
-                    spaceBetween={0}
-                    slidesPerView={1}
-                    className={scss.swiper}
-                  >
-                    {block.images.map((image, imgIndex) => (
-                      <SwiperSlide className={scss.slide} key={imgIndex}>
-                        <Link to={`/cardPage/${index}`}>
-                          <img src={image} alt="image" />
-                        </Link>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                  {likes.find((el) => el.id === block.id) ? (
-                    <img
-                      className={scss.like}
-                      src={like}
-                      alt="like"
-                      onClick={() => addLike(block)}
-                    />
-                  ) : (
-                    <img
-                      className={scss.like}
-                      src={notLike}
-                      alt="notLike"
-                      onClick={() => addLike(block)}
-                    />
-                  )}
-                </div>
-                <Link to="/cardPage">
-                  <div className={scss.info}>
-                    <h4>{block.title}</h4>
-                    <span>
-                      <img src={starIcon} alt="" />
-                      {block.rating}
-                    </span>
-                  </div>
-                  <p>{block.place}</p>
-                  <p>{block.data}</p>
-                  <h4 className={scss.price}>
-                    {block.price.toLocaleString("ru-RU")} сом{" "}
-                    <p>за {block.day} ночей</p>
-                  </h4>
-                </Link>
-              </div>
+            {blocks.map((block) => (
+              <Card block={block} addLike={addLike} likes={likes} mapModalBlock={false} key={block.id}/>
             ))}
           </div>
         </div>
