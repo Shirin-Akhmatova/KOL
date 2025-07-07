@@ -35,9 +35,9 @@ export interface FormData {
   discountWeek: number;
   discountMonth: number;
   bedroom: number;
+  guests: number;
   bed: number;
   bathroom: number;
-  guests: number;
   subject: boolean;
   location: Location;
 }
@@ -102,6 +102,7 @@ const CreateService = () => {
     const savedData = localStorage.getItem("objectDraft");
     if (savedData) reset(JSON.parse(savedData));
   }, [reset]);
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -111,9 +112,6 @@ const CreateService = () => {
         <Date />
         <PriceRoom />
         <IndicateMap />
-        <button type="submit" style={{ marginTop: "20px" }}>
-          Сохранить
-        </button>
         {loading ? (
           <button disabled className={`${style.btn} ${style.loadingDots}`}>
             <span></span>

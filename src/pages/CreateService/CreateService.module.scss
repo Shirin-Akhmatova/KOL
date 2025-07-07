@@ -1,6 +1,7 @@
 .btn {
   display: block;
   margin: 4rem auto;
+  margin-top: 10rem;
   width: 13.5rem;
   height: 3rem;
   border-radius: 0.5rem;
@@ -19,6 +20,7 @@
   justify-content: center;
   gap: 0.5rem;
   cursor: not-allowed;
+  background: rgb(56, 56, 56);
   span {
     width: 0.5rem;
     height: 0.5rem;
