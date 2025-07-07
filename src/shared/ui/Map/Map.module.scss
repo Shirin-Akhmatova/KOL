@@ -38,6 +38,9 @@
 }
 
 .popup {
+  p {
+    margin-block: 0.5rem;
+  }
   :global(.leaflet-popup-content) {
     margin: 0;
   }
