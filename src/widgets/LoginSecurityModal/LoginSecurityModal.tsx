@@ -3,8 +3,6 @@ import styles from "./LoginSecurityModal.module.scss";
 import CustomInput from "../CustomInput/CustomInput";
 import CustomButton from "../CustomButton/CustomButton";
 import googleIcon from "../../assets/icons/google.svg";
-import appleIcon from "../../assets/icons/apple.svg";
-import emailIcon from "../../assets/icons/email.svg";
 import checkIcon from "../../assets/icons/check.svg";
 import eyeIcon from "../../assets/icons/toggleEyeIcon.svg";
 
@@ -22,11 +20,11 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.title}>Login & Security</h2>
+        <h2 className={styles.title}>Безопасность и вход</h2>
 
         <form className={styles.form}>
           <label>
-            Change login
+            Изменить логин
             <CustomInput
               label="Alex"
               type="text"
@@ -37,7 +35,7 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
           </label>
 
           <label>
-            Change Password
+            Изменить пароль
             <CustomInput
               label="..........."
               type="password"
@@ -49,7 +47,7 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
           </label>
 
           <label style={{ marginTop: "42px" }}>
-            Social networks
+            Социальные сети
             <div className={styles.socials}>
               <CustomButton
                 text="Google"
@@ -57,26 +55,15 @@ export default function LoginSecurityModal({ isOpen, onClose }: Props) {
                 iconRight={<img src={checkIcon} />}
                 style={{ height: "40px" }}
               />
-              <CustomButton
-                text="Apple"
-                icon={<img src={appleIcon} />}
-                iconRight={<img src={checkIcon} />}
-                style={{ height: "40px" }}
-              />
-              <CustomButton
-                text="eMail"
-                icon={<img src={emailIcon} />}
-                style={{ height: "40px" }}
-              />
             </div>
           </label>
 
           <div className={styles.account_settings}>
-            <p>Account</p>
+            <p>Аккаунт</p>
             <div className={styles.deactivate_account}>
-              <p>Deactivate your account</p>
+              <p>Деактивировать ваш аккаунт</p>
               <p className={styles.deactivate_btn} onClick={onClose}>
-                Deactivate
+                Деактивировать
               </p>
             </div>
           </div>

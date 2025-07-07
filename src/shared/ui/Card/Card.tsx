@@ -6,34 +6,16 @@ import like from "@/assets/icons/like.png";
 import notLike from "@/assets/icons/without like.png";
 import style from "./Card.module.scss";
 import type { Block } from "@/widgets/mockData";
-import { useEffect, useState } from "react";
 
 interface PropsType {
   block: Block | null;
+  addLike: (block: any) => void;
+  likes: Block[];
   mapModalBlock: boolean;
 }
 
-const Card = ({ block, mapModalBlock }: PropsType) => {
+const Card = ({ block, addLike, likes, mapModalBlock }: PropsType) => {
   if (!block) return null;
-
-  const [likes, setLikes] = useState<Block[]>([]);
-
-  const likesFromLocalStore = () => {
-    try {
-      const item = localStorage.getItem("favorites");
-      return item ? setLikes(JSON.parse(item)) : null;
-    } catch {
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    likesFromLocalStore();
-  }, [addLike]);
-
-  function addLike(block: Block) {
-    localStorage.setItem("favorites", JSON.stringify([...likes, block]));
-  }
   return (
     <div className={style.Card}>
       <div className={style.images}>

@@ -12,7 +12,7 @@ import {
 } from "../../app/services/redux/Register/signupWithGoogle";
 import type { RootState, AppDispatch } from "../../app/services/redux/store";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useNavigate } from "react-router-dom"; // Добавленный импорт
+import { useNavigate } from "react-router-dom";
 
 import styles from "./RegisterModal.module.scss";
 import googleIcon from "../../assets/icons/google.svg";
@@ -26,23 +26,24 @@ import "react-toastify/dist/ReactToastify.css";
 import { fetchUserData } from "@/app/services/redux/Register/googleLoginSlice";
 import FinishRegisterModal from "./FinishRegisterModal";
 import { resetUserState } from "@/app/services/redux/Register/userSlice";
+import { resetVerifyState } from "@/app/services/redux/OTP/verifySlice";
 
 interface RegisterProps {
   onClose?: () => void;
-  onSuccess?: () => void; 
+  onSuccess?: () => void;
 }
 
 const formatPhoneNumber = (num: string) => {
   const cleaned = num.replace(/\D/g, "");
   const part1 = cleaned.slice(0, 3);
   const part2 = cleaned.slice(3, 6);
-  const part3 = cleaned.slice(6, 10);
+  const part3 = cleaned.slice(6, 9);
   return [part1, part2, part3].filter(Boolean).join(" ");
 };
 
 const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate(); // Добавленный хук
+  const navigate = useNavigate();
 
   const { loading, error, success } = useSelector(
     (state: RootState) => state.register
@@ -56,6 +57,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
   const googleUserRaw = useSelector(
     (state: RootState) => state.googleLogin.user
   );
+  const { isAuthenticated } = useSelector((state: RootState) => state.verify);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [countryCode, setCountryCode] = useState("+996");
@@ -64,13 +66,12 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
 
   const isValid = phoneNumber.length === 9;
 
-  // Добавленный эффект для редиректа
   useEffect(() => {
-    const token = localStorage.getItem('access_token');
+    const token = localStorage.getItem("access_token");
     if (token) {
-      const redirectPath = localStorage.getItem('redirectAfterAuth');
+      const redirectPath = localStorage.getItem("redirectAfterAuth");
       if (redirectPath) {
-        localStorage.removeItem('redirectAfterAuth');
+        localStorage.removeItem("redirectAfterAuth");
         navigate(redirectPath);
         onClose?.();
         onSuccess?.();
@@ -117,7 +118,7 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
 
   useEffect(() => {
     if (success) {
-      toast.success("Номер успешно отправлен!");
+      toast.success("Код подтверждения отправлен!");
       setShowModal(true);
       dispatch(resetRegisterState());
     }
@@ -132,36 +133,60 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
       toast.success("Успешный вход через Google!");
       dispatch(fetchUserData());
     }
-    if (googleError) {
-      toast.error(googleError);
-      dispatch(resetGoogleLoginState());
-    }
-  }, [googleSuccess, googleError, dispatch]);
+  }, [googleSuccess, dispatch]);
 
   useEffect(() => {
-    dispatch(resetUserState());
-  }, [dispatch]);
+    if (isAuthenticated) {
+      dispatch(fetchUserData());
+    }
+  }, [isAuthenticated, dispatch]);
+
+  useEffect(() => {
+    if (googleSuccess && user && googleUserRaw !== "False") {
+      setTimeout(() => {
+        onClose?.();
+        onSuccess?.();
+      }, 1200);
+    }
+  }, [user, googleSuccess, googleUserRaw, onClose, onSuccess]);
 
   useEffect(() => {
     if (googleSuccess) {
-      if (googleUserRaw === "False") {
-        setShowFinishModal(true);
-      } else {
-        setShowFinishModal(false);
-      }
+      dispatch(fetchUserData());
     }
-    if (googleError) {
-      toast.error(googleError);
-      dispatch(resetGoogleLoginState());
+  }, [googleSuccess, dispatch]);
+
+  useEffect(() => {
+    const isUserEmpty =
+      googleUserRaw ||
+      googleUserRaw === "False" ||
+      (typeof googleUserRaw === "string" &&
+        googleUserRaw.toLowerCase() === "false");
+
+    if ((googleSuccess || isAuthenticated) && isUserEmpty) {
+      setShowFinishModal(true);
+    } else {
+      setShowFinishModal(false);
     }
-  }, [googleSuccess, googleError, googleUserRaw, dispatch]);
+  }, [
+    googleSuccess,
+    googleError,
+    googleUserRaw,
+    isAuthenticated,
+    dispatch,
+    onClose,
+  ]);
 
   useEffect(() => {
     return () => {
       dispatch(resetGoogleUser());
       dispatch(resetGoogleLoginState());
       dispatch(resetRegisterState());
-      dispatch(resetUserState());
+
+      const token = localStorage.getItem("access_token");
+      if (!token) {
+        dispatch(resetUserState());
+      }
     };
   }, [dispatch]);
 
@@ -221,12 +246,16 @@ const Register: React.FC<RegisterProps> = ({ onClose, onSuccess }) => {
 
         {showModal && (
           <SmsModal
-            onClose={() => setShowModal(false)}
+            onClose={() => {
+              setShowModal(false);
+              dispatch(resetVerifyState());
+              onClose?.();
+            }}
             phoneNumber={`${countryCode} ${formatPhoneNumber(phoneNumber)}`}
           />
         )}
 
-        {showFinishModal && user && (
+        {showFinishModal && (
           <FinishRegisterModal
             onClose={() => {
               setShowFinishModal(false);

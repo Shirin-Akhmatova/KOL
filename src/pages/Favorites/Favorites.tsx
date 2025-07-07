@@ -19,7 +19,7 @@ const FavoritesPage = () => {
   return (
     <div className="container" style={{ padding: "30px 0" }}>
       <h1>Избранное</h1>
-      <Carts cardList={favorites} />
+      <Carts />
     </div>
   );
 };

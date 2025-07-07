@@ -84,7 +84,7 @@ const ObjectForm = () => {
         };
 
         if (currentField[toLang] !== res) {
-          setValue(field, newField);
+          setValue(field, newField as { ru: string; en: string });
           localStorage.setItem(
             "objectDraft",
             JSON.stringify({

@@ -69,7 +69,7 @@ const footerColumns: IFooterColumn[] = [
 const footerSocials: IFooterSocial[] = [
   {
     icon: "/imgs/svgs/globe.svg",
-    title: "Русский(RU)",
+    title: "Русский(RU)", 
   },
   {
     icon: "/imgs/somIcon.webp",

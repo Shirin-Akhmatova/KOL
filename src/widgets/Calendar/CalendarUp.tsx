@@ -9,13 +9,11 @@ type DatePicker = {
 };
 
 interface CalendarProps extends HTMLAttributes<HTMLDivElement> {
-  onClose: () => void;
   onChangeValue: (data: DatePicker) => void;
   values: DatePicker;
 }
 
 const Calendar: React.FC<CalendarProps> = ({
-  onClose,
   onChangeValue,
   values,
   className,
@@ -42,22 +40,6 @@ const Calendar: React.FC<CalendarProps> = ({
   useEffect(() => {
     onChangeValue({ endDate: selectedEnd, startDate: selectedStart });
   }, [selectedEnd, selectedStart]);
-  // Обработчик клика вне календаря
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target as Node)
-      ) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
 
   const year = date.getFullYear();
   const month = date.getMonth();

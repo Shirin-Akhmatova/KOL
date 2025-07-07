@@ -1,6 +1,5 @@
 import { useState } from "react";
 import styles from "./LoginUserProfilePage.module.scss";
-import markIcon from "../../assets/icons/check.svg";
 import cameraIcon from "../../assets/icons/Map Chips.svg";
 import UploadModal from "../UploadModal/UploadModal";
 import PersonalInfoModal from "../PersonalInfoModal/PersonalInfoModal";
@@ -10,18 +9,20 @@ import Payment from "../PaymentModal/PaymentModal";
 import ObjectsModal from "../ObjectsModal/ObjectsModal";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/app/services/redux/store";
+import crossIcon from '../../assets/icons/cross.svg';
+import markIcon from '../../assets/icons/checkMark.svg';
+import logoutIcon from '../../assets/icons/out.svg';
 
 function LoginUserProfilePage() {
   const [image, setImage] = useState<string | null>(null);
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isPersonalInfoModalOpen, setIsPersonalInfoModalOpen] = useState(false);
-  const [isLoginSecurityModalOpen, setIsLoginSecurityModalOpen] =
-    useState(false);
-  const [isNotificationsModalOpen, setIsNotificationsModalOpen] =
-    useState(false);
+  const [isLoginSecurityModalOpen, setIsLoginSecurityModalOpen] = useState(false);
+  const [isNotificationsModalOpen, setIsNotificationsModalOpen] = useState(false);
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isObjectsModalOpen, setIsObjectsModalOpen] = useState(false);
+  const [showExitConfirmation, setShowExitConfirmation] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
 
   const handleAvatarClick = () => {
@@ -30,6 +31,14 @@ function LoginUserProfilePage() {
     } else {
       setIsUploadModalOpen(true);
     }
+  };
+
+  const handleSectionClick = (setter: React.Dispatch<React.SetStateAction<boolean>>) => {
+    setter(true);
+  };
+
+  const handleExit = () => {
+    setShowExitConfirmation(true);
   };
 
   return (
@@ -42,7 +51,7 @@ function LoginUserProfilePage() {
           {image ? (
             <img src={image} alt="аватар" className={styles.avatarImage} />
           ) : (
-            <span>А</span>
+            <span>{user?.first_name?.[0] || "Г"}</span>
           )}
 
           <div className={styles.avatarOverlay}>
@@ -59,7 +68,7 @@ function LoginUserProfilePage() {
         </div>
 
         <div className={styles.loginUserProfilePage_info}>
-          <h1>{user?.first_name || "Гость"}</h1>
+          <h1>{"Гость"}</h1>
           <p>{user?.email || "Нет email"}</p>
           <p>В KÖL уже</p>
           <h3>3 года</h3>
@@ -68,13 +77,13 @@ function LoginUserProfilePage() {
 
       <div className={styles.loginUserProfilePage_personalInfo}>
         <div className={styles.loginUserProfilePage_fixedInfo}>
-          <h6>Подтвержденная информация {user?.first_name || "Алекса"}</h6>
+          <h6>Информация о Гость</h6>
           <div className={styles.loginUserProfilePage_emailAndNumber}>
-            <img src={markIcon} alt="иконка отметки" />
-            <p>Адрес электронной почты</p>
+            <img src={crossIcon} alt="Не проверено" className={styles.crossIcon} />
+            <p className={styles.emailText}>Адрес электронной почты</p>
           </div>
           <div className={styles.loginUserProfilePage_emailAndNumber}>
-            <img src={markIcon} alt="иконка отметки" />
+            <img src={markIcon} alt="Проверено" className={styles.markIcon} />
             <p>Номер телефона</p>
           </div>
         </div>
@@ -82,36 +91,29 @@ function LoginUserProfilePage() {
         <div className={styles.loginUserProfilePage_divider}></div>
 
         <div className={styles.loginUserProfilePage_settings}>
-          <h6
-            onClick={() => setIsPersonalInfoModalOpen(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Личная информация
+          <h6 onClick={() => handleSectionClick(setIsPersonalInfoModalOpen)}>
+            <span>Персональная информация</span>
           </h6>
 
-          <h6
-            onClick={() => setIsLoginSecurityModalOpen(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Вход и безопасность
+          <h6 onClick={() => handleSectionClick(setIsLoginSecurityModalOpen)}>
+            <span>Безопасность и вход</span>
           </h6>
-          <h6
-            onClick={() => setIsNotificationsModalOpen(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Уведомления
+
+          <h6 onClick={() => handleSectionClick(setIsNotificationsModalOpen)}>
+            <span>Уведомления</span>
           </h6>
-          <h6
-            onClick={() => setIsPaymentModalOpen(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Методы оплаты
+
+          <h6 onClick={() => handleSectionClick(setIsPaymentModalOpen)}>
+            <span>Способы оплаты</span>
           </h6>
-          <h6
-            onClick={() => setIsObjectsModalOpen(true)}
-            style={{ cursor: "pointer" }}
-          >
-            Список объектов
+
+          <h6 onClick={() => handleSectionClick(setIsObjectsModalOpen)}>
+            <span>Мои объекты</span>
+          </h6>
+
+          <h6 onClick={handleExit} className={styles.logoutButton}>
+            <img src={logoutIcon} alt="Выход" className={styles.logoutIcon} />
+            <span>Выйти из аккаунта</span>
           </h6>
         </div>
       </div>
@@ -130,45 +132,65 @@ function LoginUserProfilePage() {
 
       {/* Модальное окно предпросмотра */}
       {isPreviewOpen && image && (
-        <div
-          className={styles.previewOverlay}
-          onClick={() => setIsPreviewOpen(false)}
-        >
+        <div className={styles.previewOverlay} onClick={() => setIsPreviewOpen(false)}>
           <div className={styles.previewModal}>
-            <img src={image} />
+            <img src={image} alt="Предпросмотр аватара" />
           </div>
         </div>
       )}
 
-      {/* Модальное окно личной информации */}
+      {/* Модальные окна разделов */}
       <PersonalInfoModal
         isOpen={isPersonalInfoModalOpen}
         onClose={() => setIsPersonalInfoModalOpen(false)}
       />
 
-      {/* Модальное окно входа и безопасности */}
       <LoginSecurityModal
         isOpen={isLoginSecurityModalOpen}
         onClose={() => setIsLoginSecurityModalOpen(false)}
       />
 
-      {/* Модальное окно уведомлений */}
       <NotificationsModal
         isOpen={isNotificationsModalOpen}
         onClose={() => setIsNotificationsModalOpen(false)}
       />
 
-      {/* Модальное окно оплаты */}
       <Payment
         isOpen={isPaymentModalOpen}
         onClose={() => setIsPaymentModalOpen(false)}
       />
 
-      {/* Модальное окно объектов */}
       <ObjectsModal
         isOpen={isObjectsModalOpen}
         onClose={() => setIsObjectsModalOpen(false)}
       />
+
+      {/* Модальное окно подтверждения выхода */}
+      {showExitConfirmation && (
+        <div className={styles.confirmationOverlay} onClick={() => setShowExitConfirmation(false)}>
+          <div className={styles.confirmationModal} onClick={(e) => e.stopPropagation()}>
+            <h3>Подтверждение выхода</h3>
+            <p>Вы уверены, что хотите выйти?</p>
+            <div className={styles.confirmationButtons}>
+              <button 
+                className={styles.cancelButton}
+                onClick={() => setShowExitConfirmation(false)}
+              >
+                Отмена
+              </button>
+              <button 
+                className={styles.confirmButton}
+                onClick={() => {
+                  setShowExitConfirmation(false);
+                  // Здесь должна быть логика выхода <3
+                }}
+              >
+                Выйти
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
