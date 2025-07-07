@@ -33,3 +33,23 @@
   margin: 10px 0;
   border: 1px solid #f2f2f2;
 }
+
+.userProfileModal_button {
+  all: unset;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #1a1a1a;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
