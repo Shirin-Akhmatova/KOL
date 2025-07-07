@@ -24,3 +24,4 @@ jobs:
             cd kol_frontend
             git pull origin staging
             sh run.sh
+            docker restart kol_nginx
