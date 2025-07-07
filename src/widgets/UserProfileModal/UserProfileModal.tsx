@@ -11,8 +11,9 @@ type UserProfileModalProps = {
 
 function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state: RootState) => 
-    state.auth.isAuthenticated || !!localStorage.getItem('access_token')
+  const isAuthenticated = useSelector(
+    (state: RootState) =>
+      state.auth.isAuthenticated || !!localStorage.getItem("access_token")
   );
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +33,7 @@ function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
       navigate("/create-service");
       onClose();
     } else {
-      localStorage.setItem('redirectAfterAuth', '/create-service');
+      localStorage.setItem("redirectAfterAuth", "/create-service");
       onRegisterClick();
     }
   };
@@ -41,12 +42,20 @@ function UserProfileModal({ onClose, onRegisterClick }: UserProfileModalProps) {
     <div className={styles.userProfileModal_overlay} ref={modalRef}>
       <div className={styles.userProfileModal_container}>
         <ul>
-          <li onClick={onRegisterClick}>Регистрация/Вход</li>
+          <button
+            onClick={onRegisterClick}
+            disabled={isAuthenticated}
+            className={styles.userProfileModal_button}
+          >
+            Регистрация/Вход
+          </button>
           <div className={styles.divider}></div>
           <li onClick={handleCreateServiceClick}>Сдать жилье на KÖL</li>
           <li>Центр помощи</li>
           <li>
-            <Link to="/favorites" onClick={onClose}>Избранное</Link>
+            <Link to="/favorites" onClick={onClose}>
+              Избранное
+            </Link>
           </li>
         </ul>
       </div>
